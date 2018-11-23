@@ -1,4 +1,44 @@
-<div class="layout">
+<div class="lay">
+
+    <header>
+        <mat-toolbar color="primary" class="header">
+
+                <i (click)="drawer.toggle()" class="anticon anticon-menu-unfold"></i>
+
+
+          <div class="menu-title">
+              Angular系列学习
+            </div>
+        </mat-toolbar>
+
+    </header>
+    <mat-drawer-container class="container" [hasBackdrop]="hasBackdrop">
+        <mat-drawer #drawer opened class="sidebar"[mode]="mode">
+            <layout-sidebar></layout-sidebar>
+        </mat-drawer>
+        <mat-drawer-content class="content">
+          <div class="router">
+            <router-outlet></router-outlet>
+          </div>
+          <div class="footer">
+            <span>
+              Powered by
+              <a routerLink="/project/author">
+                <strong>
+                  Eve
+                </strong>
+              </a> ©2018 | Hosted by
+              <a href="https://pages.coding.me" target="view_window" style="font-weight: bold">Coding Pages</a>
+            </span>
+            <br/>
+            <span>
+              如需转载请标明出处
+            </span>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+</div>
+<!-- <div class="layout">
   <div class="left">
     <layout-sidebar></layout-sidebar>
   </div>
@@ -22,4 +62,4 @@
       </span>
     </div>
   </div>
-</div>
+</div> -->

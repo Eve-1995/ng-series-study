@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { fromEvent } from 'rxjs';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 
 @Component({
   selector: 'layout',
@@ -9,10 +10,28 @@ import { fromEvent } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class LayoutComponent implements AfterViewInit {
-  constructor(router: Router) {
+  mode= 'side';
+  hasBackdrop=false;
+  constructor(router: Router,breakpointObserver: BreakpointObserver) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         window.scrollTo(0, 0);
+      }
+    });
+    breakpointObserver.observe([
+      '(max-width: 599px)',
+      '(min-width:600px)'
+    ]).subscribe(result => {
+      if (result.matches) {
+        const ow = window.innerWidth;
+        console.log(ow)
+        if(ow<=599){
+          this.hasBackdrop = true;
+          this.mode = 'over';
+        } else{
+          this.hasBackdrop = false;
+          this.mode = 'side';
+        }
       }
     });
   }
