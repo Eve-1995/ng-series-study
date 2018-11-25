@@ -3,10 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AutoUploadComponent } from './auto-upload/auto-upload.component';
 import { CommonQuestionComponent } from './common-question/common-question.component';
+import { NgExamComponent } from './ng-exam/ng-exam.component';
 
 const routes: Routes = [
   { path: 'auto-upload', component: AutoUploadComponent },
   { path: 'common-question', component: CommonQuestionComponent },
+  { path: 'ng-exam', component: NgExamComponent },
 ];
 
 @NgModule({
