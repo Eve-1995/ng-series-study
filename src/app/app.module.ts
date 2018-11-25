@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { LayoutModule } from './layout/layout.module';
 import { PagesRoutingModule } from './pages/pages-routing.module';
@@ -21,7 +22,8 @@ import { PagesRoutingModule } from './pages/pages-routing.module';
     HttpClientModule,
     RouterModule,
     PagesRoutingModule,
-    LayoutModule
+    LayoutModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent]

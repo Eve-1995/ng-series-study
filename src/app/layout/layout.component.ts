@@ -1,6 +1,6 @@
-import { Component, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd } from '@angular/router';
-import { fromEvent } from 'rxjs';
+import { Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'layout',
@@ -8,32 +8,34 @@ import { fromEvent } from 'rxjs';
   styleUrls: ['./layout.component.less', './theme.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LayoutComponent implements AfterViewInit {
-  constructor(router: Router) {
+export class LayoutComponent {
+  @ViewChild('drawer') drawer: ElementRef;
+  sidebarIsHide = true;//控制侧边栏隐藏按钮样式
+  openedChange($event) {
+    this.sidebarIsHide = $event;
+  }
+  mode = 'side';
+  hasBackdrop = false;
+  constructor(router: Router, breakpointObserver: BreakpointObserver) {
     router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         window.scrollTo(0, 0);
       }
     });
-  }
-  ngAfterViewInit() {
-    /* let element;
-    let elementHeight;
-    setTimeout(() => {
-      element = document.body.querySelector('.ant-anchor');
-      elementHeight = Number.parseInt(window.getComputedStyle(element).height);
-    }, 0);
-    let maxHeight;
-    setTimeout(() => {
-      maxHeight = document.documentElement.scrollTop || document.body.scrollHeight - document.body.clientHeight;
-    }, 0);
-    fromEvent(window, 'scroll').subscribe((event) => {
-      const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
-      if (scrollHeight > maxHeight - 100) {
-        const gap = scrollHeight - (maxHeight - 100);
-        const height = elementHeight - gap - 230;
-        element.setAttribute('style', `height: ${height}px;`);
+    breakpointObserver.observe([
+      '(max-width: 599px)',
+      '(min-width:600px)'
+    ]).subscribe(result => {
+      if (result.matches) {
+        const ow = window.innerWidth;
+        if (ow <= 599) {
+          this.hasBackdrop = true;
+          this.mode = 'over';
+        } else {
+          this.hasBackdrop = false;
+          this.mode = 'side';
+        }
       }
-    }); */
+    });
   }
 }
