@@ -1,18 +1,82 @@
 [
     {
-        "question": "组件树的数据流向是2()",
-        "optionA": "A.父组件流向子组件的单向数据流",
-        "optionB": "B.子组件流向父组件的单向数据流",
-        "optionC": "C.父组件和子组件的双向数据流",
-        "optionD": "D.可自行设置",
-        "answer": "A"
-    },
-    {
-        "question": "关于数据绑定,以下说法不正确的是2()",
+        "question": "关于数据绑定,以下说法不正确的是()",
         "optionA": "A.出现 [ ],说明是从数据源到视图的单向绑定",
         "optionB": "B.出现 ( ),说明是从视图到数据源的单向绑定",
         "optionC": "C.出现 ([ ]),说明是数据源和视图的双向绑定",
         "optionD": "D.在ng2中,ngModel必须声明name属性",
+        "answer": "C"
+    },
+    {
+        "question": "<p *ngFor='let obj of ngForData;let index = index;let first = first;let last = last;let even = even;let odd = odd;'/p>,关于以上代码说法正确的是()",
+        "optionA": "A.index下标从0开始",
+        "optionB": "B.even表示判断偶数,返回布尔值",
+        "optionC": "C.last表示判断是否为最后一个元素,返回布尔值",
+        "optionD": "D.以上说法均正确",
+        "answer": "D"
+    },
+    {
+        "question": "对于@NgModule的元数据中declarations属性对应的值不应包括()",
+        "optionA": "A.组件",
+        "optionB": "B.指令",
+        "optionC": "C.服务",
+        "optionD": "D.管道",
+        "answer": "C"
+    },
+    {
+        "question": "当angular程序抛出NullInjectorError: No Provider for XXXX 时可能的原因是()",
+        "optionA": "A.未在NgModule元数据的providers属性中声明",
+        "optionB": "B.未在NgModule元数据的imports属性中声明",
+        "optionC": "C.未在NgModule元数据的declarations属性中声明",
+        "optionD": "D.未在NgModule元数据的bootstrap属性中声明",
+        "answer": "A"
+    },
+    {
+        "question": "以下关于组件通信的描述最恰当的是()",
+        "optionA": "A.父组件使用Input属性给子组件传递信息",
+        "optionB": "B.子组件使用Output属性给父组件传递信息",
+        "optionC": "C.Service可以用于组件之间的通信",
+        "optionD": "D.以上均正确",
+        "answer": "D"
+    },
+    {
+        "question": "以下哪个生命周期钩子会被多次调用?",
+        "optionA": "A.ngOnInit",
+        "optionB": "B.ngAfterContentInit",
+        "optionC": "C.ngAfterViewInit",
+        "optionD": "D.ngAfterContentChecked",
+        "answer": "D"
+    },
+    {
+        "question": "下面对表单控件状态描述错误的是()",
+        "optionA": "A.dirty:表单控件值未改变",
+        "optionB": "B.invalid:表单控件无效",
+        "optionC": "C.pristine:表单控件值未改变",
+        "optionD": "D.valid:表单控件有效",
+        "answer": "A"
+    },
+    {
+        "question": "以下关于RxJS和Promise的描述不正确的是()",
+        "optionA": "A.Observable不订阅则不执行",
+        "optionB": "B.Promise一经产生便起作用",
+        "optionC": "C.RxJS可以next多个值,而Promise只能resovle一个值",
+        "optionD": "D.RxJS中,complete和error可以同时触发",
+        "answer": "D"
+    },
+    {
+        "question": "关于路由守卫描述正确的是()",
+        "optionA": "A.CanActivate会检查用户是否有权限访问这个页面",
+        "optionB": "B.CanLoad会加载子模块,再由其他路由守卫进行权限验证",
+        "optionC": "C.CanDeactivate会检查用户是否允许离开当前页面",
+        "optionD": "D.CanActivateChild用来保护子路由的访问权限",
+        "answer": "B"
+    },
+    {
+        "question": "以下关于常用模块说法正确的是()",
+        "optionA": "A.BrowserModule:当你想要在浏览器中运行应用时",
+        "optionB": "B.CommonModule:当你想要使用 NgIf 和 NgFor 时",
+        "optionC": "C.FormsModule:当要构建响应式表单时",
+        "optionD": "D.HttpClientModule:当你要和服务器进行通信时",
         "answer": "C"
     }
 ]

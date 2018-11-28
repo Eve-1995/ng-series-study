@@ -29,7 +29,7 @@ export class ExamReportComponent {
     });
     setTimeout(() => {
       this.spinBoolean = false;
-    }, 1500);
+    }, 500);
   }
   constructor(
     private modalService: NzModalService

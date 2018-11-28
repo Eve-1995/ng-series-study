@@ -8,6 +8,9 @@
     </div>
     <nz-tabset *ngIf="!spinBoolean">
         <nz-tab nzTitle="入门">
+            <div *ngIf="level1Data.length === 0" class="center">
+                太厉害了!该部分题目全部答对了!
+            </div>
             <div *ngFor="let item of level1Data;let index = index">
                 <div>
                     <p class="title">{{index+1}}、{{item.question}}</p>
@@ -28,6 +31,9 @@
             </div>
         </nz-tab>
         <nz-tab nzTitle="进阶">
+                <div *ngIf="level2Data.length === 0" class="center">
+                    太厉害了!该部分题目全部答对了!
+                </div>
             <div *ngFor="let item of level2Data;let index = index">
                 <div>
                     <p class="title">{{index+1}}、{{item.question}}</p>
@@ -48,6 +54,9 @@
             </div>
         </nz-tab>
         <nz-tab nzTitle="高级">
+                <div *ngIf="level3Data.length === 0" class="center">
+                    太厉害了!该部分题目全部答对了!
+                </div>
             <div *ngFor="let item of level3Data;let index = index">
                 <div>
                     <p class="title">{{index+1}}、{{item.question}}</p>

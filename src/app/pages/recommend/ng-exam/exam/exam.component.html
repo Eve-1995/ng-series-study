@@ -11,7 +11,7 @@
     </div>
     <div *ngIf="finish" class="tip">
         <p>已完成该部分试题,请挑战其他难度试题!</p>
-        <p>待完成所有试题后可查看[成绩报告单].</p>
+        <p>待完成所有试题后可查看[成绩单].</p>
     </div>
     <ng-container *ngFor="let item of questions;let index = index;">
         <ng-container *ngIf="index == currentIndex && !start">
@@ -26,7 +26,7 @@
                 </label>
                 <br>
                 <label nz-radio [nzValue]="'C'" (click)="next(item.answer)" [nzDisabled]="disabled">
-                    <span>{{item.optionC}}</span>
+                    <span >{{item.optionC}}</span>
                 </label>
                 <br>
                 <label nz-radio [nzValue]="'D'" (click)="next(item.answer)" [nzDisabled]="disabled">

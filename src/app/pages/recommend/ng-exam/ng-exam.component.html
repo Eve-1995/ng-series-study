@@ -9,7 +9,7 @@
                 </nz-card-meta>
             </nz-card>
             <ng-template #level1>
-                <img alt="example" src="../../../../assets/img/level1.png" />
+                <img alt="新手入门" src="../../../../assets/img/level1.png" />
             </ng-template>
         </div>
         <div nz-col class="gutter-row" nzSpan="6">
@@ -21,7 +21,7 @@
                 </nz-card-meta>
             </nz-card>
             <ng-template #level2>
-                <img alt="example" src="../../../../assets/img/level2.png" />
+                <img alt="进阶升级" src="../../../../assets/img/level2.png" />
             </ng-template>
         </div>
         <div nz-col class="gutter-row" nzSpan="6">
@@ -33,7 +33,7 @@
                 </nz-card-meta>
             </nz-card>
             <ng-template #level3>
-                <img alt="example" src="../../../../assets/img/level3.png" />
+                <img alt="史诗挑战" src="../../../../assets/img/level3.png" />
             </ng-template>
         </div>
         <div nz-col class="gutter-row" nzSpan="6">
@@ -45,7 +45,7 @@
                 </nz-card-meta>
             </nz-card>
             <ng-template #report>
-                <img alt="example" src="../../../../assets/img/report.png" />
+                <img alt="成绩单" src="../../../../assets/img/report.png" />
             </ng-template>
         </div>
     </div>
@@ -53,5 +53,5 @@
     <do-exam #examLevel2 [level]="2"></do-exam>
     <do-exam #examLevel3 [level]="3"></do-exam>
     <error-list #errorList></error-list>
-    <exam-report #examReport (event)="showErrorList($event)"></exam-report>
+    <exam-report #examReport (event)="showErrorList()"></exam-report>
 </div>
