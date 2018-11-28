@@ -56,6 +56,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         },
@@ -67,6 +75,10 @@
           "configurations": {
             "production": {
               "browserTarget": "ng-series-study:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "ng-series-study:build:hmr"
             }
           }
         },
