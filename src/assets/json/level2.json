@@ -72,7 +72,7 @@
         "answer": "B"
     },
     {
-        "question": "以下关于常用模块说法正确的是()",
+        "question": "以下关于常用模块说法不正确的是()",
         "optionA": "A.BrowserModule:当你想要在浏览器中运行应用时",
         "optionB": "B.CommonModule:当你想要使用 NgIf 和 NgFor 时",
         "optionC": "C.FormsModule:当要构建响应式表单时",

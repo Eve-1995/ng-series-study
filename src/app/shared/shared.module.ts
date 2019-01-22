@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-import { CodemirrorModule } from 'ng2-codemirror';
+import { CodemirrorModule } from '@nomadreservations/ngx-codemirror';
 // 自定义的全局组件
 import { CodemirrorComponent } from './codemirror/codemirror.component';
 

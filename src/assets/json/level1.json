@@ -24,7 +24,7 @@
         "answer": "A"
     },
     {
-        "question": "TS:className = 'color',css:.color{color:blue},HTML:<div class='{{className}}'>我是个快乐的肥宅!</div>,符合以上代码描述的一项是()",
+        "question": "TS:className = 'color',css:.color{color:blue},HTML:<div class='{{className}}'  style='color:pink;'>我是个快乐的肥宅!</div>,符合以上代码描述的一项是()",
         "optionA": "A.程序报错,插值表达式不能用在属性值上",
         "optionB": "B.文字部分显示为蓝色",
         "optionC": "C.文字部分显示为黑色",
@@ -72,7 +72,7 @@
         "answer": "B"
     },
     {
-        "question": "以下关于RxJS和Promise的描述正确的是()",
+        "question": "以下关于RxJS和Promise的描述不正确的是()",
         "optionA": "A.Observer:一个回调函数的集合,它知道如何去监听由Observable提供的值",
         "optionB": "B.Subscription:表示 Observable 的执行,主要用于取消Observable的执行",
         "optionC": "C.Observable对象和Promise对象不可以进行互相转换",
