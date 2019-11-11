@@ -9,6 +9,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 import { LayoutModule } from './layout/layout.module';
 import { PagesRoutingModule } from './pages/pages-routing.module';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { PagesRoutingModule } from './pages/pages-routing.module';
     LayoutModule,
     OverlayModule
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
