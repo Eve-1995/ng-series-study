@@ -1,0 +1,212 @@
+<div class="tutorial">
+  <h2 id="resume">概述</h2>
+  在Angular中, 一共有三种类型的指令:
+  <ul>
+    <li>组件 - 拥有模板的指令</li>
+    <li>结构型指令 - 通过添加和移除 DOM 元素改变 DOM 布局的指令</li>
+    <li>属性型指令 - 改变元素、组件或其它指令的外观和行为的指令</li>
+  </ul>
+  指令, 在使用上看起来就是个DOM元素的特性(property), 实际上Angular就是通过特性的方式来获取数据, 然后根据数据对DOM元素进行操作.
+  <div class="info">
+    这里需要知道
+    <span class="key-word">attribute</span>和
+    <span class="key-word">property</span
+    >的区别.在中文中一般二者都翻译为属性, 其实是很容易混淆的.在Angular中, 绝大部分都是用的property.在本系列中, 用'特性'一词来形容.
+  </div>
+  结构型指令以
+  <span class="key-word">*</span>开头, 如 <span class="key-word">*ngIf</span>,  <span class="key-word">*ngFor</span>, 否则为属性型指令, 如
+  <span class="key-word">ngClass</span>,  <span class="key-word">ngStyle</span>等.
+  <h2 id="structural-directive">结构型指令</h2>
+  <h3 id="ngIf">*ngIf</h3>
+  该指令用来控制元素是否加载, *ngIf的值为一个表达式, 表达式的结果为布尔值.当布尔值为真时, 加载该元素, 反之则移除该元素.
+  <br />
+  <h4>示例</h4>
+  当你选择'男生'时, 显示'我是男生';当你选择'女生'时, 显示'我是女生'.
+  <br />
+  值得注意的是, *ngIf是移除表达式为false的元素, 并不是隐藏元素, 可以通过查看元素验证这点. <br />
+  现在尝试选择下你的性别, 观察运行结果的变化情况.
+  <br />
+  <code-mirror [code]="ngIfCode"></code-mirror>
+  <h4>运行结果</h4>
+  <nz-radio-group [(ngModel)]="gender">
+    <label nz-radio nzValue="男生">男生</label>
+    <label nz-radio nzValue="女生">女生</label>
+  </nz-radio-group>
+  <nz-card class="card">
+    <div *ngIf="gender == '男生'">我是男生</div>
+    <div *ngIf="gender == '女生'">我是女生</div>
+  </nz-card>
+  <h3 id="ngFor">*ngFor</h3>
+  该指令用来遍历迭代器, 一般用来遍历数组.在下文中, 你会看到一种写法
+  <span class="key-word">let obj of ngForData</span>, 这是在遍历
+  <span class="key-word">ngForData</span>数组, 遍历到每个元素的时候, 都会将这个元素命名为 <span class="key-word">obj</span>, 这样就可以读取
+  <span class="key-word">obj</span>的属性了. <span class="key-word">*ngFor</span>支持嵌套结构. <br />
+  *ngFor具有以下几种模板模板变量:
+  <ul>
+    <li>
+      <span class="key-word">index: number</span>:遍历时的序号, 
+      <strong>下标从0开始</strong>
+    </li>
+    <li><span class="key-word">first: boolean</span>:若为第一个元素则返回true, 否则返回false</li>
+    <li><span class="key-word">last: boolean</span>:若为最后一个元素则返回true, 否则返回false</li>
+    <li><span class="key-word">even: boolean</span>:若为偶数元素则返回true, 否则返回false</li>
+    <li><span class="key-word">odd: boolean</span>:若为奇数元素则返回true, 否则返回false</li>
+  </ul>
+  <h4>示例</h4>
+  根据定义好的数组对象遍历数据, 观察数据与视图的对应关系.
+  <br />
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="ngForCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="ngForCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h4>运行结果</h4>
+  <nz-card class="card">
+    <nz-table #ngForTable [nzData]="ngForData" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>性别</th>
+          <th>籍贯</th>
+          <th>第一条记录</th>
+          <th>最后条记录</th>
+          <th>偶数记录</th>
+          <th>奇数记录</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let obj of ngForTable.data; let index = index; let first = first; let last = last; let even = even; let odd = odd">
+          <td>{{ index }}</td>
+          <td>{{ obj.name }}</td>
+          <td>{{ obj.gender }}</td>
+          <td>{{ obj.hometown }}</td>
+          <td [ngClass]="{ 'high-light-true': first,  'high-light-false': !first }">{{ first }}</td>
+          <td [ngClass]="{ 'high-light-true': last,  'high-light-false': !last }">{{ last }}</td>
+          <td [ngClass]="{ 'high-light-true': even,  'high-light-false': !even }">{{ even }}</td>
+          <td [ngClass]="{ 'high-light-true': odd,  'high-light-false': !odd }">{{ odd }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+  <h4>trackBy</h4>
+  Angular默认是以对象为标记的, 一旦你更新数据源, Angular便更新视图.更新时, 先移除全部DOM结点, 再依次添加DOM结点.DOM的操作非常消耗性能, 因此, 
+  <span class="key-word">*ngFor</span>提供 <span class="key-word">trackBy</span>来帮助用户自定义追踪函数算法.
+  <h4>示例</h4>
+  设定数据源是一个数组对象, 包含的是城市名称与城市代码, 当点击获取数据按钮时, 更新数据源, 
+  <strong>更新前后的数据源只有湖州市的代码与名称更改为金华市的代码与名称, 其余数据不变.</strong
+  >因此, 我们要实现的是, 当城市代码改变时, 才修改DOM结点.
+  <div class="info">
+    说的通俗易懂一些, 就是使用trackBy让Angular知道, 用户是如何判断数据到底有没有发生变更的, 所以我需要指定一个值作为依据, 类似数据库的主键的概念, 也就是说, 当用户设定标识为某个值时, 只有当那个值变更了, Angular才认为是真的变更了.
+  </div>
+  在 <strong>运行结果</strong>中展示了使用 <span class="key-word">trackBy</span>与不使用
+  <span class="key-word">trackBy</span>时, 更新数据源所引起的DOM操作的区别, 你可以打开控制台自行验证这点.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="trackByCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="trackByCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h4>运行结果</h4>
+  <nz-tabset>
+    <nz-tab nzTitle="未使用trackBy">
+      <div nz-row>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <ul>
+            <li *ngFor="let obj of citiesForNoTrack">
+              {{ obj.name }}
+            </li>
+          </ul>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <button (click)="updateCitiesForNoTrack()" nz-button>获取数据</button>
+          <button (click)="resetCitiesForNoTrack()" nz-button>还原数据</button>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="16">
+          <img src="https://file.qingflow.com/uploads/file/2691e931-e245-4b9b-abf2-8d2b41be4232.gif" />
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="使用trackBy">
+      <div nz-row>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <ul>
+            <li *ngFor="let obj of citiesForTrack; trackBy: trackByCityCode">
+              {{ obj.name }}
+            </li>
+          </ul>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="4">
+          <button (click)="updateCitiesForTrack()" nz-button>获取数据</button>
+          <button (click)="resetCitiesForTrack()" nz-button>还原数据</button>
+        </div>
+        <div nz-col class="gutter-row" nzSpan="16">
+          <img src="https://file.qingflow.com/uploads/file/96cdce73-0e7f-4e40-b187-aafcbe73837e.gif" />
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+
+  <h3 id="custom-structural-directive">自定义结构型指令</h3>
+  Angular允许用户自定义指令来满足更复杂的业务场景, 自定义指令创建的步骤如下
+  <ul>
+    <li>导入并添加 <span class="key-word">Directive</span>装饰器</li>
+    <li>
+      导入 <span class="key-word">Input</span>,  <span class="key-word">TemplateRef</span>, 
+      <span class="key-word">ViewContainerRef</span>
+    </li>
+    <li>设置选择器, 以便Angular解析指令</li>
+    <li>在AppModule的 <span class="key-word">declarations</span> 中声明</li>
+  </ul>
+  <div class="info">由于指令涉及DOM操作, 对于DOM操作部分在此不再赘述, 可自行前往其他章节查看.(打算写, 但还没写)</div>
+  关于自定义结构型指令需要预先了解以下三个概念:
+  <br />
+  <span class="key-word">TemplateRef</span>:表示内嵌的HTML模板.
+  <br />
+  <span class="key-word">ViewContainerRef</span>:表示视图容器, 创建和管理内嵌视图.
+  <br />
+  <strong>依赖注入</strong
+  >:如果做过java开发的同学一点听过依赖注入.以我浅显的水平, 我个人认为就是将控制权交给了父组件.在本案例中, 注入的方式就是在构造函数中的写法.
+  <div class="info">
+    对于新手来说, 暂时很难理解这三个概念.你可以这样理解, 一个DOM元素带了结构型指令之后, 他不再是一个DOM, 进入指令后, 他提供了两个控制权, 一个是自身的模板控制权, 一个是容器控制权.尝试看看下面的伪代码是能理解, 实在理解不了暂时先不管, 后面还会多次遇到的.
+  </div>
+  <code-mirror [code]="code1"></code-mirror>
+  <h4>示例</h4>
+  由于我本人比较爱喝奶茶, 这里以奶茶为主题, 个人喜爱的口味分别为抹茶、红豆、奥利奥(按喜爱程度排序).
+  <br />假设你要请我喝奶茶, 你可以选择奶茶的类型, 如果是奥利奥奶茶, 我选择喝一杯.如果是红豆奶茶, 我选择喝两杯.如果是抹茶奶茶, 我选择喝三杯.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="directiveCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="directiveCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <span class="key-word">@Input</span>是用来读取外部流进来的数据的. <br />
+  这是Angular当中组件与组件通讯的一种方式, 简单地说, 组件和组件之间通讯, 肯定需要一种约定, 那么Angular给了我们一种解决方案, 就是在组件内部声明Input, 这个值可以接收外部参数.
+  <br />
+  在我们的案例中,  <span class="key-word">nssMilkTeaType</span>是我们的指令名, 一旦使用直接就会直接调用指令中的
+  <span class="key-word">type</span>方法, 同时将实参传给这个方法的虚参.
+  <h4>运行结果</h4>
+  <nz-radio-group [(ngModel)]="milkTeaType">
+    <label nz-radio nzValue="oreo">请前夕喝奥利奥奶茶</label>
+    <label nz-radio nzValue="redBean">请前夕喝红豆奶茶</label>
+    <label nz-radio nzValue="matcha">请前夕喝抹茶奶茶</label>
+  </nz-radio-group>
+  <nz-card class="card">
+    <p *nssMilkTeaType="milkTeaType">来一杯奶茶</p>
+  </nz-card>
+</div>
+<nz-anchor class="anchor" nzOffsetTop="64">
+  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
+  <nz-link nzHref="#structural-directive" nzTitle="结构型指令">
+    <nz-link nzHref="#ngIf" nzTitle="ngIf"></nz-link>
+    <nz-link nzHref="#ngFor" nzTitle="ngFor"></nz-link>
+    <nz-link nzHref="#custom-structural-directive" nzTitle="自定义结构型指令"></nz-link>
+  </nz-link>
+</nz-anchor>

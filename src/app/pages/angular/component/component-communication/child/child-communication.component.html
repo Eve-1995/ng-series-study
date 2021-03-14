@@ -1,0 +1,44 @@
+<div [ngSwitch]="index">
+  <div *ngSwitchCase="1">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" placeholder="子组件的输入框" />
+    </div>
+  </div>
+  <div *ngSwitchCase="2">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" [(ngModel)]="childValue1" name="childValue1" placeholder="子组件的输入框" />
+    </div>
+  </div>
+  <div *ngSwitchCase="3">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" [(ngModel)]="childValue2" name="childValue2" placeholder="子组件的输入框" />
+      <button (click)="childFunction2()" nz-button nzType="primary">调用方法</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="4">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" [(ngModel)]="childValue3" name="childValue3" placeholder="子组件的输入框" />
+      <button (click)="childFunction3()" nz-button nzType="primary">调用方法</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="5">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" [(ngModel)]="name" name="name" placeholder="姓名" />
+      <input nz-input class="input" [(ngModel)]="bornYear" name="bornYear" placeholder="出生年月" />
+      <button (click)="childFunction4()" nz-button nzType="primary">传值给父组件</button>
+    </div>
+  </div>
+  <div *ngSwitchCase="6">
+    <div class="child">
+      <h1>子组件</h1>
+      <input nz-input class="input" [(ngModel)]="drink" name="drink" placeholder="最爱喝的饮料" />
+      <input nz-input class="input" [(ngModel)]="eat" name="eat" placeholder="最爱吃的甜点" />
+      <button (click)="transferDataByService()" nz-button nzType="primary">传值给父组件</button>
+    </div>
+  </div>
+</div>

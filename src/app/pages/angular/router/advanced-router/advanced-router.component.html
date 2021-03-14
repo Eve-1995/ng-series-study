@@ -1,0 +1,226 @@
+<div class="tutorial">
+  <h2 id="resume">概述</h2>
+  如果你翻阅官网, 会发现关于路由的描述是非常长的, 将近五万的汉字.所以在本小结当中, 我只会抽取一些比较核心与常用的.如若需要更详细的资料, 请前往
+  <a href="https://angular.cn/guide/router#redirecting-routes" target="view_window">官网</a>查看.
+  <h2 id="Routes">Routes</h2>
+  Angular提供了一种数据结构, 方便我们配置路由的对象结构.
+  <code-mirror [code]="code1"></code-mirror>
+  先来认识下新的名词
+  <ul>
+    <li>path - 路径, 用来匹配路由的名字</li>
+    <li>component - 组件名, 对应路径指向的组件名</li>
+    <li>redirectTo - 重定向指向的路径, 当匹配到这个路径时转发请求给重定向的路径</li>
+    <li>pathMatch - 路径匹配模式</li>
+  </ul>
+  <span class="key-word">path</span>:当其值为
+  <span class="key-word">''</span>时, 是指默认路径.很多时候, 我们访问一个页面并不是一步到位的.而是只输入了他的域名.比如
+  <span class="key-word">angular.ink</span>, 但是却会自动导航到首页, 这就是其默认导航路径. 当其值为
+  <span class="key-word">**</span
+  >时为通配符路径, 是指任何路径都可以匹配到的路径, 通常用来放置404页面, 比如用户恶意修改路径, 但实际上并没有对应的路径.
+  <div class="warning">
+    路径顺序并不是任意的, 他实际上是一个一个匹配的, 类似于
+    <span class="key-word">switch case + break</span>, 当匹配成功时就会结束查询.所以, 通配符路径必须放在最后.否则所有的路径都会指向通配符路径.
+  </div>
+  <span class="key-word">pathMatch</span>:通常设置为 <span class="key-word">full</span>.其值还有一种可能是
+  <span class="key-word">prefix</span>, 是指前缀匹配.思考一下, 当 <span class="key-word">path</span> 值为
+  <span class="key-word">''</span> 时, 为什么必须指明 <span class="key-word">pathMatch</span>为
+  <span class="key-word">full</span>?观察以下URL.
+  <code-mirror [code]="code2"></code-mirror>
+  这三个URL都是以
+  <span class="key-word">angular.ink</span>开头的, 这个是根域名, 那么三个都可以匹配到, 所以, 默认路径必须是
+  <span class="key-word">full</span>的匹配模式.
+  <h2 id="asynchronous-router">异步路由</h2>
+  实际上, 这里应该先讲同步路由的, 但是绝大部分项目应该都会用到异步路由, 所以我就直接讲这部分了.并且, 这部分会以真实项目情况为基础, 如文件划分等, 具有一定的参考意义.
+  <br />
+  所谓异步路由, 就是指当项目加载时, 只加载用到的模块.比如说一个项目有admin和user两个模块.但是用户操作时, 并不会同时操作两个模块的内容.当user访问时, 其实是不需要加载admin模块的, 即便用户是双重身份, 那么当他点击admin模块时, 再加载对应的JS文件即可, 这样可以大大提升页面加载速度.
+  <br />
+  <h3>文件结构</h3>
+  在
+  <a routerLink="/angular/create">创建项目</a>部分, 已经大致描述了使用Angular
+  CLI自动生成的文件目录结构.现在我们来思考一下, 业务代码应该写在哪个地方?通常是写在
+  <span class="key-word">src/app/</span>当中的.而这个目录当中, 已经有了系统自动生成的文件.
+  <ul>
+    <li>app.component.css</li>
+    <li>app.component.html</li>
+    <li>app.component.spec.ts</li>
+    <li>app.component.ts</li>
+    <li>app.module.ts</li>
+  </ul>
+  假如我们现在要做一个线上超市系统, 分为用户模块和管理模块.我们简单地划分下业务功能模块.
+  <br />
+  <strong>用户</strong>
+  <ul>
+    <li>浏览商品</li>
+    <li>购买商品</li>
+  </ul>
+  <strong>管理员</strong>
+  <ul>
+    <li>管理商品</li>
+    <li>操作记录</li>
+  </ul>
+  接下来, 我们建立各个所需的文件.
+  <div class="info">
+    app
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;pages <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pages-routing.module.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browse-product <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;browse-product.component.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buy-product <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;buy-product.component.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user-router.module.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user.module.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;manage-product <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;manage-product.component.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator-record <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;operator-record.component.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin-router.module.ts <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;admin.module.ts
+  </div>
+  <span class="key-word">pages</span
+  >:所有的业务代码都放在了这里, 因为一个应用当中, 除了业务逻辑, 还有其他的模块, 如共享模块, 布局模块等(名字不一定是pages, 这些都是自定义的, 不同公司文件结构不一样也很正常).
+  <br />
+  现在我们已经对文件结构进行了划分, 业务逻辑的页面就不演示了, 自行填充内容.我们来详细探讨下几个 <span class="key-word">module</span>的作用.
+  <ul>
+    <li>pages-routing.module.ts - 总的模块路由</li>
+    <li>user-router.module.ts(admin-router.module.ts) - 具体模块路由, 决定哪些路径能够匹配到user(admin)的哪些页面</li>
+    <li>user.module.ts(admin.module.ts) - 模块声明, 组件、管道、服务等需要在此声明, 才可以被此模块使用</li>
+  </ul>
+  现在我们对这些module做如下配置
+  <nz-tabset>
+    <nz-tab nzTitle="user-router.module.ts">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="user.module.ts">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="admin-router.module.ts">
+      <code-mirror [code]="code5"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="admin.module.ts">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="pages-routing.module.ts">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  虽然
+  <span class="key-word">user(admin)-router</span>的路由配置和
+  <span class="key-word">pages-routing</span>非常地相似, 但是他们是有本质不同的.正如你所见, 都是路由配置, 但是
+  <span class="key-word">pages-routing</span>用的是 <span class="key-word">loadChildren</span>, 而
+  <span class="key-word">user(admin)-router</span>用的是 <span class="key-word">component</span> .相信通过两个单词你能看出区别.
+  <span class="key-word">loadChildren</span>就是指明了子模块, 而 <span class="key-word">component</span>则指明了具体的页面. <br />
+  所以, 访问链接为 <span class="key-word">/user/browse-product</span>时, 他首先是匹配 <span class="key-word">user</span>, 再匹配
+  <span class="key-word">browse-product</span>.
+  <div class="info">
+    打个比方来说, 大学一般都有二级学院.软件工程和其他计算机专业一般是归计算机系管的.假设软件工程是我们要找的页面, 想要找到这个专业需要先找到这个二级学院.同理, 想要访问browse-product, 就要先访问user模块, 等待user模块加载后, 再查找browse-product.
+  </div>
+  现在我们已经配置好了路由, 接下来将总路由在
+  <span class="key-word">app.module.ts</span>当中引入.
+  <code-mirror [code]="code8"></code-mirror>
+  万事俱备只欠东风.何为东风? 即
+  <span class="key-word">router-outlet</span
+  >.需要使用这个标签来告诉Angular, 路由所控制的视图, 都在这个地方切换.Angular初次加载, 一定需要访问一个根目录的, 即
+  <span class="key-word">app.component.ts</span>.无论有没有路由都是先访问这个页面, 所以, 对其做如下代码修改.
+  <code-mirror [code]="code9"></code-mirror>
+  <div class="info">
+    为什么说最初一定是找
+    <span class="key-word">app.component.ts</span>呢?是因为 <span class="key-word">app.module.ts</span> 当中的
+    <span class="key-word">bootstrap</span>指明了根组件.
+  </div>
+  <h2 id="router-params">路由传参</h2>
+  在路由跳转时, 有时候我们需要传参, 这个较为简单, 记住相关API的用法即可.
+  <nz-tabset>
+    <nz-tab nzTitle="原页面">
+      <code-mirror [code]="code10"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="跳转后的页面">
+      <code-mirror [code]="code11"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <button (click)="navigate()" nz-button nzType="primary">携参跳转</button>
+  </nz-card>
+  <h2 id="CanActivate">CanActivate</h2>
+  很多时候, 并不是所有人都可以访问所有页面的.最典型的应用场景是普通用户并不能访问管理员的操作页面.那么我们就需要在用户访问时判断这个用户到底是否有相应的权限.路由配置文件提供了一个接口
+  <span class="key-word">CanActivate</span>用来处理验证的业务.有时候这些安全措施也被称为路由守卫.
+  <code-mirror [code]="code12"></code-mirror>
+  可以看到, 这个字段是数组格式, 这是合理的.因为验证规则可能是复杂的, 需要满足多个条件, 不同的条件分属不同的守卫.当路由守卫返回
+  <span class="key-word">true</span>时, 守卫放行, 用户可以正常访问, 反之守卫拦截, 页面不予以跳转. <br />
+  以之前路由传参部分为例, 现在我们设计两个路由守卫, 一个守卫返回 <span class="key-word">true</span>, 一个守卫返回
+  <span class="key-word">false</span>.
+  <nz-tabset>
+    <nz-tab nzTitle="路由守卫">
+      <code-mirror [code]="code13"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="路由配置">
+      <code-mirror [code]="code14"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="Html">
+      <code-mirror [code]="code15"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card demo1">
+    <a routerLink="/angular/params-router-true">来者不拒</a>
+    <a routerLink="/angular/params-router-false">拒之门外</a>
+  </nz-card>
+  <div class="warning">
+    1、路由守卫本质上是个服务, 记得在模块中注册.服务注册请参考
+    <a routerLink="/angular/service">这里</a>
+    <br />
+    2、成功跳转后显示的是空内容, 这是正常的, 因为我没有传参, 此处的重点不在于有没有内容, 而在于能否正常跳转
+  </div>
+  <h2 id="CanDeactivate">CanDeactivate</h2>
+  在一些表单编辑页面, 如果用户辛辛苦苦输入了半天, 却不小心点到导航按钮, 跳转到了其他页面, 丢失了未保存的数据, 这样的用户体验是非常糟糕的.所以, Angular提供了
+  <span class="key-word">CanDeactivate</span>接口, 在跳转路由之前触发, 以提醒用户, 或者做一些业务上的保存等操作.
+  <nz-tabset>
+    <nz-tab nzTitle="CanDeactivate">
+      <code-mirror [code]="code16"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="路由配置">
+      <code-mirror [code]="code17"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="Html">
+      <code-mirror [code]="code18"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <div class="warning">
+    这个结果演示只能在专门的页面实现.因为守卫都是在路由配置上统一设置的.如果我为本页面设置了
+    <span class="key-word">CanDeactivate</span>, 那本页前面的案例都会触发离开确认.
+  </div>
+  <nz-card class="card">
+    <a routerLink="/angular/advanced-router-deactive">进入具有 <span class="key-word">CanDeactivate</span> 的页面</a>
+  </nz-card>
+  <h2 id="CanActivateChildAndCanLoad">其他守卫</h2>
+  除了以上守卫外, 还有
+  <span class="key-word">CanActivateChild</span> 和 <span class="key-word">CanLoad</span>.
+  这两个守卫我只简单地介绍下概念, 一方面是因为概念其实都差不多, 都是验证规则后决定是否放行, 其次是因为很难演示, 我需要专门写子路由和模块, 太麻烦了.
+  <br />
+  前面已经学习了 <span class="key-word">CanActivate</span>, 可以用来保护组件的合法访问.那么, CanActivateChild则用来保护子路由.
+  <code-mirror [code]="code19"></code-mirror>
+  CanLoad则是用来保护子模块的, 未经允许, 不加载子模块.
+  <code-mirror [code]="code20"></code-mirror>
+  <h2 id="preload">预加载</h2>
+  我们知道, 使用异步路由后, 各自的路由模块只有在初次访问时才会加载.而实际上, 在页面初次加载后, 进入默认路由模块, 用户通常需要停留一会, 这个时候继续加载其他模块是比较合适的, 这样做有两个非常显著的好处.
+  <ul>
+    <li>初次加载并没有加载默认路由模块, 提高加载速度</li>
+    <li>当用户访问其他模块时, 不会出现卡顿, 因为已经预加载了</li>
+  </ul>
+  只需要在模块配置处添加以下代码即可
+  <code-mirror [code]="code21"></code-mirror>
+</div>
+<nz-anchor class="anchor" nzOffsetTop="64">
+  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
+  <nz-link nzHref="#Routes" nzTitle="Routes"></nz-link>
+  <nz-link nzHref="#asynchronous-router" nzTitle="异步路由"></nz-link>
+  <nz-link nzHref="#router-params" nzTitle="路由传参"></nz-link>
+  <nz-link nzHref="#CanActivate" nzTitle="CanActivate"></nz-link>
+  <nz-link nzHref="#CanDeactivate" nzTitle="CanDeactivate"></nz-link>
+  <nz-link nzHref="#CanActivateChildAndCanLoad" nzTitle="其他守卫"></nz-link>
+  <nz-link nzHref="#preload" nzTitle="预加载"></nz-link>
+</nz-anchor>

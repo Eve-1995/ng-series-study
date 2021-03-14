@@ -1,0 +1,12 @@
+<div class="content-fill-container">
+  <div class="text">
+    <ng-content></ng-content>
+  </div>
+  <div class="anchor">
+    <nz-anchor class="anchor">
+      <nz-link *ngFor="let item of anchor" [nzHref]="item.href" [nzTitle]="item.title">
+        <nz-link *ngFor="let subItem of item.children" [nzHref]="subItem.href" [nzTitle]="subItem.title"></nz-link>
+      </nz-link>
+    </nz-anchor>
+  </div>
+</div>

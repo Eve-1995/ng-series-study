@@ -1,0 +1,249 @@
+<div class="tutorial">
+  <h2 id="resume">概述</h2>
+  在
+  <a routerLink="/angular/structural-directive">指令</a
+  >部分提到过, 组件属于指令的一种, 因为组件是Angular当中非常重要的一个概念, 且内容繁杂, 因此单独拿出来讲解. <br />
+  我们可以将每个页面都看作一个组件, 实际上, 组件支持嵌套, 也就是说, 一个页面当中, 还可能包含多个组件.
+  <div class="info">
+    在传统页面开发中, 我们一般将一个页面划分为头部、底部、侧边栏等部分, 其实每个部分, 就是组件.所以组件有点类似搭积木的意思, 将不同部分抽象出来, 摆成需要的样子.如这个教程项目, 你点击侧边栏的导航关键字, 可以看到只有右侧内容区变化了, 底部和侧边栏依旧没变化, 因为只有右侧的组件替换了.
+  </div>
+  <h2 id="father-child-component">父子组件</h2>
+  现在我们假设有一个页面, 将其看作是一个组件, 而这个组件内部, 却又包含了另外一个组件, 因此就有了父子组件的概念.
+  <br />
+  <h3>示例</h3>
+  定义一个子组件
+  <span class="key-word">child-communication</span>, 包含于父组件.还记得在
+  <a routerLink="/angular/conventional-usage">常规用法</a>中我提到过的
+  <span class="key-word">selector</span>吗?当时我的解释是, 他起到标记的作用.这也就是为什么在父组件当中使用
+  <span class="key-word">child-communication</span>作为标签名, Angular能够定位这个组件的原因.
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="faterCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="childCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="childCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <input nz-input class="input" placeholder="父组件的输入框" />
+    <child-communication [index]="1"></child-communication>
+  </nz-card>
+  <h2 id="father-transfer-to-child">父组件传值给子组件</h2>
+  在父子组件的应用当中, 组件通讯是非常重要的一环.现有两个组件, 现在我们尝试将父类的输入框值传给子类的输入框值.在输入内容之后点击按钮即可完成.接下来我们分析下这个流程:
+  <ol>
+    <li>父组件取得值并将值与数据源中的 <span class="key-word">fatherValue1</span>进行双向绑定</li>
+    <li>
+      点击按钮后触发数据源事件, 将 <span class="key-word">fatherValue1</span>的值赋值给
+      <span class="key-word">childValue1</span>
+    </li>
+    <li>
+      在 <span class="key-word">child-communication</span> 标签上存在从数据源到视图的单向绑定, Angular变更检查发现
+      <span class="key-word">childValue1</span> 的值不一样了(初值为空), 将 <span class="key-word">childValue1</span>的值流入子组件, 子组件利用
+      <span class="key-word">ngModel</span> 对 <span class="key-word">childValue1</span>进行了双向绑定, 因此修改了子组件的输入框值.
+    </li>
+  </ol>
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code1"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件typescript">
+      <code-mirror [code]="code2"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <div class="info">
+    这里思考一个问题, 如果在第一次传值之后, 修改子组件的值再按传值按钮, 会发现父组件并不能修改子组件的值, 请思考一下这是为什么?
+    <br />
+    这是因为当第一次传值时,  父组件 <span class="key-word">childValue1</span>与
+    <span class="key-word">fatherValue1</span>是一致的, 在子组件修改内容之后, 虽然修改了子组件内部的
+    <span class="key-word">childValue1</span> , 但是父组件的 <span class="key-word">childValue1</span>与
+    <span class="key-word">fatherValue1</span>还是一样的.也就导致Angular的变更检查结果为未发生变化, 也就导致父组件未能将值流入子组件. <br />
+    ok, 那我们继续思考, 该如何修改案例才能实现每次点击按钮都同步呢? <br />
+    既然未变更值他就无法将数据流入子组件, 那么我们只要在数据源事件中, 每次都重置下
+    <span class="key-word">childValue1</span>再赋值, 不就发生了数据变更吗?即可达到每次点击都变更的效果.
+  </div>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <input nz-input class="input" [(ngModel)]="fatherValue1" placeholder="父组件的输入框" />
+    <button (click)="transferData()" nz-button nzType="primary">传值给子组件</button>
+    <child-communication [index]="2" [childValue1]="childValue1"></child-communication>
+  </nz-card>
+  <h2 id="father-call-function-child">父组件调用子组件方法</h2>
+  有时候, 父组件需要调用子组件的方法, 这里分为两种调用方式, 一种是
+  <strong>实例调用</strong>, 一种是 <strong>类调用</strong>.
+  <div class="warning">
+    <strong>实例调用</strong>和
+    <strong>类调用</strong>其实是我自己瞎起的名字, 因为我未能在官方文档找到这两种方式的命名, 我只能按自己的理解起名, 方便开发者理解.
+  </div>
+  这里需要使用
+  <span class="key-word">ViewChild</span>将子组件注入到父组件的数据源.
+  <div class="info">
+    初次接触
+    <span class="key-word">ViewChild</span
+    >的开发者可能很难理解这个玩意到底是干嘛的, 说实话, 当初我也纠结了很久这个黑科技是啥...可能是由于我自身水平问题, 我只能说, 你看过火影忍者吗...就是个影分身的感觉, 使用
+    <span class="key-word">ViewChild</span>可以拥有原先子组件的属性和方法. <br />
+    在 <strong>类调用</strong> 的案例中, 
+    <span class="key-word">child-communication</span>的标签即使不写, 也可以调用子组件的方法, 看完后面两个小案例你就明白了.
+  </div>
+  <h3 id="class-call">类调用</h3>
+  在这个案例中, 子组件有个输入框, 点击子组件的按钮可以正常弹出值.但是点击父类, 也能弹出信息, 但是却无值, 这是为什么?
+  <br />这是因为在父组件的数据源中, 对子组件的引用使用的是 <strong>类调用</strong>, 即参数都是子组件的类名.
+  <div class="cmd">@ViewChild(ChildCommunicationComponent) private childComponent: ChildCommunicationComponent;</div>
+  尝试换位思考, 那Angular只能知道你有这个子组件, 但是无法定位你子组件所在的位置, 是不是这个道理?所以自然无法取得子组件的动态成员变量.
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code5"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件typescript">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="code8"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h4>运行结果</h4>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <button (click)="callChildFunction2()" nz-button nzType="primary">调用子组件方法</button>
+    <child-communication [index]="3"></child-communication>
+  </nz-card>
+  <h3 id="instantiation-call">实例调用</h3>
+  这种调用方式, 可以调用子组件的动态成员变量.思考一下, 如果你是Angular开发项目组, 你会如何设计API, 使得Angular能够定位子组件的位置?在CSS当中, 一般通过id, class等方式进行定位DOM元素.同理, Angular也有类似的想法, 只不过他并不打算通过这些特性访问子组件, 而是通过
+  <span class="key-word">模板引用变量(#var)</span>进行定位.
+  <div class="cmd">@ViewChild('child') private childComponent2: ChildCommunicationComponent;</div>
+  <br />
+  现在回头看看我之前关于飞雷神的比方, 是不是觉得很贴切?
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code9"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件typescript">
+      <code-mirror [code]="code10"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code11"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="code12"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h4>运行结果</h4>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <button (click)="callChildFunction3()" nz-button nzType="primary">调用子组件方法</button>
+    <child-communication #child [index]="4"></child-communication>
+  </nz-card>
+  <h2 id="child-transfer-to-father">子组件传值给父组件</h2>
+  在父组件传值给子组件的时候, 其实是通过指令的方式完成的.但是使用指令的前提, 是被传值者是一个标签, 这符合了父组件传值给子组件的条件.
+  <br />
+  但是子组件显然不可能包含父组件的标签, 所以并不能通过这种方式完成传值.在开始演示之前, 先了解以下几个概念:
+  <ol>
+    <li><span class="key-word">output</span>用于外部访问, 也就是说, 将其暴露给外部, 允许外部使用</li>
+    <li><span class="key-word">EventEmitter</span>是Angular的事件发射器, 暂时理解为事件的一个大类</li>
+  </ol>
+  观察代码和运行结果, 可以看到, 子组件中, 在点击按钮后, 触发点击事件, 调用
+  <span class="key-word">childFunction4()</span>方法, 在这个方法中,  使用事件发射器
+  <span class="key-word">this.event.emit()</span>触发事件, 将值(案例中弹的是一个对象)弹出.
+  <div class="info">
+    初学者可能很难理解这个事件发射器.那么, 大家思考一个问题, click事件, 是在点击的时候发生的, 那么是否存在自定义事件呢?显然作为一个框架, 肯定要提供这样常规的功能.既然是自定义事件, 那也就是说触发是有条件的, 如果你是Angular项目开发组成员, 你会如何设计这个API?显然最合适的设计方法, 就是在模板中使用
+    <span class="key-word">(eventName)</span> 来声明事件, 当用户认为符合触发条件时, 执行代码 <span class="key-word">eventName.click()</span>.
+    <br />
+    当然了, 这一切都是建立在"如果我是Angular项目组成员"的前提下而产生的.实际上, 官方也差不多使用了这种想法, 只是略微复杂点.需要先定义一个事件发射器.
+    这个 <span class="key-word">event</span> 就是你的事件名, 在需要触发时, 执行
+    <span class="key-word">emit(value)</span>函数, 即可触发事件, 并调用这个事件对应的属性事件, 在本案例中, 是
+    <span class="key-word">showInfo()</span>函数.
+  </div>
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code13"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件typescript">
+      <code-mirror [code]="code14"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code15"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="code16"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <input nz-input class="input" [(ngModel)]="name" placeholder="姓名" />
+    <input nz-input class="input" [(ngModel)]="bornYear" placeholder="出生年月" />
+    <child-communication (event)="showInfo($event)" [index]="5"></child-communication>
+  </nz-card>
+  <h2 id="service">通过服务进行通讯</h2>
+  在组件通讯中, 还有一种方式叫做服务(service).这种方式较为复杂, 涉及RxJS内容, 具体步骤如下:
+  <ol>
+    <li>定义一个service, 定义父子Subject变量, 转为Observable后再保存变量, 创建函数事件发射器</li>
+    <li>在父组件中,  在 <span class="key-word">providers</span>中提供服务的实例, 在构造函数中对子组件发起订阅</li>
+    <li>在子组件中, 重复上一步, 只是没有使用 <span class="key-word">providers</span>, 因为是子组件, 可以自动获取父组件的服务实例</li>
+    <li>
+      点击按钮(无论是父的还是子的), 都会触发服务中的
+      <span class="key-word">next()</span
+      >函数, 发送新值给订阅者, 订阅者触发订阅操作, 将新值赋值给自身的成员变量, 之后的刷新试图操作属于双向绑定, 与通讯无关.
+    </li>
+  </ol>
+  <div class="info">
+    这里可能偏理论了, 初学者很难理解. <br />
+    首先大家这样理解Observable, 思考这样一个场景, 假如我订阅了报刊, 那么每次有新报纸时, 送报员就把报纸送到我家物业, 物业根据报刊上的订阅信息把报纸分发到我家门口(这个过程是我瞎编的, 我没订过报刊...你们就这么凑活着理解吧).
+    <br />
+    同样地, 换到我们的案例中, 服务就是个报社, 他一旦触发
+    <span class="key-word">next()</span
+    >函数, 送报员就会把报纸送给订阅者(父子组件都订阅了彼此的变化).可以看到, 在父子组件的构造函数中, 父订阅了子, 子订阅了父, 
+    <span class="key-word">subscribe</span
+    >后面跟的内容你可以理解为是约定, 也就是说报纸(值)送到以后要做什么.在我们的案例中只是把值给了自身的成员变量.
+  </div>
+  <nz-tabset>
+    <nz-tab nzTitle="service">
+      <code-mirror [code]="code17"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code18"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件typescript">
+      <code-mirror [code]="code19"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code20"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件typescript">
+      <code-mirror [code]="code21"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <input nz-input class="input" [(ngModel)]="drink" name="drink" placeholder="最爱喝的饮料" />
+    <input nz-input class="input" [(ngModel)]="eat" name="eat" placeholder="最爱吃的甜点" />
+    <button (click)="transferDataByService()" nz-button nzType="primary">传值给子组件</button>
+    <child-communication [index]="6"></child-communication>
+  </nz-card>
+</div>
+<nz-anchor class="anchor" nzOffsetTop="64">
+  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
+  <nz-link nzHref="#father-child-component" nzTitle="父子组件"></nz-link>
+  <nz-link nzHref="#father-transfer-to-child" nzTitle="父组件传值给子组件"></nz-link>
+  <nz-link nzHref="#father-call-function-child" nzTitle="父组件调用子组件方法">
+    <nz-link nzHref="#class-call" nzTitle="类调用"></nz-link>
+    <nz-link nzHref="#instantiation-call" nzTitle="实例调用"></nz-link>
+  </nz-link>
+  <nz-link nzHref="#child-transfer-to-father" nzTitle="子组件传值给父组件"></nz-link>
+  <nz-link nzHref="#service" nzTitle="通过服务进行通讯"></nz-link>
+</nz-anchor>

@@ -1,0 +1,10 @@
+.content-fill-container {
+  display: flex;
+  .text {
+    padding: 10px 20px;
+    flex: 1;
+  }
+  .anchor {
+    width: 200px;
+  }
+}

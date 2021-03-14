@@ -1,0 +1,120 @@
+<div class="tutorial">
+  <h2 id="resume">概述</h2>
+  服务, 通常用于数据通信.最经典的应用场景就是访问数据库.在项目中, 当需要获取数据库数据的时候, 通常这个操作并不是放在组件的数据源当中, 而是放在服务当中, 由组件进行调用.使得业务代码与数据访问代码相隔离.
+  <h2 id="provider">注册</h2>
+  在前文当中, 我们已经学习到了, 一个新的组件, 需要在
+  <span class="key-word">@ngModule</span>的
+  <span class="key-word">declarations</span
+  >当中声明.而service并不使用这种策略.service称之为注册, 注册有两种方式, 一种是模块级注册, 一个是组件级注册.无论哪种方式, 当组件需要使用服务时, 都需要将服务引入组件内并在构造函数中声明.
+  <br />
+  <ul>
+    <li>
+      组件级注册, 在
+      <span class="key-word">@Component</span>当中的 <span class="key-word">providers</span>数组当中引入服务
+      <br />
+    </li>
+    <li>
+      模块级注册, 在
+      <span class="key-word">@ngModule</span>当中的 <span class="key-word">providers</span>数组当中引入服务
+    </li>
+  </ul>
+  <nz-tabset>
+    <nz-tab nzTitle="组件级注册">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="模块级注册">
+      <code-mirror [code]="code5"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h2 id="basic-usage">基础用法</h2>
+  在概述当中, 我们提到了服务的应用场景, 那么, 我们现在来实现这样一个登录功能.
+  <ul>
+    <li>设计一份表单来采集账号和密码, 点击登录后验证用户身份</li>
+    <li>当帐号为'admin', 密码为'123456'时, 登录成功, 否则登录失败</li>
+  </ul>
+  <nz-tabset>
+    <nz-tab nzTitle="service">
+      <code-mirror [code]="code1"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code2"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card demo1">
+    <input nz-input #userName name="userName" placeholder="用户名, 默认admin" />
+    <input nz-input #password name="password" placeholder="密码, 默认123456" />
+    <button (click)="login(userName.value,  password.value)" nz-button nzType="primary">登录</button>
+  </nz-card>
+  <h2 id="component-provider">组件级注册提供商</h2>
+  在上一个小结当中, 我们已经熟悉了服务的基本用法.在概述部分, 我已经提到了服务的两种注册方式, 实际上, 这两种注册方式有着本质区别.
+  <br />
+  在不同的组件中注册, 服务其实是多个实例.简言之, 服务的内部数据是独立不冲突的.现在我们来实现如下需求
+  <ul>
+    <li>设计一个服务, 服务内部有一个字段初始值为0, 定义一个方法, 可以自增这个字段并且弹出显示(alert, 在案例中使用的antd样式)</li>
+    <li>设计父子组件, 在父子组件中均注册这个服务并且调用这个服务的方法.但是各自的数据互不影响</li>
+  </ul>
+  经过本小结开头的叙述, 你一定知道了这样的需求正是组件级注册服务的最佳实践.没错, 组件间注册最大的特点就是互不影响.
+  <nz-tabset>
+    <nz-tab nzTitle="service">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件ts">
+      <code-mirror [code]="code8"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code9"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件ts">
+      <code-mirror [code]="code10"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <button (click)="addAndShowComponent()" nz-button nzType="primary">自增且显示</button>
+    <component-child></component-child>
+  </nz-card>
+  <h2 id="module-provider">模块级注册提供商</h2>
+  现在我们来看模块级注册.模块级注册要求在模块
+  <span class="key-word">@ngModule</span
+  >当中注册, 而该模块内需要用到该服务的组件无需重复注册, 并且该服务提供唯一实例.简言之, 服务内部的数据是共享的.现在我们实现与上面这个案例完全相反的结果, 要求父子组件共享这个数据.
+  <nz-tabset>
+    <nz-tab nzTitle="service">
+      <code-mirror [code]="code11"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="模块注册">
+      <code-mirror [code]="code16"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code12"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件ts">
+      <code-mirror [code]="code13"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code14"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件ts">
+      <code-mirror [code]="code15"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <button (click)="addAndShowRoot()" nz-button nzType="primary">自增且显示</button>
+    <service-child></service-child>
+  </nz-card>
+</div>
+<nz-anchor class="anchor" nzOffsetTop="64">
+  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
+  <nz-link nzHref="#provider" nzTitle="注册"></nz-link>
+  <nz-link nzHref="#basic-usage" nzTitle="基础用法"></nz-link>
+  <nz-link nzHref="#component-provider" nzTitle="组件级注册提供商"></nz-link>
+  <nz-link nzHref="#module-provider" nzTitle="模块级注册提供商"></nz-link>
+</nz-anchor>

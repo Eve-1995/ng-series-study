@@ -1,0 +1,49 @@
+<ng-template #title>
+  <span>Angular水平测验 - 成绩报告单</span>
+</ng-template>
+<ng-template #content>
+  <div class="spin" *ngIf="spinBoolean">
+    <nz-spin nzTip="Loading..." [nzSize]="'large'"></nz-spin>
+  </div>
+  <div *ngIf="!spinBoolean">
+    <div class="table-container">
+      <nz-table #basicTable [nzData]="dataSet" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th style="text-align: center">分类</th>
+            <th style="text-align: center">总题数</th>
+            <th style="text-align: center">正确数</th>
+            <th style="text-align: center">折算得分</th>
+          </tr>
+        </thead>
+        <tbody style="text-align: center">
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.level }}</td>
+            <td>{{ data.maxNumber }}</td>
+            <td>{{ data.correctNumber }}</td>
+            <td>{{ data.discountScore }}{{ data.discountRate }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+    <div class="number-score">
+      <div class="score">
+        {{ score }}
+      </div>
+      <div class="line">
+        <img src="../../../../../assets/img/line.png" />
+      </div>
+      <div class="grade-level">
+        <img src="../../../../../assets/img/grade1.png" *ngIf="score < 60" />
+        <img src="../../../../../assets/img/grade2.png" *ngIf="score >= 60 && score <= 69" />
+        <img src="../../../../../assets/img/grade3.png" *ngIf="score >= 70 && score <= 79" />
+        <img src="../../../../../assets/img/grade4.png" *ngIf="score >= 80 && score <= 89" />
+        <img src="../../../../../assets/img/grade5.png" *ngIf="score >= 90" />
+      </div>
+      <button nz-button [nzType]="'primary'" (click)="showErrorList()" class="check-analysis">查看错题集</button>
+    </div>
+    <!-- 解决子元素浮动导致无法撑起父元素高度的问题 -->
+    <div style="clear: both"></div>
+  </div>
+  <!-- <div style="clear:both;"></div> -->
+</ng-template>

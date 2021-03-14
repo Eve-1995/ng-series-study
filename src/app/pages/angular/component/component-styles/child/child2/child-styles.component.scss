@@ -1,0 +1,12 @@
+.child {
+  border: 1px solid black;
+  width: 90%;
+  height: auto;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+:host(.first-element) {
+  display: block;
+  border: 1px solid red;
+}
