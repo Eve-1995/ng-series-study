@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "lint": "ng lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "deploy": "ng deploy --base-href=\"./\" --no-silent"
   },
   "dependencies": {
     "@angular/animations": "~11.0.0",
@@ -32,6 +33,7 @@
     "@angular/compiler-cli": "~11.0.0",
     "@types/codemirror": "^0.0.71",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^1.0.0-rc.1",
     "codelyzer": "^6.0.0",
     "prettier": "^2.2.1",
     "ts-node": "~8.3.0",
