@@ -3,7 +3,7 @@
     <h1>Ng Docs</h1>
   </div>
   <ul nz-menu [nzMode]="'inline'">
-    <li nz-menu-item routerLink="/project/introduction">
+    <li nz-menu-item nzMatchRouter routerLink="/project/introduction">
       <span title>
         <span>教程概述</span>
       </span>
@@ -13,41 +13,41 @@
         <span>Angular</span>
       </span>
       <ul>
-        <li nz-menu-item routerLink="/angular/create">创建项目</li>
-        <li nz-menu-item routerLink="/angular/conventional-usage">常规用法</li>
+        <li nz-menu-item nzMatchRouter routerLink="/angular/create">创建项目</li>
+        <li nz-menu-item nzMatchRouter routerLink="/angular/conventional-usage">常规用法</li>
         <li nz-submenu>
           <span title>路由</span>
           <ul>
-            <li nz-menu-item routerLink="/angular/init-router">初识路由</li>
-            <li nz-menu-item routerLink="/angular/advanced-router">路由进阶</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/init-router">初识路由</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/advanced-router">路由进阶</li>
           </ul>
         </li>
         <li nz-submenu>
           <span title>指令</span>
           <ul>
-            <li nz-menu-item routerLink="/angular/structural-directive">结构型指令</li>
-            <li nz-menu-item routerLink="/angular/attribute-directive">属性型指令</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/structural-directive">结构型指令</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/attribute-directive">属性型指令</li>
           </ul>
         </li>
-        <li nz-menu-item routerLink="/angular/service">服务</li>
+        <li nz-menu-item nzMatchRouter routerLink="/angular/service">服务</li>
         <li nz-submenu>
           <span title>组件</span>
           <ul>
-            <li nz-menu-item routerLink="/angular/component-communication">组件交互</li>
-            <li nz-menu-item routerLink="/angular/component-styles">组件样式</li>
-            <li nz-menu-item routerLink="/angular/dynamic-component">动态组件</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/component-communication">组件交互</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/component-styles">组件样式</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/dynamic-component">动态组件</li>
           </ul>
         </li>
-        <li nz-menu-item routerLink="/angular/lifecycle">生命周期</li>
-        <li nz-menu-item routerLink="/angular/pipe">管道</li>
+        <li nz-menu-item nzMatchRouter routerLink="/angular/lifecycle">生命周期</li>
+        <li nz-menu-item nzMatchRouter routerLink="/angular/pipe">管道</li>
         <li nz-submenu>
           <span title>表单</span>
           <ul>
-            <li nz-menu-item routerLink="/angular/initial-form">初识表单</li>
-            <li nz-menu-item routerLink="/angular/template-driven-form">模板驱动表单</li>
-            <li nz-menu-item routerLink="/angular/validation-form">表单验证</li>
-            <li nz-menu-item routerLink="/angular/reactive-form">响应式表单</li>
-            <li nz-menu-item routerLink="/angular/dynamic-form">动态表单</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/initial-form">初识表单</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/template-driven-form">模板驱动表单</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/validation-form">表单验证</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/reactive-form">响应式表单</li>
+            <li nz-menu-item nzMatchRouter routerLink="/angular/dynamic-form">动态表单</li>
           </ul>
         </li>
       </ul>
@@ -57,8 +57,8 @@
         <span>RxJS</span>
       </span>
       <ul>
-        <li nz-menu-item routerLink="/rxjs/init-rxjs">初识RxJS</li>
-        <li nz-menu-item routerLink="/rxjs/operators">常用操作符</li>
+        <li nz-menu-item nzMatchRouter routerLink="/rxjs/init-rxjs">初识RxJS</li>
+        <li nz-menu-item nzMatchRouter routerLink="/rxjs/operators">常用操作符</li>
       </ul>
     </li>
     <li nz-submenu>
@@ -66,11 +66,11 @@
         <span>生态社区</span>
       </span>
       <ul>
-        <li nz-menu-item routerLink="/recommend/common-question">常见问题</li>
-        <!-- <li nz-menu-item routerLink="/recommend/ng-exam">水平测验</li> -->
+        <li nz-menu-item nzMatchRouter routerLink="/recommend/common-question">常见问题</li>
+        <!-- <li nz-menu-item nzMatchRouter routerLink="/recommend/ng-exam">水平测验</li> -->
       </ul>
     </li>
-    <!-- <li nz-menu-item routerLink="/project/author">
+    <!-- <li nz-menu-item nzMatchRouter routerLink="/project/author">
       <span title>
         <span>关于作者</span>
       </span>

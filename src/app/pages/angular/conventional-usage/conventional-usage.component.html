@@ -31,15 +31,15 @@
     <span class="key-word">iframe</span>标签.
   </div>
   <span class="key-word">templateUrl</span>, 虽然模板文件只有一个, 但并不一定要通过这个关键字声明.也可以使用
-  <span class="key-word">template</span>来声明.二者的区别相信大家一眼就看出来, 前者是指定了某一个html文件作为模板, 后者是直接将html代码写在ts当中. 两种方式
-  <div class="info">
+  <span class="key-word">template</span>来声明.二者的区别相信大家一眼就看出来, 前者是指定了某一个html文件作为模板, 后者是直接将html代码写在ts当中. 同样, 我也不推荐你直接把 <span class="key-word">html</span> 写在ts当中.
+  <div class="warning">
     到这里, 你应该已经知道了 <span class="key-word">html</span> 与 <span class="key-word">css</span> 都是可以直接写在 <span
       class="key-word">TypeScript</span> 当中的. 但是我非常不推荐你那么做.<br>
-    因为Angular的设计目标就是针对大型web项目, 既然是大型的, 那么相应的代码量也会多一些. 为了方便代码可维护, 肯定是希望代码进行分离的. 组件化是一种方案, 而将 <span
+    因为Angular的设计目标就是针对大型web项目, 既然是大型的, 那么相应的代码量也会多一些. 为了代码的可维护性, 肯定是希望代码进行分离的. 组件化是一种方案, 而将 <span
       class="key-word">html/css/ts</span> 进行分离也是一种基本操作.
   </div>
   <h2 id="interpolation">插值表达式</h2>
-  思考一个问题, 在传统开发中, JS定义了一个用户名, 如何放在html当中合适的位置呢?查看如下所示代码, 是否与你想的一样?
+  思考一个问题, 在传统开发中, JS定义了一个用户名, 如何放在html当中合适的位置呢? 查看如下所示代码, 是否与你想的一样?
   <nz-tabset>
     <nz-tab nzTitle="html">
       <code-mirror [code]="insertCodeHtml"></code-mirror>
@@ -198,7 +198,7 @@
     ERROR TypeError: Cannot read property 'location' of undefined
   </div>
   <br />
-  可在实际开发中, 这个house可能有也可能没有, 那该怎么办呢? Angular提供了可选链, 只需要在可能为null变量后加一个 <span class="key-word">?</span> 即可避免这个问题.
+  可在实际开发中, 这个house可能有也可能没有, 那该怎么办呢? Angular提供了可选链, 只需要在可能为null的变量后加一个 <span class="key-word">?</span> 即可避免这个问题.
   <nz-tabset>
     <nz-tab nzTitle="html">
       <code-mirror [code]="safeCodeHtml"></code-mirror>
@@ -212,7 +212,7 @@
   <div class="info">
     如果大家对es标准和ts熟悉的话, 会发现可选链的写法, 在ts的代码中也可以使用. 但是需要注意, 在html中使用可选链, 与es标准啥的没有关系, 这不是es实现的. 而是Angular自己实现的, 官方称之为 <span class="key-word">安全导航操作符</span> (这个起名的风格像极了波风水门...)
   </div>
-  <h2>ng-系列, 放在一起讲</h2>
+  <h2>(重制版计划:ng-系列, 放在一起讲)</h2>
   <h2 id="ng-content">ng-content</h2>
   这部分知识要求你对父子组件有略微了解, 如果你完全没接触过父子组件, 建议你先看一下
   <a routerLink="/angular/component-communication">组件交互</a>. <br />
