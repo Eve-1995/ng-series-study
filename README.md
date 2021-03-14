@@ -4,6 +4,6 @@
 
 ## 预览
 
-github pages: [http://eve-angular.weishour.com/](http://eve-angular.weishour.com/). 
+github pages: [https://eve-sama.github.io/ng-docs/](https://eve-sama.github.io/ng-docs/). 
 
 国内镜像: [http://eve-angular.weishour.com/](http://eve-angular.weishour.com/)
