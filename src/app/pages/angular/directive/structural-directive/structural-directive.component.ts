@@ -293,7 +293,7 @@ export class StructuralDirectiveComponent {
         <label nz-radio nzValue="redBean">请前夕喝红豆奶茶</label>
         <label nz-radio nzValue="matcha">请前夕喝抹茶奶茶</label>
     </nz-radio-group>
-    <p *milkTeaType="milkTeaType">
+    <p *nssMilkTeaType="milkTeaType">
         来一杯奶茶
     </p>
     `;
