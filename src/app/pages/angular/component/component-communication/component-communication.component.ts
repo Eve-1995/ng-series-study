@@ -2,6 +2,7 @@ import { Component, ViewChild, OnDestroy } from '@angular/core';
 import { ChildCommunicationComponent } from './child/child-communication.component';
 import { CommunicationService } from './service/communication.service';
 import { Subscription } from 'rxjs';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './component-communication.component.html',
@@ -10,6 +11,44 @@ import { Subscription } from 'rxjs';
 })
 export class ComponentCommunicationComponent implements OnDestroy {
   subscription: Subscription;
+
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#father-child-component',
+      title: '父子组件'
+    },
+    {
+      href: '#father-transfer-to-child',
+      title: '父组件传值给子组件'
+    },
+    {
+      href: '#father-call-function-child',
+      title: '父组件调用子组件方法',
+      children: [
+        {
+          href: '#class-call',
+          title: '类调用'
+        },
+        {
+          href: '#instantiation-call',
+          title: '实例调用'
+        }
+      ]
+    },
+    {
+      href: '#child-transfer-to-father',
+      title: '子组件传值给父组件'
+    },
+    {
+      href: '#service',
+      title: '通过服务进行通讯'
+    }
+  ];
+
   constructor(private communicationService: CommunicationService) {
     this.subscription = communicationService.child$.subscribe(value => {
       this.drink = value.drink;

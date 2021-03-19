@@ -108,5 +108,8 @@
       }
     }
   },
-  "defaultProject": "ng-docs"
+  "defaultProject": "ng-docs",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,10 +1,55 @@
 import { Component, OnInit } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './lifecycle.component.html',
   styleUrls: ['./lifecycle.component.scss']
 })
 export class LifecycleComponent implements OnInit {
+
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#eight-lifecycle',
+      title: '八个生命周期'
+    },
+    {
+      href: '#lifecycle-category',
+      title: '钩子分类'
+    },
+    {
+      href: '#usage',
+      title: '使用方法',
+    },
+    {
+      href: '#ngOnInit',
+      title: 'ngOnInit',
+    },
+    {
+      href: '#ngOnDestroy',
+      title: 'ngOnDestroy',
+    },
+    {
+      href: '#ngOnChanges',
+      title: 'ngOnChanges',
+    },
+    {
+      href: '#SimpleChanges',
+      title: 'SimpleChanges',
+    },
+    {
+      href: '#directive-lifecycle',
+      title: '指令的生命周期',
+    },
+    {
+      href: '#emotion',
+      title: '感情记录器',
+    }
+  ];
+
   currentLover = '迪丽热巴';
   currentName;
   record() {
