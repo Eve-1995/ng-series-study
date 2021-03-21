@@ -1,4 +1,4 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
   <h2 id="range-style">范围化的样式</h2>
   现在, 你应该已经有了组件化开发的概念.既然是组件化开发, 就涉及到一个样式范围的问题.
   <br />
@@ -37,8 +37,8 @@
   那么, 如何添加样式给这个边界呢?只需在子组件样式表中写以下代码即可:
   <div class="cmd">:host(.selector)</div>
   可以看到, 以上模板代码中包含了两个部分, 一个是
-  <span class="key-word">:host</span
-  >, 意味着在整个子组件的根元素上添加样式, 而小括号内的参数, 其实你猜猜也应该知道是什么意思了, 起到过滤作用.也就是说, 只有子组件根元素上存在这个选择器类名的组件才应用这个样式, 如下面这个例子
+  <span class="key-word">:host</span>, 意味着在整个子组件的根元素上添加样式, 而小括号内的参数, 其实你猜猜也应该知道是什么意思了, 起到过滤作用.也就是说,
+  只有子组件根元素上存在这个选择器类名的组件才应用这个样式, 如下面这个例子
   <nz-tabset>
     <nz-tab nzTitle="父组件html">
       <code-mirror [code]="code5"></code-mirror>
@@ -123,20 +123,10 @@
   实际上, 组件都提供了
   <span class="key-word">encapsulation</span>(封装)的可选项字段, 一共有三种模式. <br />
   第一个问题, 其实就是默认的模式实现的, 其值为
-  <span class="key-word">Emulated </span
-  >, 这是默认模式.中文官方文档在对于视图封装解释的非常好, 官方译注是"只进不出，全局样式能进来，组件样式出不去". <br />
+  <span class="key-word">Emulated </span>, 这是默认模式.中文官方文档在对于视图封装解释的非常好, 官方译注是"只进不出，全局样式能进来，组件样式出不去". <br />
   第二个问题, 可以使用 <span class="key-word">Native</span>模式解决, 译注"不进不出，没有样式能进来，组件样式出不去" <br />
   第三种模式是 <span class="key-word">None</span>, 译注"能进能出", 这种方式会导致所有组件互相污染样式.
   <code-mirror [code]="code13"></code-mirror>
-  <div class="info"><span class="key-word">ViewEncapsulation</span>需要引入, 属于 <span class="key-word">@angular/core</span>包.</div>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#range-style" nzTitle="范围化的样式"></nz-link>
-  <nz-link nzHref="#host" nzTitle=":host"></nz-link>
-  <nz-link nzHref="#ngDeep" nzTitle="::ng-deep"></nz-link>
-  <nz-link nzHref="#style-talk" nzTitle="样式杂谈">
-    <nz-link nzHref="#model-style" nzTitle="模板文件与样式文件"></nz-link>
-    <nz-link nzHref="#import-style" nzTitle="引入样式文件"></nz-link>
-    <nz-link nzHref="#control-view" nzTitle="控制视图的封装"></nz-link>
-  </nz-link>
-</nz-anchor>
+  <div class="info"><span class="key-word">ViewEncapsulation</span>需要引入, 属于 <span
+      class="key-word">@angular/core</span>包.</div>
+</app-content-fill>

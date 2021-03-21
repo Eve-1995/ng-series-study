@@ -1,4 +1,4 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
   <h2 id="resume">概述</h2>
   生命周期(又名钩子), 相信大家听到这个名词大概能想到是干嘛的吧?一个组件, 从渲染到销毁, 在不同的阶段执行不同的操作, 这个过程就被称之为生命周期.
   <br />
@@ -62,11 +62,11 @@
   在组件销毁时调用, 一般用于取消订阅等.
   <div class="warning">
     <span class="key-word">ngDoCheck</span>、 <span class="key-word">ngAfterContentChecked</span>、
-    <span class="key-word">ngAfterViewChecked</span
-    >在数据变更时会反复触发, 触发频率非常高, 几乎你只要稍微改一点点数据, 就会多次调用, 所以千万不能在这些钩子中写繁重的业务, 否则会很影响用户体验.
+    <span class="key-word">ngAfterViewChecked</span>在数据变更时会反复触发, 触发频率非常高, 几乎你只要稍微改一点点数据, 就会多次调用, 所以千万不能在这些钩子中写繁重的业务,
+    否则会很影响用户体验.
   </div>
   <h2 id="ngOnChanges">ngOnChanges</h2>
-  再次强调, 
+  再次强调,
   <span class="key-word">ngOnChanges</span>在Angular6当中不会在一开始就调用. <br />
   从字面意思来看, 是发生变更时触发的, 而实际上, 他只检查外部流入的数据变更状态, 而外部流入的数据必然是使用
   <span class="key-word">@Input</span>的变量, 也就是说, 如果你想要监控的变量不是
@@ -84,8 +84,8 @@
   前文所描述的内容都是组件的生命周期, 那么, 在指令当中是否有生命周期的概念呢?
   <br />
   在
-  <a routerLink="/angular/structural-directive">指令</a
-  >部分就提到过, 组件就是拥有模板的指令.想想指令一般的存在情况, 根据流进来的数据对DOM元素进行处理.所以, 指令肯定是需要初始化、销毁等操作的.但是如果不是组件, 就没有模板, 也就没有了那些与视图有关的钩子.
+  <a routerLink="/angular/structural-directive">指令</a>部分就提到过, 组件就是拥有模板的指令.想想指令一般的存在情况, 根据流进来的数据对DOM元素进行处理.所以,
+  指令肯定是需要初始化、销毁等操作的.但是如果不是组件, 就没有模板, 也就没有了那些与视图有关的钩子.
   <br />
   所以指令的周期只有如下四种:
   <ul>
@@ -122,16 +122,4 @@
     <button (click)="record()" nz-button nzType="primary">更新</button>
     <emotion [name]="currentName"></emotion>
   </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#eight-lifecycle" nzTitle="八个生命周期"></nz-link>
-  <nz-link nzHref="#lifecycle-category" nzTitle="钩子分类"></nz-link>
-  <nz-link nzHref="#usage" nzTitle="使用方法"></nz-link>
-  <nz-link nzHref="#ngOnInit" nzTitle="ngOnInit"></nz-link>
-  <nz-link nzHref="#ngOnDestroy" nzTitle="ngOnDestroy"></nz-link>
-  <nz-link nzHref="#ngOnChanges" nzTitle="ngOnChanges"></nz-link>
-  <nz-link nzHref="#SimpleChanges" nzTitle="SimpleChanges"></nz-link>
-  <nz-link nzHref="#directive-lifecycle" nzTitle="指令的生命周期"></nz-link>
-  <nz-link nzHref="#emotion" nzTitle="感情记录器"></nz-link>
-</nz-anchor>
+</app-content-fill>

@@ -1,9 +1,25 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 @Component({
   templateUrl: './pipe.component.html',
   styleUrls: ['./pipe.component.scss']
 })
 export class PipeComponent implements OnInit, DoCheck {
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#DatePipe',
+      title: 'DatePipe'
+    },
+    {
+      href: '#custom-pipe',
+      title: '自定义管道'
+    },
+  ];
+
   date;
   constructor() {
     this.date = new Date().toString();

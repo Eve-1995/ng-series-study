@@ -1,10 +1,45 @@
 import { Component } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './component-styles.component.html',
   styleUrls: ['./component-styles.component.scss']
 })
 export class ComponentStylesComponent {
+
+  anchor: Anchor[] = [
+    {
+      href: '#range-style',
+      title: '范围化的样式'
+    },
+    {
+      href: '#host',
+      title: ':host'
+    },
+    {
+      href: '#ngDeep',
+      title: '::ng-deep'
+    },
+    {
+      href: '#style-talk',
+      title: '样式杂谈',
+      children: [
+        {
+          href: '#model-style',
+          title: '模板文件与样式文件'
+        },
+        {
+          href: '#import-style',
+          title: '引入样式文件'
+        },
+        {
+          href: '#control-view',
+          title: '控制视图的封装'
+        }
+      ]
+    }
+  ];
+
   code1 = `
     <h1>父组件</h1>
     <span class="color bgColor">父组件的内容</span>

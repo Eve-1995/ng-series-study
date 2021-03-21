@@ -1,4 +1,4 @@
-<div class="tutorial-no-anchor">
+<app-content-fill>
   <h2>概述</h2>
   我们现在已经知道, 在一个视图里面, 如果想插入别的视图, 一般是通过插入子组件标签的方式.实际上, 我们称这种方法为
   <strong>静态组件</strong>. <br />
@@ -14,7 +14,7 @@
   <br />
   第一条, 两个字段的输入框, 这个没问题, 静态组件可以实现. <br />
   第二条, 即按条件加载, 这点可以通过 <span class="key-word">@Input</span>实现, 静态组件也完全可以胜任. <br />
-  第三条, 在外部获取组件的值,  <a routerLink="/angular/component-communication">组件交互</a>中有详细介绍, 静态组件可以实现. <br />
+  第三条, 在外部获取组件的值, <a routerLink="/angular/component-communication">组件交互</a>中有详细介绍, 静态组件可以实现. <br />
   第四条, 这个数据不是一条一条录入的, 是一次性写好多条一次性录入的.如果客户是要3条记录我可以写3个静态组件, 可是数量不确定, 显然静态组件不是那么的合适了, 这个时候就需要用到动态组件.
   <br />
   <div class="info">实际上, 在动态组件的应用当中, 其实还是父子组件, 只是实现方式不同罢了.</div>
@@ -40,7 +40,8 @@
       <span class="key-word">ng-template</span>, 并且使用了模板引用变量, 起到容器的作用.这是在告诉Angular, 动态组件要在什么地方插入
     </li>
     <li>
-      使用 <span class="key-word">ViewChild</span>获取容器视图, 使用 <span class="key-word">ComponentFactoryResolver</span>获得组件工厂, 使用
+      使用 <span class="key-word">ViewChild</span>获取容器视图, 使用 <span class="key-word">ComponentFactoryResolver</span>获得组件工厂,
+      使用
       <span class="key-word">ViewContainerRef</span>在模板中插入子组件, 并将组件实例存入数组.
     </li>
     <li>遍历数组内容, 调用子组件实例的方法, 获取子组件变量, 通过管道的方式显示在页面上</li>
@@ -51,17 +52,18 @@
   <span class="key-word">addPersonContainer</span>的地方, 都属于这个视图容器.它有许多的方法, 比如创建视图
   <span class="key-word">createComponent</span>, 还有length属性, 返回当前容器中子组件的数量
   <br />
-  <span class="key-word">ComponentFactoryResolver</span>:组件工厂解析器, 
+  <span class="key-word">ComponentFactoryResolver</span>:组件工厂解析器,
   <span class="key-word">resolveComponentFactory</span> 接收一个组件原型, 返回组件的工厂类型.
   <span class="key-word">createComponent</span>:这个方法属于
-  <span class="key-word">ViewContainerRef</span
-  >, 看字面意思你也应该猜到了, 创建组件用的.传入组件的工厂类型, 它会创建这个子组件的视图, 并且返回该子组件的实例. <br />
+  <span class="key-word">ViewContainerRef</span>, 看字面意思你也应该猜到了, 创建组件用的.传入组件的工厂类型, 它会创建这个子组件的视图, 并且返回该子组件的实例. <br />
   <div class="info">
     怎么样, 是不是有点晕?这部分知识相对较难, 我再通俗地解释下.
     <br />
-    你可以这样理解, 我们已经定义好了一个子组件了, 那么, 我在不能使用静态组件(直接写子组件标签)的方式下, 我怎么样才能插入子组件呢?首先就是做标记, 现在你应该很容易理解标记的意义了吧?在有了标记以后, 如何让Angular知道我在哪里做了标记呢?就是使用
+    你可以这样理解, 我们已经定义好了一个子组件了, 那么, 我在不能使用静态组件(直接写子组件标签)的方式下, 我怎么样才能插入子组件呢?首先就是做标记, 现在你应该很容易理解标记的意义了吧?在有了标记以后,
+    如何让Angular知道我在哪里做了标记呢?就是使用
     <span class="key-word">ViewChild</span>, 获得标记的视图容器.之后在这个容器插入子组件即可. <br />
-    只是这里并没有想的这么简单, 这里我先打个比方, 比如说, "男生很帅", 这句话是指谁?他可以指任何染色体为XY的人类.那如果这句话改为"Eve很帅", 那么指的是谁?显然就是指我了(假如世界上只有我使用这个名字), 这个就是实例的概念, 当容器插入多个同类组件的时候, 这几个组件一样吗?显然是不一样的, 尽管代码都一样, 但是他们的确是不同的个体, 所以每个插入的组件都有一个实例.
+    只是这里并没有想的这么简单, 这里我先打个比方, 比如说, "男生很帅", 这句话是指谁?他可以指任何染色体为XY的人类.那如果这句话改为"Eve很帅", 那么指的是谁?显然就是指我了(假如世界上只有我使用这个名字),
+    这个就是实例的概念, 当容器插入多个同类组件的时候, 这几个组件一样吗?显然是不一样的, 尽管代码都一样, 但是他们的确是不同的个体, 所以每个插入的组件都有一个实例.
     <br />
     所以, 在拥有视图容器后, 插入组件并将返回的组件实例存在数组当中.实例有什么用呢?实例可以调用特定组件的变量与方法.在本案例中, 将
     <span class="key-word">gender</span>参数传给了子组件, 同理, 在收集数据的时候, 又遍历数组, 调用每个实例的
@@ -89,4 +91,4 @@
       <ng-template #addPersonContainer></ng-template>
     </div>
   </nz-card>
-</div>
+</app-content-fill>

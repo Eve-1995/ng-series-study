@@ -1,6 +1,7 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
   <h2 id="resume">概述</h2>
-  管道, 又是一个典型的顾名思义的案例.思考一下, 在现实生活中, 管道是什么意思?比如水管, 在居民家中放出的是自来水, 而在管道的另一端, 也就是水厂, 源头可能是山水或者海水等(我不清楚真正的源头, 就那个意思, 反正不能直接喝的水), 管道将二者连了起来并且做了净化处理.
+  管道, 又是一个典型的顾名思义的案例.思考一下, 在现实生活中, 管道是什么意思?比如水管, 在居民家中放出的是自来水, 而在管道的另一端, 也就是水厂, 源头可能是山水或者海水等(我不清楚真正的源头, 就那个意思,
+  反正不能直接喝的水), 管道将二者连了起来并且做了净化处理.
   <br />
   Angular当中的管道概念与此相类似, 组件提供一个数据, 管道进行处理后返回, 典型的应用是时间格式化.我们知道, 如果你直接获取系统时间并且打印, 大概是这个样子
   <div class="cmd">Sun Jul 29 2018 13:18:21 GMT+0800</div>
@@ -48,7 +49,7 @@
   <div class="info">需求不难的, 就是输入身高体重然后按公式计算BMI值而已, 公式为:体重(kg)/身高*身高(m).</div>
   整个流程如下:
   <ul>
-    <li>创建管道文件, 使用 <span class="key-word">Pipe</span>装饰器,  <span class="key-word">name</span>为选择器名字</li>
+    <li>创建管道文件, 使用 <span class="key-word">Pipe</span>装饰器, <span class="key-word">name</span>为选择器名字</li>
     <li>
       实现
       <span class="key-word">PipeTransform</span>接口, 调用管道时, 直接进入
@@ -91,9 +92,4 @@
   Angular提供了不止
   <span class="key-word">DatePipe</span> 一种, 更多的管道类型请前往
   <a href="https://angular.cn/api?type=pipe" target="view_window">官方文档</a>查看, 在此不一一举例了.
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#DatePipe" nzTitle="DatePipe"></nz-link>
-  <nz-link nzHref="#custom-pipe" nzTitle="自定义管道"></nz-link>
-</nz-anchor>
+</app-content-fill>
