@@ -23,7 +23,6 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     LayoutModule,
     OverlayModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
