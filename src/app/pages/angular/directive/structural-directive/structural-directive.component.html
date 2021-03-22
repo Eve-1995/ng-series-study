@@ -1,4 +1,5 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
+  
   <h2 id="resume">概述</h2>
   在Angular中, 一共有三种类型的指令:
   <ul>
@@ -201,12 +202,4 @@
   <nz-card class="card">
     <p *nssMilkTeaType="milkTeaType">来一杯奶茶</p>
   </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#structural-directive" nzTitle="结构型指令">
-    <nz-link nzHref="#ngIf" nzTitle="ngIf"></nz-link>
-    <nz-link nzHref="#ngFor" nzTitle="ngFor"></nz-link>
-    <nz-link nzHref="#custom-structural-directive" nzTitle="自定义结构型指令"></nz-link>
-  </nz-link>
-</nz-anchor>
+</app-content-fill>

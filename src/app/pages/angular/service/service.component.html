@@ -1,4 +1,4 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
   <h2 id="resume">概述</h2>
   服务, 通常用于数据通信.最经典的应用场景就是访问数据库.在项目中, 当需要获取数据库数据的时候, 通常这个操作并不是放在组件的数据源当中, 而是放在服务当中, 由组件进行调用.使得业务代码与数据访问代码相隔离.
   <h2 id="provider">注册</h2>
@@ -110,11 +110,4 @@
     <button (click)="addAndShowRoot()" nz-button nzType="primary">自增且显示</button>
     <service-child></service-child>
   </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#provider" nzTitle="注册"></nz-link>
-  <nz-link nzHref="#basic-usage" nzTitle="基础用法"></nz-link>
-  <nz-link nzHref="#component-provider" nzTitle="组件级注册提供商"></nz-link>
-  <nz-link nzHref="#module-provider" nzTitle="模块级注册提供商"></nz-link>
-</nz-anchor>
+</app-content-fill>

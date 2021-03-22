@@ -1,10 +1,33 @@
 import { Component } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
+
 @Component({
   selector: 'structural-directive',
   templateUrl: './structural-directive.component.html',
   styleUrls: ['./structural-directive.component.scss']
 })
 export class StructuralDirectiveComponent {
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#structural-directive',
+      title: '结构型指令'
+    },  {
+      href: '#ngIf',
+      title: 'ngIf'
+    },  {
+      href: '#ngFor',
+      title: 'ngFor'
+    },  {
+      href: '#custom-structural-directive',
+      title: '自定义结构型指令'
+    },
+  ];
+  
+
   gender = '男生';
   ngIfCode = `
     <nz-radio-group [(ngModel)]="gender">
