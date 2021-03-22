@@ -11,4 +11,5 @@ export class CodemirrorComponent {
     theme: 'seti',
     readOnly: true
   };
+  codeUrl = './codemirror.component.html';
 }

@@ -24,6 +24,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 // 自定义的全局组件
 import { CodemirrorComponent } from './codemirror/codemirror.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HighlightPlusModule } from 'ngx-highlightjs/plus';
+import 'highlightjs-line-numbers.js';
 
 // 先把全部的zorro都引进来, 能跑起来再说
 const zorroModules = [
@@ -47,7 +49,7 @@ const zorroModules = [
   NzGridModule
 ];
 
-const THIRDMODULES = [...zorroModules, HighlightModule];
+const THIRDMODULES = [...zorroModules, HighlightModule, HighlightPlusModule];
 const CUSTOM_COMPONENT = [CodemirrorComponent];
 // endregion
 
@@ -66,8 +68,8 @@ const CUSTOM_COMPONENT = [CodemirrorComponent];
       useValue: {
         // fullLibraryLoader: () => import('highlight.js'),
         coreLibraryLoader: () => import('highlight.js/lib/core'),
-        lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
-        lineNumbers: true, // 无效, 暂时先不探究了.
+        // tslint:disable-next-line: max-line-length
+        lineNumbersLoader: () => import('highlightjs-line-numbers.js/dist/highlightjs-line-numbers.min.js'),
         languages: {
           typescript: () => import('highlight.js/lib/languages/typescript'),
           scss: () => import('highlight.js/lib/languages/scss'),

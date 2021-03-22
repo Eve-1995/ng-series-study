@@ -38,7 +38,7 @@
             ],
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-              "./node_modules/highlight.js/styles/androidstudio.css",
+              "./node_modules/highlight.js/styles/atom-one-dark.css",
               "src/styles.scss"
             ],
             "scripts": []

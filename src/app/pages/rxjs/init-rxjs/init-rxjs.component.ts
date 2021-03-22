@@ -15,7 +15,7 @@ export class InitRxjsComponent implements OnInit, OnDestroy {
   demo1Subject$ = new Subject();
 
   code1 = `
-    <input nz-input type="text" placeholder="输入文字试试?" [(ngModel)]="demo1" (ngModelChange)="demo1Change()">
+  <input nz-input type="text" placeholder="输入文字试试?" [(ngModel)]="demo1" (ngModelChange)="demo1Change()">
   `;
   code2 = `
     private unsubscribe$ = new Subject<void>();
