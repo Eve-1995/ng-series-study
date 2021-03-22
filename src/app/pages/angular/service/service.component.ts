@@ -2,12 +2,38 @@ import { Component } from '@angular/core';
 import { RootService, LoginService, ComponentService } from './service/demo.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
+
 @Component({
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.scss'],
   providers: [LoginService, ComponentService]
 })
 export class ServiceComponent {
+
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#provider',
+      title: '注册'
+    },
+    {
+      href: '#basic-usage',
+      title: '基础用法'
+    },
+    {
+      href: '#component-provider',
+      title: '组件级注册提供商'
+    },
+    {
+      href: '#module-provider',
+      title: '模块级注册提供商'
+    },
+  ];
+
   constructor(
     private rootService: RootService,
     private componentService: ComponentService,

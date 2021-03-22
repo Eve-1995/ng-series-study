@@ -1,4 +1,6 @@
-<div class="tutorial">
+<app-content-fill [anchor]="anchor">
+
+
   <h2 id="attribute-directive">属性型指令</h2>
   <h3 id="ngClass">ngClass</h3>
   顾名思义, 给DOM元素添加
@@ -134,12 +136,5 @@
   <nz-card class="card">
     <p nssStyle [nssColor]="color" [nssSize]="size" [nssWeight]="weight">生活就是这样的五彩斑斓!</p>
   </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#attribute-directive" nzTitle="属性型指令">
-    <nz-link nzHref="#ngClass" nzTitle="ngClass"></nz-link>
-    <nz-link nzHref="#ngStyle" nzTitle="ngStyle"></nz-link>
-    <nz-link nzHref="#ngSwitch" nzTitle="ngSwitch"></nz-link>
-    <nz-link nzHref="#custom-attribute-directive" nzTitle="自定义属性型指令"></nz-link>
-  </nz-link>
-</nz-anchor>
+</app-content-fill>
+
