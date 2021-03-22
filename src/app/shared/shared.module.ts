@@ -20,6 +20,7 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzAnchorModule } from 'ng-zorro-antd/anchor';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 // 自定义的全局组件
 import { CodemirrorComponent } from './codemirror/codemirror.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -42,7 +43,8 @@ const zorroModules = [
   NzMessageModule,
   NzModalModule,
   NzAnchorModule,
-  NzLayoutModule
+  NzLayoutModule,
+  NzGridModule
 ];
 
 const THIRDMODULES = [...zorroModules, HighlightModule];

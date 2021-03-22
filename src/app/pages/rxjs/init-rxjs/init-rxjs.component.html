@@ -1,7 +1,76 @@
-<div class="tutorial">
+<app-content-fill>
   <h2 id="resume">概述</h2>
-  Angular之所以强大, 是因为他拥有众多的"将军".其中一位得力干将就是RxJS.想要更好地学习RxJS需要先了解一些名词, 为方便大家理解又不误导大家, 我提供了官方的说法与我个人的理解.
-  <ul>
+  <p>
+    在日常的Angular项目开发中, 一定会用到RxJS, 如果你未曾使用过, 可能会有点担心和焦虑. 放心, 先给你打一针预防针: 绝大部分业务用到的RxJS都很基础! RxJS的确可以做到很复杂的事情,
+    但是大部分业务都是搬砖活.了解基本的RxJS就可以应付绝大部分业务了.
+  </p>
+  <p>
+    先记住RxJS的基本概念: <strong>对一个行为的订阅, 并对产生的数据流进行操作处理.</strong> 我知道你看了这个基本概念还是不懂, 没关系, just remember it!
+  </p>
+  <p>
+    为了方便理解, 我们先来打个比方. <span class="key-word">假如有一个报社的名字叫A, 而用户B可以对A报社进行预定报纸, 要求每天一份.</span> 这个逻辑够正常够简单吧? 换成RxJS的世界,
+    报社A就是可观察对象(Observable),
+    而用户B就是观察者(Observer). 订报纸的这个动作, 叫做订阅(Subscription).
+  </p>
+  <p>有时候, 我们预订报纸并非是想要全部的, 而是有选择性的. 比如只想看科技相关的, 那么当报社按照你的订阅, 每天给你发送报纸的时候, 你会进行过滤. 对Observable进行一些操作的行为,
+    我们称之为操作符(Operator)</p>
+  <!-- <p>在Angular项目只, RxJS最常用的一个场景, 就是用来发请求. Angular自带的HTTP相关的模块, 在请求后都是返回了一个可观察对象. 所以, 请求就是</p> -->
+  <h2>基础案例</h2>
+  <div class="section">
+    我们来看一个很简单的例子, 该例子演示了如何订阅一个Subject, 如何使用操作符.
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code1"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code2"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    在组件初始化的时候就对一个Subject进行了订阅. 
+    <div class="info">
+      Subject你可以理解为就是Observable, 因为他继承了Observable. Subject非常的实用. 他经常用于复杂组件通信. 
+    </div>
+    下面有个输入框, 你每次的敲击都会让"变更事件"触发, 而 <span class="key-word">ngModelChange</span> 激活后, 会触发 Subject的next事件. 查看 <span class="key-word">demo1Change</span> 的代码逻辑, <span class="key-word">changeTimes</span> 立刻进行了自增. 之后触发了 <span class="key-word">demo1Subject$</span> 的事件, 那么所有订阅了他的地方都会收到通知执行订阅的回调函数. 也就是执行 <span class="key-word">this.count++;</span> 但是不同的是, 订阅时使用了 <span class="key-word">debounceTime</span> 进行过滤, 也就是防抖. 此处的防抖操作符就相当于是你对报社发送的报纸进行过滤.
+  </div>
+  <h3>运行结果</h3>
+  <nz-card class="card demo1">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <input nz-input type="text" placeholder="输入文字试试?" [(ngModel)]="demo1" (ngModelChange)="demo1Change()">
+        变更事件一共触发: {{ changeTimes }} 计数器累加: {{ count }}
+      </div>
+    </div>
+  </nz-card>
+  <h2>取消订阅</h2>
+  <div class="section">
+    我相信你一定看到了一个新的名词: <span class="key-word">取消订阅</span>. 这是因为当你订阅了一个Subject的时候, 每次发生next事件都会触发订阅. 那么请问, 有没有可能发生多次订阅? 比如在组件 <span class="key-word">ngOnInit</span> 钩子中订阅的话. 每次初始化组件时, 就会订阅一次. 那么不就发生多次订阅了吗? 然而, 在组件销毁的时候, 并不会进行取消订阅. 所以你需要手动取消订阅.
+  </div>
+  <div class="section">
+    那么问题来了, 如果不取消订阅会怎么样? 我们看下面这个案例.
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code1"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code2"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <div nz-row [nzGutter]="16">
+      <div nz-col nzSpan="8">
+        <button nz-button nzType="primary" (click)="emit()">发射事件</button>
+      </div>
+      <div nz-col nzSpan="8">
+        <app-rxjs-child-01></app-rxjs-child-01>
+      </div>
+      <div nz-col nzSpan="8">
+        <app-rxjs-child-02></app-rxjs-child-02>
+      </div>
+    </div>
+  </nz-card>
+  <!-- <ul>
     <li>
       Observable (可观察对象)
       <ul>
@@ -44,7 +113,8 @@
       <ul>
         <li>
           官方:采用函数式编程风格的纯函数 (pure function)，使用像
-          <span class="key-word">map</span> 、 <span class="key-word">filter</span> 、 <span class="key-word">concat</span> 、
+          <span class="key-word">map</span> 、 <span class="key-word">filter</span> 、 <span
+            class="key-word">concat</span> 、
           <span class="key-word">flatMap</span> 等这样的操作符来处理集合。
         </li>
         <li>通俗:一些现成的函数, 帮助你处理数据.</li>
@@ -54,7 +124,7 @@
   RxJS在不同的环境中, 用法有略微差别, 如引用等.本文的所有案例以ng环境为背景.
   <div class="danger">RxJS章节的效果演示部分, 按钮如果按多次, 可能会导致同时出现多个订阅影响效果, 建议只执行一次.</div>
   <h2 id="Observable">可观察对象(Observable)</h2>
-  <span class="key-word">create</span>可以创建一个操作符, 
+  <span class="key-word">create</span>可以创建一个操作符,
   <span class="key-word">next</span>可以发出值.当订阅了一个可观察对象后, 可观察对象会依次发出值.
   <img src="../../../../assets/img/rxjs-create.png" alt="rxjs弹珠图" />
   <h2 id="basic">基本流程</h2>
@@ -69,7 +139,8 @@
       <code-mirror [code]="code2"></code-mirror>
     </nz-tab>
   </nz-tabset>
-  现在我们来分析下TS中的代码.第6~13行代码, 创建了一个可观察对象, 第11行使用观察者(参数)发射了一个值(next在后面会专门讲).截止至13行, 这个可观察对象都是不会执行的(惰性运算).这个类似于我们定义了函数, 若不调用则不执行一样.直到第14行, 进行了订阅, 并且规定了订阅后的操作(其实是observer).当满足条件时, 第17行将取消这个订阅.
+  现在我们来分析下TS中的代码.第6~13行代码, 创建了一个可观察对象, 第11行使用观察者(参数)发射了一个值(next在后面会专门讲).截止至13行, 这个可观察对象都是不会执行的(惰性运算).这个类似于我们定义了函数,
+  若不调用则不执行一样.直到第14行, 进行了订阅, 并且规定了订阅后的操作(其实是observer).当满足条件时, 第17行将取消这个订阅.
   <h3>运行结果</h3>
   <nz-card class="card demo1">
     <div nz-row>
@@ -82,7 +153,8 @@
     </div>
   </nz-card>
   <h2 id="Observer">Observer(观察者)</h2>
-  现在我们来单独谈下观察者(Observer).在前面的计时器的案例代码中可以看到, 在创建可观察对象的时候, 必须传入一个观察者(形参)来执行值的发射.而订阅之后, 我们使用箭式函数对发射的值进行了处理.实际上, 这里也可以是一个观察者.
+  现在我们来单独谈下观察者(Observer).在前面的计时器的案例代码中可以看到, 在创建可观察对象的时候, 必须传入一个观察者(形参)来执行值的发射.而订阅之后, 我们使用箭式函数对发射的值进行了处理.实际上,
+  这里也可以是一个观察者.
   <br />
   之前提到, 观察值可以执行值的发射, 其实观察值有三种发射方式. <span class="key-word">next</span>、 <span class="key-word">error</span>、
   <span class="key-word">complete</span>.
@@ -107,7 +179,8 @@
     </div>
   </nz-card>
   <h2 id="Operators">Operators(操作符)</h2>
-  操作符就是Observable提供的方法.当你调用操作符时, Observable并不会改变, 而且操作符会返回一个全新的Observable.我们再次改造计时器的案例, 这次不再使用这么原始的方式, 而是使用操作符来完成Observable的创建、延时等操作.
+  操作符就是Observable提供的方法.当你调用操作符时, Observable并不会改变, 而且操作符会返回一个全新的Observable.我们再次改造计时器的案例, 这次不再使用这么原始的方式,
+  而是使用操作符来完成Observable的创建、延时等操作.
   <code-mirror [code]="code4"></code-mirror>
   <span class="key-word">timer</span>:第一个参数是延时执行时间, 第二个参数是间隔执行时间.自身会返回一个Observable.
   <span class="key-word">timer(0, 1000)</span>是指延时0秒执行, 每隔1秒发出一个值.他会从0开始发送, 无限递增.
@@ -170,14 +243,5 @@
         {{ demo7Result }}
       </div>
     </div>
-  </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#Observable" nzTitle="可观察对象(Observable)"></nz-link>
-  <nz-link nzHref="#basic" nzTitle="基本流程"></nz-link>
-  <nz-link nzHref="#Observer" nzTitle="Observer(观察者)"></nz-link>
-  <nz-link nzHref="#Operators" nzTitle="Operators(操作符)"></nz-link>
-  <nz-link nzHref="#custom-operator" nzTitle="自定义操作符"></nz-link>
-  <nz-link nzHref="#Subject" nzTitle="Subject"></nz-link>
-</nz-anchor>
+  </nz-card> -->
+</app-content-fill>

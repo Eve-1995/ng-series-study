@@ -13,7 +13,6 @@ h3,
 h4,
 h5 {
   font-weight: bold;
-  // margin: 15px 0px;
   margin-bottom: 15px;
 }
 
@@ -69,6 +68,10 @@ div.danger {
   width: 100%;
   height: auto;
   margin: 16px 0px;
+}
+
+div.section {
+  margin-bottom: 9px;
 }
 
 //'代码显示器'上边距设置为15px,但是nz-tabset自带内边距,所以不需要那15px
