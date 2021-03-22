@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   selector: 'attribute-directive',
@@ -6,6 +7,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./attribute-directive.component.scss']
 })
 export class AttributeDirectiveComponent {
+    anchor: Anchor[] = [
+        {
+          href: '#attribute-directive',
+          title: '属性型指令'
+        },
+        {
+          href: '#ngClass',
+          title: 'ngClass'
+        },
+        {
+          href: '#ngStyle',
+          title: 'ngStyle'
+        },
+        {
+          href: '#ngSwitch',
+          title: 'ngSwitch'
+        },
+        {
+          href: '#custom-attribute-directive',
+          title: '自定义属性型指令'
+        }
+      ];
+
   hobby = 'sweet';
   ngSwitchCode = `
     <nz-radio-group [(ngModel)]="hobby">

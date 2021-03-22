@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './advanced-router.component.html',
@@ -7,6 +8,42 @@ import { Router } from '@angular/router';
 })
 export class AdvancedRouterComponent {
   constructor(private router: Router) {}
+
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#Routes',
+      title: 'Routes'
+    },
+    {
+      href: '#asynchronous-router',
+      title: '异步路由'
+    },
+    {
+      href: '#router-params',
+      title: '路由传参'
+    },
+    {
+      href: '#CanActivate',
+      title: 'CanActivate'
+    },
+    {
+      href: '#CanDeactivate',
+      title: 'CanDeactivate'
+    },
+    {
+      href: '#CanActivateChildAndCanLoad',
+      title: '其他守卫'
+    },
+    {
+      href: '#preload',
+      title: '预加载'
+    },
+  ];
+
   code1 = `
     import { Routes } from '@angular/router';
     const routes: Routes = [
