@@ -25,7 +25,6 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { CodemirrorComponent } from './codemirror/codemirror.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { HighlightPlusModule } from 'ngx-highlightjs/plus';
-import 'highlightjs-line-numbers.js';
 
 // 先把全部的zorro都引进来, 能跑起来再说
 const zorroModules = [

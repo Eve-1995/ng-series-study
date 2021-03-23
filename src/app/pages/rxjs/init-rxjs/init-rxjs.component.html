@@ -5,7 +5,7 @@
     但是大部分业务都是搬砖活.了解基本的RxJS就可以应付绝大部分业务了.
   </p>
   <p>
-    先记住RxJS的基本概念: <strong>对一个行为的订阅, 并对产生的数据流进行操作处理.</strong> 我知道你看了这个基本概念还是不懂, 没关系, just remember it!
+    先记住RxJS的基本概念: <strong>对一个行为的订阅, 并对产生的数据流进行操作处理.</strong> 我知道你读了这句话还是一头雾水, 没关系, just remember it!
   </p>
   <p>
     为了方便理解, 我们先来打个比方. <span class="key-word">假如有一个报社的名字叫A, 而用户B可以对A报社进行预定报纸, 要求每天一份.</span> 这个逻辑够正常够简单吧? 换成RxJS的世界,
@@ -18,14 +18,7 @@
   <h2>基础案例</h2>
   <div class="section">
     我们来看一个很简单的例子, 该例子演示了如何订阅一个Subject, 如何使用操作符.
-    <nz-tabset>
-      <nz-tab nzTitle="html">
-        <code-mirror [code]="code1"></code-mirror>
-      </nz-tab>
-      <nz-tab nzTitle="ts">
-        <code-mirror [code]="code2"></code-mirror>
-      </nz-tab>
-    </nz-tabset>
+    <code-mirror [code]="appService.code1 | async "></code-mirror>
     在组件初始化的时候就对一个Subject进行了订阅. 
     <div class="info">
       Subject你可以理解为就是Observable, 因为他继承了Observable. Subject非常的实用. 他经常用于复杂组件通信. 
@@ -36,8 +29,7 @@
   <nz-card class="card demo1">
     <div nz-row>
       <div nz-col nzSpan="24">
-        <input nz-input type="text" placeholder="输入文字试试?" [(ngModel)]="demo1" (ngModelChange)="demo1Change()">
-        变更事件一共触发: {{ changeTimes }} 计数器累加: {{ count }}
+        <app-rxjs-child-03></app-rxjs-child-03>
       </div>
     </div>
   </nz-card>
@@ -47,14 +39,14 @@
   </div>
   <div class="section">
     那么问题来了, 如果不取消订阅会怎么样? 我们看下面这个案例.
-    <nz-tabset>
+    <!-- <nz-tabset>
       <nz-tab nzTitle="html">
         <code-mirror [code]="code1"></code-mirror>
       </nz-tab>
       <nz-tab nzTitle="ts">
         <code-mirror [code]="code2"></code-mirror>
       </nz-tab>
-    </nz-tabset>
+    </nz-tabset> -->
   </div>
   <h3>运行结果</h3>
   <nz-card class="card">
@@ -70,178 +62,4 @@
       </div>
     </div>
   </nz-card>
-  <!-- <ul>
-    <li>
-      Observable (可观察对象)
-      <ul>
-        <li>官方:表示一个概念，这个概念是一个可调用的未来值或事件的集合。</li>
-        <li>
-          通俗:数据类型可以是number类型, 也可以是boolean类型, 而
-          <span class="key-word">Observable</span> 也是一种类型.
-        </li>
-      </ul>
-    </li>
-    <li>
-      Observer (观察者)
-      <ul>
-        <li>
-          官方:一个回调函数的集合，它知道如何去监听由
-          <span class="key-word">Observable</span> 提供的值。
-        </li>
-        <li>
-          通俗:根据情况处理
-          <span class="key-word">Observable</span> 发出的值.
-        </li>
-      </ul>
-    </li>
-    <li>
-      Subscription (订阅)
-      <ul>
-        <li>
-          官方:表示
-          <span class="key-word">Observable</span> 的执行，主要用于取消 <span class="key-word">Observable</span> 的执行。
-        </li>
-        <li>
-          通俗:当你使用
-          <span class="key-word">subscribe()</span>时, 返回一个 <span class="key-word">Subscription</span> 对象, 该对象有一个
-          <span class="key-word">unsubscribe()</span> 方法.
-        </li>
-      </ul>
-    </li>
-    <li>
-      Operators (操作符)
-      <ul>
-        <li>
-          官方:采用函数式编程风格的纯函数 (pure function)，使用像
-          <span class="key-word">map</span> 、 <span class="key-word">filter</span> 、 <span
-            class="key-word">concat</span> 、
-          <span class="key-word">flatMap</span> 等这样的操作符来处理集合。
-        </li>
-        <li>通俗:一些现成的函数, 帮助你处理数据.</li>
-      </ul>
-    </li>
-  </ul>
-  RxJS在不同的环境中, 用法有略微差别, 如引用等.本文的所有案例以ng环境为背景.
-  <div class="danger">RxJS章节的效果演示部分, 按钮如果按多次, 可能会导致同时出现多个订阅影响效果, 建议只执行一次.</div>
-  <h2 id="Observable">可观察对象(Observable)</h2>
-  <span class="key-word">create</span>可以创建一个操作符,
-  <span class="key-word">next</span>可以发出值.当订阅了一个可观察对象后, 可观察对象会依次发出值.
-  <img src="../../../../assets/img/rxjs-create.png" alt="rxjs弹珠图" />
-  <h2 id="basic">基本流程</h2>
-  一个
-  <span class="key-word">Observable</span>应该包含四个部分:创建、订阅、执行、清理. <br />
-  现在, 我们通过一个非常简单的案例来初步了解这样的一个流程.我们使用RxJS来模拟计时器, 从1数到10即可.
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code1"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code2"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  现在我们来分析下TS中的代码.第6~13行代码, 创建了一个可观察对象, 第11行使用观察者(参数)发射了一个值(next在后面会专门讲).截止至13行, 这个可观察对象都是不会执行的(惰性运算).这个类似于我们定义了函数,
-  若不调用则不执行一样.直到第14行, 进行了订阅, 并且规定了订阅后的操作(其实是observer).当满足条件时, 第17行将取消这个订阅.
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo1()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo1Result }}
-      </div>
-    </div>
-  </nz-card>
-  <h2 id="Observer">Observer(观察者)</h2>
-  现在我们来单独谈下观察者(Observer).在前面的计时器的案例代码中可以看到, 在创建可观察对象的时候, 必须传入一个观察者(形参)来执行值的发射.而订阅之后, 我们使用箭式函数对发射的值进行了处理.实际上,
-  这里也可以是一个观察者.
-  <br />
-  之前提到, 观察值可以执行值的发射, 其实观察值有三种发射方式. <span class="key-word">next</span>、 <span class="key-word">error</span>、
-  <span class="key-word">complete</span>.
-  <ul>
-    <li>next - 发送一个值</li>
-    <li>error - 发送一个错误</li>
-    <li>complete - 通知已完成, 不再发射值</li>
-  </ul>
-  事实上, 最常用的就是
-  <span class="key-word">next</span>.而另外两种只会执行一次, 并且只会执行其中的一个. <br />
-  现在, 我们来改造之前那个计时器案例, 不再取消订阅, 而是发射 <span class="key-word">complete</span>来终止订阅.
-  <code-mirror [code]="code3"></code-mirror>
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo2()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo2Result }}
-      </div>
-    </div>
-  </nz-card>
-  <h2 id="Operators">Operators(操作符)</h2>
-  操作符就是Observable提供的方法.当你调用操作符时, Observable并不会改变, 而且操作符会返回一个全新的Observable.我们再次改造计时器的案例, 这次不再使用这么原始的方式,
-  而是使用操作符来完成Observable的创建、延时等操作.
-  <code-mirror [code]="code4"></code-mirror>
-  <span class="key-word">timer</span>:第一个参数是延时执行时间, 第二个参数是间隔执行时间.自身会返回一个Observable.
-  <span class="key-word">timer(0, 1000)</span>是指延时0秒执行, 每隔1秒发出一个值.他会从0开始发送, 无限递增.
-  <br />
-  <span class="key-word">pipe</span>:管道, 可以对一些操作符进行链式调用.
-  <br />
-  <span class="key-word">take</span>:指执行的次数. <span class="key-word">take(11)</span>则只发送前11个值.
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo3()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo3Result }}
-      </div>
-    </div>
-  </nz-card>
-  <h2 id="custom-operator">自定义操作符</h2>
-  我们已经知道, 所谓的操作符, 就是对Observable进行改造.现在我们来自定义一个操作符, 用来放大之前的Observable, 将其值每个都乘以10.
-  <code-mirror [code]="code5"></code-mirror>
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo4()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo4Result }}
-      </div>
-    </div>
-  </nz-card>
-  <h2 id="Subject">Subject</h2>
-  Subject 是一种特殊类型的 Observable，它允许将值多播给多个观察者，所以 Subject 是多播的，而普通的 Observables
-  是单播的(每个已订阅的观察者都拥有 Observable 的独立执行)。
-  <br />
-  每个 Subject 都是观察者。 - Subject 是一个有如下方法的对象： next(v)、error(e) 和 complete() 。要给 Subject 提供新值，只要调用
-  next(theValue)，它会将值多播给已注册监听该 Subject 的观察者们。
-  <code-mirror [code]="code6"></code-mirror>
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo6()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo6Result }}
-      </div>
-    </div>
-  </nz-card>
-  因为 Subject 是观察者，这也就在意味着你可以把 Subject 作为参数传给任何 Observable 的 subscribe 方法
-  <code-mirror [code]="code7"></code-mirror>
-  <h3>运行结果</h3>
-  <nz-card class="card demo1">
-    <div nz-row>
-      <div nz-col nzSpan="12">
-        <button (click)="demo7()" nz-button nzType="primary">演示</button>
-      </div>
-      <div nz-col nzSpan="12">
-        {{ demo7Result }}
-      </div>
-    </div>
-  </nz-card> -->
 </app-content-fill>

@@ -7,8 +7,9 @@ import { ContentFillModule } from 'src/app/libs/content-fill';
 import { MarkDownModule } from 'src/app/libs/markdown/markdown.module';
 import { RxjsChild01Component } from './init-rxjs/children/rxjs-child-01.component';
 import { RxjsChild02Component } from './init-rxjs/children/rxjs-child-02.component';
+import { RxjsChild03Component } from './init-rxjs/children/rxjs-child-03.component';
 
-const COMPONENTS_DECLARATIONS = [InitRxjsComponent, OperatorsComponent, RxjsChild01Component, RxjsChild02Component];
+const COMPONENTS_DECLARATIONS = [InitRxjsComponent, OperatorsComponent, RxjsChild01Component, RxjsChild02Component, RxjsChild03Component];
 const DIRECTIVE_DECLARATIONS = [];
 const COMPONENTS_ENTRY = [];
 @NgModule({

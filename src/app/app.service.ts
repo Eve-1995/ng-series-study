@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class AppService {
   // <code-mirror [code]="appService.code1 | async "></code-mirror>
-  code1 = this.getFile('app/pages/rxjs/init-rxjs/children/rxjs-child-01.component.ts');
+  code1 = this.getFile('app/pages/rxjs/init-rxjs/children/rxjs-child-03.component.ts');
 
   getFile(path: string): Observable<string> {
     return this.http.get(path, { responseType: 'text' });
