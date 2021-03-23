@@ -1,7 +1,8 @@
-import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, timer, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { RxjsService } from '../rxjs-service';
+import { AppService } from 'src/app/app.service';
 @Component({
   templateUrl: './init-rxjs.component.html',
   styleUrls: ['init-rxjs.component.scss']
@@ -51,7 +52,7 @@ export class InitRxjsComponent implements OnInit, OnDestroy {
     this.rxjsService.Subject$.next();
   }
 
-  constructor(private rxjsService: RxjsService) {}
+  constructor(private rxjsService: RxjsService, public appService: AppService) {}
 
   ngOnInit(): void {
     // 代码 'takeUntil(this.unsubscribe$)' 可以先不看, 后文在取消订阅处会详讲.
