@@ -1,12 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from './forbidden-name.directive';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './validation-form.component.html',
   styleUrls: ['./validation-form.component.scss']
 })
 export class ValidationFormComponent implements OnInit {
+  anchor: Anchor[] = [
+    {
+      href: '#template-validation',
+      title: '模板驱动验证'
+    },
+    {
+      href: '#reactive-validation',
+      title: '自定义验证器'
+    },
+    {
+      href: '#custom-validator',
+      title: '响应式表单',
+      children:[
+        {
+            href: '#custom-reactive-validation',
+            title: '响应式表单'
+        },
+        {
+          href: '#custom-template-validation',
+          title: '模板驱动表单'
+        }
+      ]
+    }
+  ];
   demo1Value;
   code1 = `
     <form>
