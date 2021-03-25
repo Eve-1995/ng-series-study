@@ -1,77 +1,76 @@
 <app-content-fill [anchor]="anchor">
-  <div class="tutorial">
-    <h2 id="resume">概述</h2>
-    本小结略微较难, 建议多看几次.
-    <br />
-    无论是 <strong>模板驱动表单</strong>还是
-    <strong>响应式表单</strong>, 在编写大量相似的表单时, 是非常繁琐的.并且, 如果表单的内容是有变动的可能性, 随之带来的维护成本是非常高的. <br />
-    现在我们来实现一个需求
-    <ul>
-      <li>实现一份表单, 包含三个字段:用户名、密码、籍贯</li>
-    </ul>
-    首先我们先建立以下三个文件夹
-    <div class="info">
-      <pre>
+  <h2 id="resume">概述</h2>
+  本小结略微较难, 建议多看几次.
+  <br />
+  无论是 <strong>模板驱动表单</strong>还是
+  <strong>响应式表单</strong>, 在编写大量相似的表单时, 是非常繁琐的.并且, 如果表单的内容是有变动的可能性, 随之带来的维护成本是非常高的. <br />
+  现在我们来实现一个需求
+  <ul>
+    <li>实现一份表单, 包含三个字段:用户名、密码、籍贯</li>
+  </ul>
+  首先我们先建立以下三个文件夹
+  <div class="info">
+    <pre>
   data - 元数据
   service - 生成 <span class="key-word">FormGroup</span> 和表单控件
   show-question - 单个控件的展现及校验
          </pre>
-    </div>
-    <div class="warning">实际上, 并不一定要和我一样的文件分割, 我这么做只是为了更加清晰地阐述各自的职责.</div>
-    首先, 我们创建以下元数据
-    <nz-tabset>
-      <nz-tab nzTitle="question-base.ts">
-        <code-mirror [code]="code1"></code-mirror>
-      </nz-tab>
-      <nz-tab nzTitle="question-dropdown.ts">
-        <code-mirror [code]="code2"></code-mirror>
-      </nz-tab>
-      <nz-tab nzTitle="question-textbox.ts">
-        <code-mirror [code]="code3"></code-mirror>
-      </nz-tab>
-    </nz-tabset>
-    之后创建服务
-    <code-mirror [code]="code4"></code-mirror>
-    再创建单独展示问题的子组件
-    <span class="key-word">show-question.component</span>
-    <nz-tabset>
-      <nz-tab nzTitle="html">
-        <code-mirror [code]="code5"></code-mirror>
-      </nz-tab>
-      <nz-tab nzTitle="ts">
-        <code-mirror [code]="code6"></code-mirror>
-      </nz-tab>
-    </nz-tabset>
-    接下来, 在容器当中调用
-    <nz-tabset>
-      <nz-tab nzTitle="html">
-        <code-mirror [code]="code7"></code-mirror>
-      </nz-tab>
-      <nz-tab nzTitle="ts">
-        <code-mirror [code]="code8"></code-mirror>
-      </nz-tab>
-    </nz-tabset>
-    <h3>运行结果</h3>
-    <nz-card class="card demo1">
-      <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <div *ngFor="let question of questions">
-          <show-question [question]="question" [form]="form"></show-question>
-        </div>
-  
-        <div>
-          <button type="submit" nz-button nzType="primary" [disabled]="!form.valid">提交</button>
-        </div>
-      </form>
-  
-      <div *ngIf="payLoad">
-        <strong>保存的数据如下</strong>
-        <br />{{ payLoad }}
-      </div>
-    </nz-card>
-    <h2 id="application-scenary">应用场景</h2>
-    是不是看完这个案例, 感觉看也看不怎么懂, 也不知道为什么要这么复杂的去写一份表单?
-    <br />
-    如果是看不懂这种写法, 那可能再好好复习下组件、指令的相关概念.至于为什么要这么复杂地写表单, 这个问题我也想了很久, 到底为什么要这么写.其实这个是和具体的应用场景有关的, 普通的表单这样写当然麻烦了.试想, 如果要你实现, 表单的内容, 可以由后台管理员控制, 该怎么办?是不是普通的表单没办法实现的?因为都是写死的.唯独动态表单, 他的控件是由服务生成的, 而服务可以访问API得到数据, 自然就是动态生成表单了.
-    <br />
   </div>
+  <div class="warning">实际上, 并不一定要和我一样的文件分割, 我这么做只是为了更加清晰地阐述各自的职责.</div>
+  首先, 我们创建以下元数据
+  <nz-tabset>
+    <nz-tab nzTitle="question-base.ts">
+      <code-mirror [code]="code1"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="question-dropdown.ts">
+      <code-mirror [code]="code2"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="question-textbox.ts">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  之后创建服务
+  <code-mirror [code]="code4"></code-mirror>
+  再创建单独展示问题的子组件
+  <span class="key-word">show-question.component</span>
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code5"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  接下来, 在容器当中调用
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code8"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card demo1">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div *ngFor="let question of questions">
+        <show-question [question]="question" [form]="form"></show-question>
+      </div>
+
+      <div>
+        <button type="submit" nz-button nzType="primary" [disabled]="!form.valid">提交</button>
+      </div>
+    </form>
+
+    <div *ngIf="payLoad">
+      <strong>保存的数据如下</strong>
+      <br />{{ payLoad }}
+    </div>
+  </nz-card>
+  <h2 id="application-scenary">应用场景</h2>
+  是不是看完这个案例, 感觉看也看不怎么懂, 也不知道为什么要这么复杂的去写一份表单?
+  <br />
+  如果是看不懂这种写法, 那可能再好好复习下组件、指令的相关概念.至于为什么要这么复杂地写表单, 这个问题我也想了很久, 到底为什么要这么写.其实这个是和具体的应用场景有关的, 普通的表单这样写当然麻烦了.试想, 如果要你实现,
+  表单的内容, 可以由后台管理员控制, 该怎么办?是不是普通的表单没办法实现的?因为都是写死的.唯独动态表单, 他的控件是由服务生成的, 而服务可以访问API得到数据, 自然就是动态生成表单了.
+  <br />
 </app-content-fill>
