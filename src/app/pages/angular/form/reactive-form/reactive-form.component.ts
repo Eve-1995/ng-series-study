@@ -1,11 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './reactive-form.component.html',
   styleUrls: ['./reactive-form.component.scss']
 })
 export class ReactiveFormComponent implements OnInit {
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#getAndSet',
+      title: '取值与赋值'
+    },
+    {
+      href: '#nestingAndGroup',
+      title: '嵌套与分组'
+    },
+    {
+      href: '#patchValue',
+      title: '批量模型更新'
+    },
+    {
+      href: '#formBuilder',
+      title: 'FormBuilder'
+    },
+    {
+      href: '#formArray',
+      title: 'FormArray'
+    }
+  ];
   constructor(private formBuilder: FormBuilder) {}
   demo1Group: FormGroup;
   userGroup: FormGroup;

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionBase } from './data/question-base';
 import { QuestionService } from './service/question.service';
 import { FormGroup } from '@angular/forms';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   providers: [QuestionService],
@@ -10,6 +11,20 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnInit {
+ anchor: Anchor[] = [
+     {
+       href: '#resume',
+       title: '概述'
+     },
+     {
+       href: '#application-scenary',
+       title: '应用场景'
+     },
+     {
+       href: '#father-transfer-to-child',
+       title: '父组件传值给子组件'
+     }
+   ];
   questions: QuestionBase<any>[] = [];
 
   constructor(private questionService: QuestionService) {
