@@ -1,0 +1,125 @@
+<app-content-fill [anchor]="anchor">
+  <h2 id="resume">概述</h2>
+  生命周期(又名钩子), 相信大家听到这个名词大概能想到是干嘛的吧?一个组件, 从渲染到销毁, 在不同的阶段执行不同的操作, 这个过程就被称之为生命周期.
+  <br />
+  将组件比喻为人类的话, 假如一个人可以活到100岁.那么, 我们把他的0岁定义为第一个生命周期(初始化), 十八岁可以定义为第二个生命周期, 100岁定义为最后一个生命周期(销毁组件).
+  <br />
+  这样我们就可以在组件初始化、销毁等阶段执行特定的代码.
+  <h2 id="eight-lifecycle">八个生命周期</h2>
+  Angular提供了八个内置的生命周期.在实际开发中, 并不是每个组件都一定要用到全部的生命周期, 下面这张表列出了生命周期的执行顺序.
+  <nz-table #basicTable [nzData]="dataSet" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>钩子</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.value }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <h2 id="lifecycle-category">钩子分类</h2>
+  钩子虽然很多, 其实就两种, 一种是只执行一次的, 一种是执行多次的.
+  <br />
+  以下四种钩子只执行一次
+  <ul>
+    <li>ngOnInit()</li>
+    <li>ngAfterContentInit()</li>
+    <li>ngAfterViewInit()</li>
+    <li>ngOnDestroy()</li>
+  </ul>
+  以下钩子多次执行
+  <ul>
+    <li>ngOnChanges()</li>
+    <li>ngDoCheck()</li>
+    <li>ngAfterContentChecked()</li>
+    <li>ngAfterViewChecked()</li>
+  </ul>
+  <div class="info">
+    如果你英语还不错的话, 应该很容易理解.看这几个钩子命名, init为初始化, destroy为销毁, 显然这些事件只能执行一次.而changes, check等动作, 在数据变更时都会触发, 所以执行多次.
+  </div>
+  <h2 id="usage">使用方法</h2>
+  在
+  <span class="key-word">@angular/core</span>中引入需要的生命周期, 然后实现接口方法即可.
+  <code-mirror [code]="code6"></code-mirror>
+  实际上, 接口与方法之间是有对应关系的, 每个接口只有一个钩子方法, 方法名是接口名加前缀ng.例如, OnInit接口的钩子方法名为ngOnInit.观察前文的生命周期列表即可发现这个规律.
+  <div class="info">
+    如果你上手实验的话, 你会发现, 其实你不实现接口, 直接定义钩子方法, 也是可以正常使用的.关于这一点, 官方的说法如下:
+    <br />
+    从纯技术的角度讲，接口对 JavaScript 和 TypeScript 的开发者都是可选的。JavaScript 语言本身没有接口。 Angular 在运行时看不到 TypeScript
+    接口，因为它们在编译为 JavaScript 的时候已经消失了。 幸运的是，它们并不是必须的。
+    你并不需要在指令和组件上添加生命周期钩子接口就能获得钩子带来的好处。 Angular
+    会去检测这些指令和组件的类，一旦发现钩子方法被定义了，就调用它们。 Angular 会找到并调用像 ngOnInit() 这样的钩子方法，有没有接口无所谓。
+    虽然如此，在 TypeScript 指令类中添加接口是一项最佳实践，它可以获得强类型和 IDE 等编辑器带来的好处。 <br />
+    我个人推荐是按规范来, 即实现接口再实现方法.
+  </div>
+  <h2 id="ngOnInit">ngOnInit</h2>
+  这个是最常用的钩子, 在组件初始化时调用.
+  <h2 id="ngOnDestroy">ngOnDestroy</h2>
+  在组件销毁时调用, 一般用于取消订阅等.
+  <div class="warning">
+    <span class="key-word">ngDoCheck</span>、 <span class="key-word">ngAfterContentChecked</span>、
+    <span class="key-word">ngAfterViewChecked</span>在数据变更时会反复触发, 触发频率非常高, 几乎你只要稍微改一点点数据, 就会多次调用, 所以千万不能在这些钩子中写繁重的业务,
+    否则会很影响用户体验.
+  </div>
+  <h2 id="ngOnChanges">ngOnChanges</h2>
+  再次强调,
+  <span class="key-word">ngOnChanges</span>在Angular6当中不会在一开始就调用. <br />
+  从字面意思来看, 是发生变更时触发的, 而实际上, 他只检查外部流入的数据变更状态, 而外部流入的数据必然是使用
+  <span class="key-word">@Input</span>的变量, 也就是说, 如果你想要监控的变量不是
+  <span class="key-word">@Input</span>标注的, 是不会引起这个钩子的.
+  <br />
+  <h2 id="SimpleChanges">SimpleChanges</h2>
+  Angular提供了一个工具, 可以用在
+  <span class="key-word">ngOnChanges</span>的参数里, 用来辅助数据的变更检查, 他有以下几个属性:
+  <ul>
+    <li><span class="key-word">firstChange</span>:判断是否是初次赋值(初始化赋值, 不是手动第一次赋值)</li>
+    <li><span class="key-word">previousValue</span>:上一个值</li>
+    <li><span class="key-word">currentValue</span>:当前值</li>
+  </ul>
+  <h2 id="directive-lifecycle">指令的生命周期</h2>
+  前文所描述的内容都是组件的生命周期, 那么, 在指令当中是否有生命周期的概念呢?
+  <br />
+  在
+  <a routerLink="/angular/structural-directive">指令</a>部分就提到过, 组件就是拥有模板的指令.想想指令一般的存在情况, 根据流进来的数据对DOM元素进行处理.所以,
+  指令肯定是需要初始化、销毁等操作的.但是如果不是组件, 就没有模板, 也就没有了那些与视图有关的钩子.
+  <br />
+  所以指令的周期只有如下四种:
+  <ul>
+    <li>ngOnChanges</li>
+    <li>ngOnInit</li>
+    <li>ngDoCheck</li>
+    <li>ngOnDestroy</li>
+  </ul>
+  <h2 id="emotion">感情记录器</h2>
+  嘿嘿!这是个很有意思的案例, 我们知道, 在感情当中, 只有现任、前任和初恋(我规定的).那么, 接下来这个案例要实现的需求如下:
+  <ul>
+    <li>初始化时, 记录用户的初恋</li>
+    <li>在用户输入新的恋人时, 更新现任和前任</li>
+  </ul>
+  怎么样?需求是不是很简单?观察代码和运行结果, 相信你能秒懂!
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code1"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="父组件ts">
+      <code-mirror [code]="code2"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件ts">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card emotion">
+    <h1>父组件</h1>
+    <input nz-input [(ngModel)]="currentLover" name="currentLover" placeholder="请输入现任" />
+    <button (click)="record()" nz-button nzType="primary">更新</button>
+    <emotion [name]="currentName"></emotion>
+  </nz-card>
+</app-content-fill>

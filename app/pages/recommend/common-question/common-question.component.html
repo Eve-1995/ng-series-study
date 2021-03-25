@@ -1,0 +1,128 @@
+<div class="tutorial-no-anchor">
+  <h2>概述</h2>
+  在实际应用开发中, 有些问题是开发者经常遇到的.现将一些常见的问题在此小节中列出, 并提供解决方案.
+  <h2>那些年, 我们一起踩过的坑</h2>
+  <nz-collapse>
+    <!-- <nz-collapse-panel nzHeader="如何删除URL路径中的#">
+      <nz-tag nzColor="#2db7f5">问题分析</nz-tag>
+      <div>
+        #被称之为哈希, 是URL的一部分.通过BOM方法可以得到哈希之后的路径.
+        <code-mirror [code]="code1"></code-mirror>
+        官方默认是开启哈希的, 然而并不是所有人都需要这个哈希.
+      </div>
+      <nz-tag nzColor="#87d068">解决方案</nz-tag>
+      <div>
+        找到你的模块路由配置文件, 关闭哈希选项.
+        <code-mirror [code]="code2"></code-mirror>
+      </div>
+    </nz-collapse-panel> -->
+    <nz-collapse-panel nzHeader="[tslint] Class name must be in pascal case (class-name)">
+      <nz-tag nzColor="#2db7f5">问题分析</nz-tag>
+      <div>
+        tslint是用来规范你写代码的格式的.以这个提示为例, 是指类名开头小写了, tslint要求类名必须大写开头.tslint直接影响的是代码质量.可以说, 不同的tslint规则保证了Angular的团队协作力, 产生了一致的代码风格.
+      </div>
+      <nz-tag nzColor="#87d068">解决方案</nz-tag>
+      <div>
+        找到文件
+        <span class="key-word">tslint.json</span>, 搜索报错(其实不算是报错, 不修改也可以正常运行)提示中末尾小括号的内容
+        <span class="key-word">class-name</span>, 就可以查找到这个配置处, 并改为false即可.其他的tslint也是这样设置的.
+        <code-mirror [code]="code3"></code-mirror>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="'xxx' is not a known element">
+      <nz-tag nzColor="#2db7f5">问题分析</nz-tag>
+      <div>
+        许多开发者吐槽, 明明在
+        <span class="key-word">app.module.ts</span>中引入了样式组件(以zorro的nz-card为例), 但是依然无法生效.往往在这种情况下, 会有这样的报错
+        <nz-card class="card">
+          ERROR Error: "Uncaught (in promise): Error: Template parse errors:
+          <br />
+          'nz-card' is not a known element: <br />
+          1. If 'nz-card' is an Angular component,  then verify that it is part of this module. <br />
+          2. If 'nz-card' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this
+          message."
+        </nz-card>
+        我们尝试着翻译为中文:
+        <br />
+        <nz-card class="card">
+          'nz-card'是一个未知元素:
+          <br />
+          1.如果'nz-card'是一个Angular组件, 那么证明他是这个模块的一部分. <br />
+          2.如果'nz-card'是一个Web组件, 那么在这个组件中添加'CUSTOM_ELEMENTS_SCHEMA'至'@NgModule.schemas'以过滤这个提示.
+        </nz-card>
+        实际上, 一般都是第一种情况.可是你的的确确引入了zorro.
+        <code-mirror [code]="code4"></code-mirror>
+        其实问题出在模块的层级概念上.举个例子, 你的文件模块结构是这样的:
+        <div class="info">
+          app.module
+          <br />&nbsp;&nbsp;&nbsp;&nbsp;a.module <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.component
+          <br />&nbsp;&nbsp;&nbsp;&nbsp;b.module <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.component
+        </div>
+        当你在
+        <span class="key-word">a.component</span>当中使用zorro的组件时, 实际上他会从去 <span class="key-word">a.module</span>中找, 而不是去
+        <span class="key-word">app.module</span>中找.虽然说 <span class="key-word">app.module</span>包括了
+        <span class="key-word">a.module</span>, 但是的确这样是不行的.所以, 你的确是引入了zorro, 但是却没引对地方.
+      </div>
+      <nz-tag nzColor="#87d068">解决方案</nz-tag>
+      <div>
+        除了在当前模块中引入zorro外, 最合适的方法是创建一个共享模块
+        <span class="key-word">share.module</span>.因为几个模块间不止都用到了zorro, 像
+        <span class="key-word">CommonModule</span>等也是各个模块所需要的.所以将其抽象出来, 在每个模块中都引入
+        <span class="key-word">share.module</span>, 提高代码可维护性.
+        <nz-tabset>
+          <nz-tab nzTitle="share.module">
+            <code-mirror [code]="code5"></code-mirror>
+          </nz-tab>
+          <nz-tab nzTitle="xxx.module">
+            <code-mirror [code]="code6"></code-mirror>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="Type XxxComponent in D:/xxx.component.ts is part of the declarations of 2 modules">
+      <nz-tag nzColor="#2db7f5">问题分析</nz-tag>
+      <div>
+        通过报错可以看到, 
+        <span class="key-word">XxxComponent</span
+        >在两个模块当中被声明.但是如果只在一个模块中声明, 另外个模块就没法使用了.那么, 如何才能使得多个模块使用同一个组件呢?其实这点和前面这个问题差不多, 最佳实践都是创建
+        <span class="key-word">share.module</span>, 统一管理这些共享的组件.
+      </div>
+      <nz-tag nzColor="#87d068">解决方案</nz-tag>
+      <div>
+        与前面问题的不同之处是, 引入UI库往往是引入一个module, 那么
+        <span class="key-word">share.module</span>只需要import+export.而自己定义的跨模块组件, 在
+        <span class="key-word">share.module</span>当中应该是declaration+export.
+        <br />
+        <nz-tabset>
+          <nz-tab nzTitle="share.module">
+            <code-mirror [code]="code7"></code-mirror>
+          </nz-tab>
+          <nz-tab nzTitle="xxx.module">
+            <code-mirror [code]="code8"></code-mirror>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="NullInjectorError: No provider for XxxService!">
+      <nz-tag nzColor="#2db7f5">问题分析</nz-tag>
+      <div>
+        这里是指该服务没有对应的注册商.这种错误常见于新手开发者, 通常是对服务没有明确的概念.具体服务的概念请参考
+        <a href="https://angular.ink/angular/service" target="view_window">这里</a>.
+      </div>
+      <nz-tag nzColor="#87d068">解决方案</nz-tag>
+      <div>
+        将服务添加至注册商即可.注册方式分为
+        <span class="key-word">组件级注册</span>和 <span class="key-word">模块级注册</span>.二者的区别在
+        <a href="https://angular.ink/angular/service" target="view_window">这里</a>已经解释的非常清楚了, 不再赘述.
+        <nz-tabset>
+          <nz-tab nzTitle="share.module">
+            <code-mirror [code]="code9"></code-mirror>
+          </nz-tab>
+          <nz-tab nzTitle="xxx.module">
+            <code-mirror [code]="code10"></code-mirror>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </nz-collapse-panel>
+  </nz-collapse>
+</div>

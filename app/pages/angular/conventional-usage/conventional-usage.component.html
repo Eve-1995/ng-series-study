@@ -1,0 +1,278 @@
+<app-content-fill [anchor]="anchor">
+  <h2 id="resume">概述</h2>
+  <span>
+    本章讲解的内容是在Angular当中非常常用的API, 是你作为Angular开发者必须学会的内容. 但常见不代表简单, 有些API相对来说比较难于理解, 如果反复阅读后还是无法理解, 可以暂时搁置, 继续看其他章节的内容,
+    逐渐地理解.
+  </span>
+  <div class="info">
+    我个人认为, 很多时候, 软件开发的理论无异于玄学, 初期根本听不懂.但是在开发久了之后, 会发现那些理论说的是对的. 所以我个人对于软件开发有个小小的看法, 就是先学会用, 再学会理解.
+  </div>
+  <h2 id="default-code-analyze">组件三要素</h2>
+  几乎所有的Angular项目都会有一个<span class="key-word">app.component.ts</span>文件, 打开它可以看到如下代码
+  <ul>
+    <li><span class="key-word">selector</span>指明其选择器名</li>
+    <li><span class="key-word">templateUrl</span>指明其使用哪个模板文件</li>
+    <li><span class="key-word">styleUrls</span>指明使用哪些CSS样式表</li>
+  </ul>
+  <code-mirror [code]="templateUrlCode"></code-mirror>
+  我们知道, 传统页面都是html+css+js组成的, 那么我们回忆下, 是谁将这三者结合在一起的?没错, 是html使用
+  <span class="key-word">link</span>和 <span class="key-word">script</span>标签引入样式表和脚本文件.所以, 在传统页面中,
+  <span class="key-word">html</span>是核心.而在Angular中,
+  <span class="key-word">typescript</span>是核心, 他将决定使用哪些样式表和哪个模板文件. <br />
+  注意看, 只有 <span class="key-word">styleUrls</span>是数组的形式, 这意味着, 他是允许使用多个样式的. 实际上, Angular也允许你直接把样式代码写了 <span
+    class="key-word">TypeScript</span> 当中. 但是我不会告诉你相应的API, <strong>因为我强烈不推荐那么做</strong>.
+  <br />
+  <span class="key-word">selector</span>是一个选择器, 其实就是给现在这个页面做个标记, 方便在其他页面引用.
+  <div class="info">
+    一开始可能大家很难理解
+    <span class="key-word">selector</span>的作用, 我给大家打个比方, 大家看过火影忍者吗?四代火影的飞雷神
+    需要先扔一个苦无作为标记, 然后才能将自身传送至苦无所在的地方.这个
+    <span class="key-word">selector</span>就是苦无的作用, 他先指明自身的代号, 在需要引入的地方插入这个标签即可引用页面内容.或者说, 类似于html的
+    <span class="key-word">iframe</span>标签.
+  </div>
+  <span class="key-word">templateUrl</span>, 虽然模板文件只有一个, 但并不一定要通过这个关键字声明.也可以使用
+  <span class="key-word">template</span>来声明.二者的区别相信大家一眼就看出来, 前者是指定了某一个html文件作为模板, 后者是直接将html代码写在ts当中. 同样, 我也不推荐你直接把 <span class="key-word">html</span> 写在ts当中.
+  <div class="warning">
+    到这里, 你应该已经知道了 <span class="key-word">html</span> 与 <span class="key-word">css</span> 都是可以直接写在 <span
+      class="key-word">TypeScript</span> 当中的. 但是我非常不推荐你那么做.<br>
+    因为Angular的设计目标就是针对大型web项目, 既然是大型的, 那么相应的代码量也会多一些. 为了代码的可维护性, 肯定是希望代码进行分离的. 组件化是一种方案, 而将 <span
+      class="key-word">html/css/ts</span> 进行分离也是一种基本操作.
+  </div>
+  <h2 id="interpolation">插值表达式</h2>
+  思考一个问题, 在传统开发中, JS定义了一个用户名, 如何放在html当中合适的位置呢? 查看如下所示代码, 是否与你想的一样?
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="insertCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="javascript">
+      <code-mirror [code]="insertCodeJs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  在Angular当中, 不需要这么复杂, 只需如下代码即可成功显示变量
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="insertCodeHtmlInNg"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="insertCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <div class="info">
+    这里需要大家记住一句话:
+    <br />
+    JQ是 <strong>事件驱动</strong>, Angular是 <strong>数据驱动</strong>. <br />
+    如果暂时无法理解也没有关系, 请务必记住这句话!
+  </div>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <div id="user-name">
+      {{ userName }}
+    </div>
+  </nz-card>
+  是不是感觉很方便?这个叫
+  <span class="key-word">插值表达式</span>, 即用双花括号即可引用TS中的变量, 对象, 数组内容等, 如下所示
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="showDataCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="showDataCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <p>{{ byString }}</p>
+    <p>{{ byObject.centence }}</p>
+    <p>{{ byArray[0] }}</p>
+  </nz-card>
+  插值表达式不仅能够用在纯文本的地方, 还能用在属性上.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="classCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="css">
+      <code-mirror [code]="classCodeCss"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="classCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <div class="warning">
+    注意, 插值表达式可以用在
+    <strong>属性值</strong>上, 但不能用在 <strong>属性名</strong>上, 即只能用在等号的右侧, 不能用在等号的左侧.
+  </div>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <div class="{{ className }}">
+      <p>犬夜叉是真爱!</p>
+      <p>没有之一!</p>
+    </div>
+  </nz-card>
+  <h2 id="bind">绑定机制</h2>
+  Angular最大的亮点就是他的绑定机制, 一共有三种
+  <ul>
+    <li>属性 - 从数据源到视图(单向)</li>
+    <li>事件 - 从视图到数据源(单向)</li>
+    <li>表单值 - 从视图到数据源再到视图(双向)</li>
+  </ul>
+  视图, 就是我们看到的样子, 其实就是指HTML.
+  <br />
+  数据源, 是指typescript中的值, 无论他是定义好的值还是来自服务器的值, 都是数据源.
+  <br />
+  <h3>示例</h3>
+  观察以下代码和运行结果, 尝试理解Angular的绑定机制.
+  <br />
+  在看这些案例之前, 需要先科普一个知识点叫做绑定点击事件
+  <span class="key-word">(click)="fn()"</span>, 在传统开发中, 如果想要绑定点击事件, 需要使用JS先查找DOM元素再添加监听事件, 而在Angular中, 不需要做这些事情,
+  只需要在需要绑定的元素上使用
+  <span class="key-word">(click)</span>即可, <span class="key-word">fn()</span>是触发点击事件时调用的函数.
+  <div class="info">
+    再次强调: JQ是 <strong>事件驱动</strong>, Angular是 <strong>数据驱动</strong>.
+    <br />
+  </div>
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="bindCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="bindCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h4>案例1</h4>
+  点击按钮, 就会弹出带有
+  <span class="key-word">#age</span>标记的值, <span class="key-word">#age</span>标记了
+  <span class="key-word">input</span>的DOM元素, 这个用法在传统开发中是没有的, 其实他的作用, 和飞雷神差不多...原谅我又想到了这个比喻, 因为他们真的很像, 就是起到标记的目的.这个在官方翻译中是
+  <span class="key-word">模板引用变量</span>, 其实看字面意思也知道, 引用嘛, 那不就是标记的意思嘛.因此, 他传递的值是
+  <span class="key-word">age.value</span>, 就把输入框的值传给了ts. <span class="key-word">messageService</span>与Angular无关, 是
+  <span class="key-word">antd-design</span>的一个全局通知服务, 你不用了解, 你可以使用 <span class="key-word">console</span>进行实验.
+  <h4>案例2</h4>
+  这里没有使用输入框, 而是在函数中直接传入了一个字符串, 注意, 当传固定的值时, 需要使用单引号将起包围.可以看到, 在触发函数的时候, 他是将字符串传递给了数据源, 属于从视图向数据源传值, 所以是单向绑定.
+  <h4>案例3</h4>
+  在渲染模版时,
+  <span class="key-word">className</span>来自数据源的变量, 属于从数据源到视图的传值, 所以是单向绑定.
+  <h4>案例4</h4>
+  <span class="key-word">ngModel</span>会将数据源中的centence的值与input的值进行绑定, 并且是双向绑定.即无论哪方修改了值, 另外一方马上也会修改值.当点击按钮时, 调用
+  <span class="key-word">showMsg(centence)</span>方法, 而 <span class="key-word">centence</span>的值是来自数据源的值, 和上面input的
+  <span class="key-word">ngModel</span>没有直接关系.所以这里在这个案例中, 既有双向绑定又有单向绑定.
+  <div class="info">
+    注意了, 双向绑定的语法是 <span class="key-word">[(ngModel)]</span>, 中括号与小括号都是要写上的. 
+  </div>
+  <h4>总结</h4>
+  思考这样一个问题, 案例1和案例4都是输入一个值, 然后显示, 二者有何区别?
+  <br />
+  效果虽然一样, 但是思路是不一样的, 案例1用的是模版引用变量, 案例4用的是单双向绑定结合. <br />
+  判断单双向绑定: <br />
+  出现 <span class="key-word">[ ]</span>, 说明是从数据源到视图的单向绑定. <br />
+  出现 <span class="key-word">( )</span>, 说明是从视图到数据源的单向绑定. <br />
+  出现 <span class="key-word">[( )]</span>, 说明是双向绑定
+  <br />
+  <h3>运行结果</h3>
+  <nz-card class="card bind">
+    <div>
+      <p>案例1:使用模版引用变量(脱离数据源)</p>
+      <input style="width: 125px" nz-input #age placeholder="请输入你的年纪" />
+      <button (click)="showMsg(age.value)" nz-button nzType="primary">弹出模板引用变量的内容</button>
+    </div>
+    <div>
+      <p>案例2:使用固定字符串(从视图到数据源的单向)</p>
+      <button (click)="showMsg('我是写在模板当中的内容')" nz-button nzType="primary">弹出默认的内容</button>
+    </div>
+    <div>
+      <p>案例3:使用固定字符串(从数据源到视图的单向)</p>
+      <span [ngClass]="className">
+        <!-- 这里的ngClass等同于 class="{{className}}" -->
+        我是红色的, 但是我的样式名不是写死的, 而是ts中定义好的
+      </span>
+    </div>
+    <div>
+      <p>案例4:既有单向绑定又有双向绑定</p>
+      <input style="width: 125px" nz-input [(ngModel)]="centence"/>
+      <button (click)="showMsg(centence)" nz-button nzType="primary">弹出双向绑定的内容</button>
+    </div>
+  </nz-card>
+  <h2 id="optional-chain">可选链</h2>
+  假如有一个对象常量, 代码如下
+  <code-mirror [code]="safeCodeTs"></code-mirror>
+  通过前文的学习, 我们知道在html中是可以读取到 <span class="key-word">{{user.name}}</span> 的. 但是我想在模板中显示这个人的其他信息, 比如他的房子的地理位置, 也就是 <span class="key-word">user.house.location</span>. 如果你有过开发经验你就会知道, 这一定会报错. 因为在这段代码中, house是空的, 那么就无法读取到locaiton. 不信你可以试下, 你一定可以看到如下报错.
+  <div class="cmd">
+    ERROR TypeError: Cannot read property 'location' of undefined
+  </div>
+  <br />
+  可在实际开发中, 这个house可能有也可能没有, 那该怎么办呢? Angular提供了可选链, 只需要在可能为null的变量后加一个 <span class="key-word">?</span> 即可避免这个问题.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="safeCodeHtml"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="typescript">
+      <code-mirror [code]="safeCodeTs"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">我是{{user.name}}, 我的房子所在地为{{user.house?.location}}</nz-card>
+  <div class="info">
+    如果大家对es标准和ts熟悉的话, 会发现可选链的写法, 在ts的代码中也可以使用. 但是需要注意, 在html中使用可选链, 与es标准啥的没有关系, 这不是es实现的. 而是Angular自己实现的, 官方称之为 <span class="key-word">安全导航操作符</span> (这个起名的风格像极了波风水门...)
+  </div>
+  <h2>(重制版计划:ng-系列, 放在一起讲)</h2>
+  <h2 id="ng-content">ng-content</h2>
+  这部分知识要求你对父子组件有略微了解, 如果你完全没接触过父子组件, 建议你先看一下
+  <a routerLink="/angular/component-communication">组件交互</a>. <br />
+  通常, 我们使用父子组件时都是直接使用标签名, 内部不包含内容.
+  <code-mirror [code]="code1"></code-mirror>
+  那如果包含了内容呢?实际上, 默认情况下是会被省略的.如果希望内容在子组件中出现呢?为了应对这个场景, Angular提供了
+  <span class="key-word">ng-content</span>. <br />
+  现在我们来实现这样的一个需求, 在子组件的标签中, 放置三句话, 这三句话能够在子组件的特定位置显示.在子组件中需要显示的地方, 放置
+  <span class="key-word">ng-content</span>标签, 相当于占位符的作用.在渲染页面时, 会自动将父组件中的内容映射到
+  <span class="key-word">ng-content</span>当中. <br />
+  现在我们来思考另外一个场景, 我不只要把内容放进去, 而且要按自己想要的内容放成几块, 或者过滤一部分内容, 该怎么做呢?
+  <span class="key-word">ng-content</span>拥有
+  <span class="key-word">select</span>属性, 可以起到过滤作用.类似于css选择器, 他可以过滤父组件传来的内容, 根据class类名或者标签名进行过滤.
+  <nz-tabset>
+    <nz-tab nzTitle="父组件html">
+      <code-mirror [code]="code2"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="子组件html">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <h1>父组件</h1>
+    <input nz-input [(ngModel)]="sentence" name="sentence" class="sentence" />
+    <stomach>
+      <div style="margin-bottom: 14px">{{ sentence }}</div>
+      <p>所谓的不公, 只是不符合人类社会法则</p>
+      <span class="className">却符合因果关系</span>
+    </stomach>
+  </nz-card>
+  <h2 id="ng-template">ng-template</h2>
+  当
+  <span class="key-word">ng-template</span>上没有结构型指令时, 是不会产生作用的.也就是说, 如果只有一个单独的
+  <span class="key-word">ng-template</span>, 无论内部包含了什么, 都会显示为注释
+  <code-mirror [code]="code4"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    今天想吃点啥?
+    <ng-template> 原味鸡肿么样? </ng-template>
+  </nz-card>
+  当
+  <span class="key-word">ng-template</span>拥有结构型指令时, 就会开始工作. <span class="key-word">ngIf</span>是
+  <a routerLink="/angular/structural-directive">结构型指令</a>, 简单地说, 如果其值为true, 则显示内容, 否则抹去DOM结点.
+  <code-mirror [code]="code5"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    今天想吃点啥?
+    <ng-template [ngIf]="true"> 原味鸡肿么样? </ng-template>
+  </nz-card>
+  <h2 id="ng-container">ng-container</h2>
+  <span class="key-word">ng-container</span>只是一个分组元素, 它的特点就是在渲染页面时, 自身不加入DOM.你可以使用浏览器的开发者工具, 查看运行结果中的这句话, 是否只有p标签包围.
+  <div class="warning">
+    如果你真的查看HTML源码, 你会看到p标签的上一层是一个样式为ant-card-body的div标签, 这是我的运行结果容器, 也就是这个灰色背景, 并不是ng-container带来的.
+  </div>
+  <code-mirror [code]="code6"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <ng-container>
+      <p>轻流招聘啦~详情请戳 <a href="https://github.com/Eve-Sama" target="_blank">https://github.com/Eve-Sama</a></p>
+    </ng-container>
+  </nz-card>
+</app-content-fill>

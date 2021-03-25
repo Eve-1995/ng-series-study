@@ -1,0 +1,121 @@
+.ant-layout {
+  background-color: #fff;
+}
+
+//卡片设置背景颜色
+.card {
+  background-color: #f5f5f5;
+  margin-top: 15px;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+h2:not(:first-child) {
+  margin-top: 15px;
+}
+
+//关键字
+.key-word {
+  background-color: #f1f1f1;
+  padding: 0px 4px 2px;
+}
+
+//格式,用于显示cmd命令
+.cmd {
+  background-color: #333333;
+  width: 100%;
+  height: auto;
+  padding: 12px 20px;
+  color: #1dff1c;
+  margin: 16px 0px;
+}
+
+//以下为评论部分样式
+div.info {
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid #91d5ff;
+  background-color: #e6f7ff;
+  width: 100%;
+  height: auto;
+  margin: 16px 0px;
+}
+
+div.warning {
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid #ffe58f;
+  background-color: #fffbe6;
+  width: 100%;
+  height: auto;
+  margin: 16px 0px;
+}
+
+div.danger {
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.65);
+  border: 1px solid #ffa39e;
+  background-color: #fff1f0;
+  width: 100%;
+  height: auto;
+  margin: 16px 0px;
+}
+
+div.section {
+  margin-bottom: 9px;
+}
+
+//'代码显示器'上边距设置为15px,但是nz-tabset自带内边距,所以不需要那15px
+nz-tabset {
+  .codemirror-container {
+    margin-top: 0px !important;
+  }
+}
+
+//当侧边栏出现滚轴时,箭头与滚轴太近了,增加其边距
+.ant-menu-submenu-arrow {
+  right: 40px !important;
+}
+
+// 下面的以后要删掉的. 
+
+.tutorial {
+  float: left;
+  width: 79%;
+  @media screen and (max-width: 1249px) {
+      width: 100%;
+  }
+  line-height: 24px;
+}
+
+//针对无导航区的内容
+.tutorial-no-anchor {
+  margin-right: 24px;
+}
+
+//右侧导航区
+.anchor {
+  float: left;
+  position: fixed;
+  right: 0px; //使得右侧导航区贴近右端
+  nz-link {
+      line-height: 18px; //修复bug因行高不够而导致无法完全显示英文,如g字母只能显示一半高度
+      a {
+          //修复bug点击锚点时有下划线
+          text-decoration: none;
+      }
+  }
+  .ant-anchor {
+      //导航区整体偏窄,拉宽点
+      min-width: 210px;
+  }
+}

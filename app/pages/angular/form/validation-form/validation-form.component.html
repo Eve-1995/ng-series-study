@@ -1,0 +1,140 @@
+<app-content-fill [anchor]="anchor">
+  <h2 id="template-validation">模板驱动验证</h2>
+  直接把验证内容放在模板当中, 被称为
+  <strong>模板驱动验证</strong>.在前文我们已经学过, H5提供了
+  <span class="key-word">required</span>来作为必填的标识, 实际上, 这点验证对于日常开发是远远不足的.所以, H5提供了一些属性型验证器,
+  <span class="key-word">minlength</span>, <span class="key-word">maxlength</span>等来辅助我们完成表单的验证. <br />
+  在前文当中, 我们已经使用过
+  <span class="key-word">#var="ngModel"</span>这种写法, 它可以取得控件的样式类名(className), 判断控件状态(touched, dirty, valid)等. <br />
+  实际上, 使用了H5的验证属性后, 所有的错误会集中为一个名为 <span class="key-word">errors</span>的对象当中.使用
+  <span class="key-word">#var="ngModel"</span>可以访问到这个对象.
+  <code-mirror [code]="code1"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <form>
+      <input name="name" [(ngModel)]="demo1Value" #demo1="ngModel" nz-input placeholder="值必填且不能少于4个字符多于6个字符" required
+        minlength="4" maxlength="6" />
+      <div *ngIf="demo1.invalid && (demo1.dirty || demo1.touched)">
+        <div *ngIf="demo1.errors.required">值不能为空</div>
+        <div *ngIf="demo1.errors.minlength">值不能少于4个字符</div>
+      </div>
+    </form>
+  </nz-card>
+  <div class="info">
+    思考一下, 案例代码中使用了
+    <span class="key-word">minlength</span>和 <span class="key-word">maxlength</span>, 但是 <span
+      class="key-word">errors</span> 却只能访问到
+    <span class="key-word">minlength</span>, 无法访问 <span class="key-word">maxlength</span>这是为什么? <br />
+    其实这是个逻辑问题.在我们的案例中, 至少输入4个字符, 至多输入6个字符.所以, 如果用户输入超出6个字符一定是不合法的, 因此, H5会自动帮我们过滤超出的字符.但是用户输入少于4个字符时, 可能是用户正在输入, 所以也许合法,
+    也许不合法.所以需要交给
+    <span class="key-word">errors</span>来处理 .
+  </div>
+  <h2 id="reactive-validation">响应式表单的验证</h2>
+  把验证内容放在模板当中, 被称为
+  <strong>模板驱动表单</strong>.那么, 把验证内容放在数据源当中就被称之为 <strong>响应式表单</strong>.
+  <div class="info">说实话, 我觉得这个名字起的很奇怪.我曾经以为这是和响应式页面一个意思, 看了官网的解释才明白压根不是一回事.</div>
+  我们先来了解几个术语
+  <ul>
+    <li><span class="key-word">FormGroup</span>:你可以理解为是将表单分为一组, 因为实际上开发中, 你一份表单可能分为多个部分</li>
+    <li><span class="key-word">FormControl</span>:你可以理解为表单控制元素, 就是每一个表单内部元素的变量</li>
+    <li><span class="key-word">Validators</span>:验证器, 设置验证条件</li>
+  </ul>
+  观察模板代码, 你会发现响应式表单验证其实和模板驱动验证非常相似.只是验证条件放在了数据源当中.
+  <br />
+  在模板驱动验证当中,
+  <span class="key-word">errors</span>需要通过模板引用变量来取得.而在响应式表单验证当中, 我们需要在数据源当中写一个函数来取得
+  <span class="key-word">FormControl</span>, 他可以取得 <span class="key-word">errors</span>. <br />
+  现在我们思考这样一个问题, 函数返回值, 在TS当中是可以正常拿到的, 但是如果返回值是给模板用的呢?提到模板调用函数, 大家可能会想到
+  <span class="key-word">(click)="func()"</span>, 这种写法的确是可以调用函数, 但也只是执行这个函数而已, 如果这个函数是返回了一个值, 模板还是没办法使用.因此,
+  就需要特殊写法的函数(我不知道这种写法术语叫啥...)
+  <code-mirror [code]="code2"></code-mirror>
+  这样子返回值就能被模板使用了.
+  <br />
+  在案例中, 我只演示了几个常用的内置验证器, 更多的内置验证器请在
+  <a href="https://angular.cn/api/forms/Validators#minLength" target="view_window">这里</a> 查看.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <form [formGroup]="demo2Group">
+      <!-- formControlName的值demo2Value指的是FormControl, 后文的demo2Value都是指数据源中的函数.一般同名处理 -->
+      <input formControlName="demo2Value" nz-input placeholder="值必填且不能少于4个字符多于6个字符" />
+      <div *ngIf="demo2Value.invalid && (demo2Value.dirty || demo2Value.touched)">
+        <div *ngIf="demo2Value.errors.required">值不能为空</div>
+        <div *ngIf="demo2Value.errors.minlength">值不能少于4个字符</div>
+        <div *ngIf="demo2Value.errors.maxlength">值不能多于6个字符</div>
+      </div>
+    </form>
+  </nz-card>
+  <div class="info">
+    想要判断验证情况, 不一定要按上文这么麻烦, 其实可以省去使用函数取得
+    <span class="key-word">FormControl</span>这步.直接写为
+    <br />
+    <span class="key-word">*ngIf="demo2Group.get('demo2Value').hasError('required')"</span>
+    <br />
+    显然判断语句的长度就长了不少, 写法的取舍, 随你个人喜欢.
+  </div>
+  <h2 id="custom-validator">自定义验证器</h2>
+  <strong>这部分难度较大, 如果看不懂请多阅读几次或者查询其他站点资料.</strong>
+  <br />
+  在开发中, 难免有自己特殊的验证需求, 现在我们来设计一个自定义的验证器.通过前文的学习, 我们已经知道在模板驱动表单和响应式表单当中的写法是不一样的.所以, 自定义验证器的设计, 其实也是要分这两种情况的.
+  <br />现在, 我们分别在两种情况下实现一个简单的需求
+  <ul>
+    <li>设定表单值不能包含'Eve', 不区分大小写</li>
+  </ul>
+  <h2 id="custom-reactive-validation">响应式表单</h2>
+  在响应式表单当中, 验证内容是写在数据源当中的.所以, 我们可以新建一个文件, 单独写一个函数来处理验证逻辑.
+  <div class="info">
+    可能你会有疑问, 为什么要单独在新的文件里写函数, 而不直接将函数写在当前组件的数据源当中.这么做是有原因的, 在后文会介绍.
+  </div>
+  按照官方的API文档, 我们大概要将函数写成这个样子.
+  <code-mirror [code]="code5"></code-mirror>
+  <span class="key-word">ValidatorFn</span>是Angular的一个类, 验证器需要返回这个类型, 而这个类型规定了返回的类型是对象, 这也就是为什么我不直接返回 <span
+    class="key-word">true</span>.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <form [formGroup]="demo3Group">
+      <input formControlName="demo3Value" nz-input placeholder="值必填且不能包含字符'Eve'" />
+      <div *ngIf="demo3Value.invalid && (demo3Value.dirty || demo3Value.touched)">
+        <div *ngIf="demo3Value.errors.required">值不能为空</div>
+        <div *ngIf="demo3Value.errors.forbiddenName">值不能包含'Eve'</div>
+      </div>
+    </form>
+  </nz-card>
+  <h2 id="custom-template-validation">模板驱动表单</h2>
+  在前面的
+  <a routerLink="/angular/attribute-directive">指令</a>
+  部分, 我们已经学习了指令的概念及基本用法.在模板当中进行验证, 其实就是写一个指令来进行数据处理.那么指令的代码大概就像下面这样子
+  <code-mirror [code]="code8"></code-mirror>
+  指令需要实现
+  <span class="key-word">Validator</span>接口的
+  <span class="key-word">validate</span>函数.等等, 这个函数的逻辑, 和之前的自定义响应式表单验证是不是应该一样的?所以, 把两种验证写在一个文件里, 直接调用函数即可.
+  <code-mirror [code]="code9"></code-mirror>
+  这也就是为什么要单独写一个文件, 方便二者统一.
+  <code-mirror [code]="code10"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <form>
+      <input name="name" [(ngModel)]="demo4Value" #demo5="ngModel" nz-input placeholder="值必填且不能包含字符'Eve'" required
+        appForbiddenName="Eve" maxlength="6" />
+      <div *ngIf="demo5.invalid && (demo5.dirty || demo5.touched)">
+        <div *ngIf="demo5.errors.required">值不能为空</div>
+        <div *ngIf="demo5.errors.forbiddenName">值不能包含'Eve'</div>
+      </div>
+    </form>
+  </nz-card>
+</app-content-fill>

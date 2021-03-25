@@ -1,0 +1,92 @@
+<app-content-fill [anchor]="anchor">
+  <h2 id="resume">概述</h2>
+  路由, 这个词最先联想到的是家用路由器.实际上, Angular路由的概念和路由器的概念其实是很像的.在Angular当中, 路由用来控制应该显示哪些视图, 隐藏哪些视图.在本小结中, 没有需要写代码的练习, 都只是些名词科普, 首先理解其概念, 在下一小结当中会应用这些基础, 实现路由系统.
+  <br />
+  <h2 id="why-router">为什么需要路由</h2>
+  大家一定有过以下经历
+  <ul>
+    <li>在URL当中直接输入网址, 就能直接看到新的页面</li>
+    <li>点击了一个链接, 跳转到新的页面</li>
+    <li>点击浏览器的前进或者后退按钮, 可以查看浏览的历史页面</li>
+  </ul>
+  归根结底, 变来变去, 变的都是URL地址. 理论地说, URL地址保存的是
+  <strong>应用状态</strong>. <br />
+  举个例子, 当你访问 <span class="key-word">angular.ink</span> 这个域名的时候, 你可以根据菜单访问不同的页面, 当你访问到
+  <span class="key-word">angular.ink/project/author</span
+  >(关于作者部分)时, 发现作者好像还挺有趣的, 想分享给朋友.那么你将链接发给对方即可.这就是所谓的应用状态. <br />
+  如果做过JSP或者ASP开发的朋友可能会好奇, 这个和路由有什么关系? <br />
+  因为在传统的开发当中, 你的页面可能是这样的
+  <div class="info">
+    dist
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;index.html <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;author.html <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;...
+  </div>
+  每个页面都是独立的, 当你需要访问
+  <span class="key-word">author.html</span
+  >时, 向服务端发起请求, 服务端返回对应的页面代码.但是在现代前端工程当中, 有模块化的概念, 所以在打包之后, 实际上的文件结构却是这个样子的
+  <div class="info">
+    dist
+    <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;assets <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;index.html <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;0.f14b16bb20ec5133033b.js <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;1.7dbb07c2d8514e83e61b.js <br />
+    &nbsp;&nbsp;&nbsp;&nbsp;...
+  </div>
+  你所看到的乱序的JS文件名, 是工具自动生成的, 可以暂时不管, 反正就是个名字.你会发现, 打包后的代码, html文件只有一个
+  <span class="key-word">index.html</span>.那他如何能返回
+  <span class="key-word">author.html</span
+  >呢?所以, 这种页面的变化, 就需要交给路由来处理.所以很多时候, 页面的跳转并不是后台返回的, 而是前端处理的.
+  <h2 id="import-router">导入路由模块</h2>
+  使用Angular CLI初始化的项目, 是不具备路由功能的, 只有一个页面.想要使用路由, 必须要导入路由模块.
+  <code-mirror [code]="code1"></code-mirror>
+  <h2 id="router-outlet">router-outlet</h2>
+  大家想一想, 是不是经常有这么一种应用, 侧边栏和顶部导航栏是不变的, 只有内容区是在变化的.如本项目, 左侧菜单好像是固定在那边的, 右边内容区却是会变化的.这是如何实现的呢?
+  <br />
+  实际上, 右边就是个 <span class="key-word">router-outlet</span>, 字面意思是路由出口, 告诉路由模块, 需要加载的页面需要放在哪个地方.
+  <code-mirror [code]="code2"></code-mirror>
+  <h2 id="routerLink">routerLink</h2>
+  路由的跳转, 很多时候是由用户在应用界面上的操作导致的, 那么当用户需要跳转页面的时候, 需要加上跳转链接.在以前, 我们可能是这样写的
+  <code-mirror [code]="code3"></code-mirror>
+  但是在路由体系当中, 应该这样写
+  <code-mirror [code]="code4"></code-mirror>
+  <h2 id="ActivatedRoute">激活的路由</h2>
+  当路由跳转时, 会携带许多的信息.比如某订餐链接是这样的
+  <span class="key-word">food/15</span>, 那么他可以是访问了
+  <span class="key-word">food</span>页面, 15号菜品的详情信息, 那么15就是这个菜品的id.实际上, 激活的路由还能携带更多的信息.
+  <nz-table #nzTable1 [nzData]="tableData1" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>属性</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of nzTable1.data">
+        <td>{{ obj.key }}</td>
+        <td>{{ obj.value }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <h2 id="router-event">路由事件</h2>
+  从用户操作上看, 所谓路由, 好像只是点了个链接, 初始化了一个视图而已.实际上, 真实的过程远比这个复杂得多.在导航当中, 路由服务会通过
+  <span class="key-word">Router.event</span>来发布一些导航事件, 如下表所示.
+  <nz-table #nzTable2 [nzData]="tableData2" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>事件名</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of nzTable2.data">
+        <td>{{ obj.key }}</td>
+        <td>{{ obj.value }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  最典型的应用是页面加载进度条, 当你切换页面时, 观察页面顶部是否有个进度条?那便是利用了导航事件.
+  <code-mirror [code]="code5"></code-mirror>
+</app-content-fill>

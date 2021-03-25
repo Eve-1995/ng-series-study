@@ -1,0 +1,57 @@
+<div class="tutorial-no-anchor">
+  <div nz-row class="card-question">
+    <div nz-col class="gutter-row" nzSpan="6">
+      <nz-card nzHoverable [nzCover]="level1" (click)="doExam(1)">
+        <nz-card-meta [nzTitle]="nzTitle1" nzDescription="常识类题目, 较为简单">
+          <ng-template #nzTitle1>
+            <span class="title">入门</span>
+          </ng-template>
+        </nz-card-meta>
+      </nz-card>
+      <ng-template #level1>
+        <img alt="新手入门" src="../../../../assets/img/level1.png" />
+      </ng-template>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <nz-card nzHoverable [nzCover]="level2" (click)="doExam(2)">
+        <nz-card-meta [nzTitle]="nzTitle2" nzDescription="开发中必备的知识点">
+          <ng-template #nzTitle2>
+            <span class="title">中级</span>
+          </ng-template>
+        </nz-card-meta>
+      </nz-card>
+      <ng-template #level2>
+        <img alt="进阶升级" src="../../../../assets/img/level2.png" />
+      </ng-template>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <nz-card nzHoverable [nzCover]="level3" (click)="doExam(3)">
+        <nz-card-meta [nzTitle]="nzTitle3" nzDescription="难到作者都一脸懵逼">
+          <ng-template #nzTitle3>
+            <span class="title">高级</span>
+          </ng-template>
+        </nz-card-meta>
+      </nz-card>
+      <ng-template #level3>
+        <img alt="史诗挑战" src="../../../../assets/img/level3.png" />
+      </ng-template>
+    </div>
+    <div nz-col class="gutter-row" nzSpan="6">
+      <nz-card nzHoverable [nzCover]="report" (click)="showGradeReport()">
+        <nz-card-meta [nzTitle]="nzTitle4" nzDescription="分析你的答题情况">
+          <ng-template #nzTitle4>
+            <span class="title">成绩单</span>
+          </ng-template>
+        </nz-card-meta>
+      </nz-card>
+      <ng-template #report>
+        <img alt="成绩单" src="../../../../assets/img/report.png" />
+      </ng-template>
+    </div>
+  </div>
+  <do-exam #examLevel1 [level]="1"></do-exam>
+  <do-exam #examLevel2 [level]="2"></do-exam>
+  <do-exam #examLevel3 [level]="3"></do-exam>
+  <error-list #errorList></error-list>
+  <exam-report #examReport (event)="showErrorList()"></exam-report>
+</div>

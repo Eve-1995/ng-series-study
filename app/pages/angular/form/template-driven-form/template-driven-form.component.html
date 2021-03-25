@@ -1,0 +1,139 @@
+<app-content-fill [anchor]="anchor">
+  <h2 id="resume">概述</h2>
+  在
+  <a routerLink="/angular/initial-form">初识表单</a>
+  部分介绍了表单的一些基本用法, 那些用法并不太复杂, 且功能较为简单.在本小结, 将继续深入Angular的表单模块, 使用Angular封装的一些表单功能.
+  <h2 id="FormsModule">FormsModule</h2>
+  在
+  <a routerLink="/angular/conventional-usage">常规用法</a>中提到过 <span class="key-word">app.module.ts</span>这个文件, 当中的
+  <span class="key-word">import</span>介绍是:导入其他模块供本模块使用.在本小结中, 我们需要使用一些表单的功能, 如输入框是否被修改过?需要填写的值是否都已经填写完毕?这些功能被Angular封装在
+  <span class="key-word">FormsModule</span>当中.现在我们在 <span class="key-word">app.module.ts</span>当中引入这个模块.
+  <code-mirror [code]="code1"></code-mirror>
+  <h2 id="object-structral">使用对象结构取值</h2>
+  在之前的许多案例中, 都用到了
+  <span class="key-word">ngModel</span>, 这个关键字堪称Angular的必杀技, 典型的双向绑定. <br />
+  在表单当中, 往往不止一个输入框, 假若有10个输入框, 那我们需要设定10个
+  <span class="key-word">ngModel</span>吗?是的, 这没有问题.但是并不是绑定10个对应的变量.而是设计一个实体类来保存这个实体的数据.在本小结中, 以用户注册为例. <br />
+  首先单独写一个 <span class="key-word">user.ts</span>, 用来声明这个实体类.
+  <code-mirror [code]="code2"></code-mirror>
+  之后在页面中引用这个实体类, 然后声明对象并实例化.在模板当中, 使用这个对象进行绑定.
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code3"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="ts">
+      <code-mirror [code]="code4"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card demo1">
+    <input nz-input [(ngModel)]="user.userName" name="userName" placeholder="请输入姓名" />
+    <input nz-input [(ngModel)]="user.password" name="password" placeholder="请输入密码" />
+    <input nz-input [(ngModel)]="user.realName" name="realName" placeholder="请输入真实姓名" />
+    <br />
+    注册信息为:{{ user | json }}
+  </nz-card>
+  <h2 id="ngModel">ngModel</h2>
+  在表单当中, 使用
+  <span class="key-word">ngModel</span>不仅仅能够给我们带来双向绑定, 还能给我们带来更多的珍贵信息.
+  <br />
+  <span class="key-word">ngModel</span>会使用一些css类来标记控件当前的状态.
+  <nz-table #table [nzData]="tableData" nzShowPagination="false">
+    <thead>
+      <tr>
+        <th>状态</th>
+        <th>为真时的CSS</th>
+        <th>为假时的CSS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of table.data">
+        <td>{{ data.state }}</td>
+        <td>{{ data.true }}</td>
+        <td>{{ data.false }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div class="info">
+    前两个状态比较好理解, 第三个状态'控件的值有效', 如何定义值是否有效?其实取决于表单的H5验证控件, 在本小结当中, 是指
+    <span class="key-word">required</span>属性, 也就是指内容是否为空.在下一节中会有多个条件组合, 全部满足时才为合法.
+  </div>
+  在使用了
+  <span class="key-word">ngModel</span>之后, 借助模板引用变量可以获取其样式类名.
+  <div class="info"><span class="key-word">ant-input</span>是antd的一个样式, 这个不属于Angular自带的内容.</div>
+  <code-mirror [code]="code5"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card">
+    <form>
+      <input nz-input required [(ngModel)]="model" name="model" placeholder="输入内容并观察输出结果" #inputElement />
+      <br />控件当前的状态: {{ inputElement.className }}
+    </form>
+  </nz-card>
+  <h2 id="form-state-judge">控件状态的判断</h2>
+  仅仅知道控件自带的样式, 对于开发其实是不够的.很多时候, 我们需要判断他们的状态.比如, 这个值是否合法?如果获取DOM判断是否包含
+  <span class="key-word">ng-invalid</span>样式, 显然太麻烦了.Angular提供了API解决了这个问题. <br />
+  我们现在已经知道了模板引用变量的存在, 实际上, 模板引用变量还有更高级的用法.我们可以通过给模板引用变量赋值来使得变量具备更多的功能.如
+  <span class="key-word">#element="ngModel"</span>. 现在我们来实现如下的一个简单需求
+  <ul>
+    <li>在初始状态下, 一切正常</li>
+    <li>当用户输入值时, 如果值不为空, 则控件左边框为绿色</li>
+    <li>如果值为空, 则控件左边框为红色且出现提示信息</li>
+  </ul>
+  <nz-tabset>
+    <nz-tab nzTitle="html">
+      <code-mirror [code]="code6"></code-mirror>
+    </nz-tab>
+    <nz-tab nzTitle="css">
+      <code-mirror [code]="code7"></code-mirror>
+    </nz-tab>
+  </nz-tabset>
+  <h3>运行结果</h3>
+  <nz-card class="card demo2">
+    <form>
+      <p>
+        <span>touched = {{ demo2.touched }}</span>
+        <span>untouched = {{ demo2.untouched }}</span>
+        <span>dirty = {{ demo2.dirty }}</span>
+        <span>pristine = {{ demo2.pristine }}</span>
+        <span>valid = {{ demo2.valid }}</span>
+        <span>invalid = {{ demo2.invalid }}</span>
+      </p>
+      <label for="userName">用户名:</label>
+      <input nz-input required [(ngModel)]="userName" id="userName" name="userName" #demo2="ngModel" />
+      <div [hidden]="demo2.valid || demo2.pristine">用户名不能为空!</div>
+    </form>
+  </nz-card>
+  <h2 id="ngForm">ngForm</h2>
+  在前文中我们已经学到, 如果将指令赋值给模板引用变量(#var="ngModel"), 则可以使用模板引用变量判断控件的状态.现在我们再来学习下
+  <span class="key-word">ngForm</span>指令的功能. <br />
+  有时候, 我们会一键清空表单.我们可以通过清空数据源中的数据, 使得表单值为空, 却不能重置控件的状态.
+  <span class="key-word">ngForm</span>指令有一个函数 <span class="key-word">reset()</span> 能够帮助我们轻松地完成这一切. <br />
+  在Angular当中, 表单提供了一个事件 <span class="key-word">ngSubmit</span>用于提交表单数据.当触发类型为
+  <span class="key-word">submit</span>的按钮时, 会触发 <span class="key-word">ngSubmit</span>的事件. <br />
+  现在我们实现一个简单的需求
+  <ul>
+    <li>点击清空按钮能够重置表单控件状态</li>
+    <li>点击提交按钮, 能够将数据打印在页面上</li>
+  </ul>
+  <code-mirror [code]="code8"></code-mirror>
+  <h3>运行结果</h3>
+  <nz-card class="card demo2">
+    <form #demo4="ngForm" (ngSubmit)="onSubmit()">
+      <p>
+        <span>touched = {{ demo3.touched }}</span>
+        <span>untouched = {{ demo3.untouched }}</span>
+        <span>dirty = {{ demo3.dirty }}</span>
+        <span>pristine = {{ demo3.pristine }}</span>
+        <span>valid = {{ demo3.valid }}</span>
+        <span>invalid = {{ demo3.invalid }}</span>
+      </p>
+      <label for="passwprd">密码:</label>
+      <input nz-input required [(ngModel)]="passwprd" id="passwprd" name="passwprd" #demo3="ngModel" />
+      <br /><br />
+      <div class="button-group">
+        <button (click)="demo4.reset()" nz-button nzType="danger">清空</button>
+        <button type="submit" nz-button nzType="primary">提交</button>
+      </div>
+    </form>
+  </nz-card>
+</app-content-fill>

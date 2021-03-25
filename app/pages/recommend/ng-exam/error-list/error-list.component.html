@@ -1,0 +1,65 @@
+<ng-template #title>
+  <span>Angular水平测验 - 错题集</span>
+</ng-template>
+<ng-template #content>
+  <div class="spin" *ngIf="spinBoolean">
+    <nz-spin nzTip="Loading..." [nzSize]="'large'"></nz-spin>
+  </div>
+  <nz-tabset *ngIf="!spinBoolean">
+    <nz-tab nzTitle="入门">
+      <div *ngIf="level1Data.length === 0" class="center">太厉害了!该部分题目全部答对了!</div>
+      <div *ngFor="let item of level1Data; let index = index">
+        <div>
+          <p class="title">{{ index + 1 }}、{{ item.question }}</p>
+          <p>{{ item.optionA }}</p>
+          <p>{{ item.optionB }}</p>
+          <p>{{ item.optionC }}</p>
+          <p>{{ item.optionD }}</p>
+          <div>
+            <span> 你的答案:{{ item.errorAnswer }} </span>
+            <span class="answer"> 参考答案:{{ item.rightAnswer }} </span>
+          </div>
+          <br />
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="中级">
+      <div *ngIf="level2Data.length === 0" class="center">太厉害了!该部分题目全部答对了!</div>
+      <div *ngFor="let item of level2Data; let index = index">
+        <div>
+          <p class="title">{{ index + 1 }}、{{ item.question }}</p>
+          <p>{{ item.optionA }}</p>
+          <p>{{ item.optionB }}</p>
+          <p>{{ item.optionC }}</p>
+          <p>{{ item.optionD }}</p>
+          <div>
+            <span> 你的答案:{{ item.errorAnswer }} </span>
+            <span class="answer"> 参考答案:{{ item.rightAnswer }} </span>
+          </div>
+          <br />
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab nzTitle="高级">
+      <div *ngIf="level3Data.length === 0" class="center">太厉害了!该部分题目全部答对了!</div>
+      <div *ngFor="let item of level3Data; let index = index">
+        <div>
+          <p class="title">{{ index + 1 }}、{{ item.question }}</p>
+          <p>{{ item.optionA }}</p>
+          <p>{{ item.optionB }}</p>
+          <p>{{ item.optionC }}</p>
+          <p>{{ item.optionD }}</p>
+          <div>
+            <span> 你的答案:{{ item.errorAnswer }} </span>
+            <span class="answer"> 参考答案:{{ item.rightAnswer }} </span>
+          </div>
+          <br />
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</ng-template>
+
+<ng-template #footer>
+  <button nz-button nzType="primary" (click)="close()">关闭</button>
+</ng-template>
