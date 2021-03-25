@@ -1,150 +1,144 @@
-<div class="tutorial">
-  <h2 id="resume">概述</h2>
-  在之前的学习当中, 我们已经知道了什么叫做
-  <strong>模板驱动表单</strong>, 什么叫做 <strong>响应式表单</strong>. <br />
-  现在, 我们来详细谈一谈响应式表单的一些零碎的用法.
-  <h2 id="getAndSet">取值与赋值</h2>
-  <span class="key-word">FormControl</span>提供了一些功能, 最常用的是取值与赋值.
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code1"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code2"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <nz-card class="card demo1">
-    <form [formGroup]="demo1Group">
-      <input formControlName="demo1Value" nz-input placeholder="尝试输入值" />
-      <button (click)="updateDemo1Value()" nz-button nzType="primary">设置值</button>
-      <button (click)="getDemo1Value()" nz-button nzType="primary">取得值</button>
-      <br />
-      你输入的值为:{{ result }}
-    </form>
-  </nz-card>
-  <h2 id="nestingAndGroup">嵌套与分组</h2>
-  很多时候, 一份复杂的表单是由几个部分组成的.比如用户信息采集, 可能由社会信息、个人信息、学籍信息等多个方面组成的.而我们知道, 
-  <span class="key-word">form</span
-  >是不能嵌套的.嵌套的好处其实就是使得逻辑更加清晰罢了, 并没有特别大的必要, 如果你真的有这个需求, 可以使用响应式表单来完成. <br />
-  现在我们来实现一个简单的需求
-  <ul>
-    <li>采集用户信息, 用户信息由个人信息和学籍信息组成</li>
-  </ul>
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code3"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code4"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h3>运行结果</h3>
-  <nz-card class="card demo2">
-    <form [formGroup]="userGroup">
-      用户表单(两个小表单合起来)的合法状态:
-      <span>{{ userGroup.valid }}</span>
-      <h2>个人信息</h2>
-      <div formGroupName="personalGroup">
-        <input formControlName="userName" nz-input placeholder="用户名, 必填项" />
-      </div>
-      userName的值为:
-      <span>{{ userGroup.get('personalGroup').get('userName').value }}</span>
-      <h2>学籍信息</h2>
-      <div formGroupName="schoolGroup">
-        <input formControlName="collegePlace" nz-input placeholder="大学所在地, 不少于4个字符" />
-      </div>
-      collegePlace的值为:
-      <span>{{ userGroup.get('schoolGroup').get('collegePlace').value }}</span>
-      <br />
-    </form>
-  </nz-card>
-  <h2 id="patchValue">批量模型更新</h2>
-  我们已经知道, 如果想要修改表单的值, 可以借助
-  <span class="key-word">FormControl</span> 的
-  <span class="key-word">setValue()</span>来修改表单的值, 但是这种方法只能改一个值, 如果想要改多个值, 可以使用
-  <span class="key-word">FormGroup</span>的 <span class="key-word">patchValue()</span>.
-  基于上一部分的需求, 我们对需求做出调整.在注册时, 对于用户信息, 一般网站不会要求一次性填写, 一些补充信息是可以事后填写的, 我们现在来模仿这个功能.
-  <ul>
-    <li>假设用户名已经设置了, 当他想要更新用户信息时, 学籍信息是全新的, 而用户名他可以修改也可以使用注册时填写的.</li>
-  </ul>
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code5"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code6"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h3>运行结果</h3>
-  <nz-card class="card demo2">
-    <form [formGroup]="userGroup2">
-      用户表单(两个小表单合起来)的合法状态:
-      <span>{{ userGroup2.valid }}</span>
-      <h2>个人信息</h2>
-      <div formGroupName="personalGroup">
-        <input formControlName="userName" nz-input placeholder="用户名, 必填项" class="userName" />
-        <button (click)="updatePersonalGroup()" nz-button nzType="primary">使用默认用户名</button>
-      </div>
-      userName的值为:
-      <span>{{ userGroup2.get('personalGroup').get('userName').value }}</span>
-      <h2>学籍信息</h2>
-      <div formGroupName="schoolGroup">
-        <input formControlName="collegePlace" nz-input placeholder="大学所在地, 不少于4个字符" />
-      </div>
-      collegePlace的值为:
-      <span>{{ userGroup2.get('schoolGroup').get('collegePlace').value }}</span>
-      <br />
-    </form>
-  </nz-card>
-  <h2 id="formBuilder">FormBuilder</h2>
-  我们已经知道, 想要创建响应式表单, 需要用到
-  <span class="key-word">FormGroup</span>和 <span class="key-word">FormControl</span>.实际上, 我们可以简化这个步骤, 在构造函数当中注入
-  <span class="key-word">FormBuilder</span>, 二者的写法相似.以下两种写法的效果是等价的.
-  <nz-tabset>
-    <nz-tab nzTitle="使用FormGroup、FormControl">
-      <code-mirror [code]="code7"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="使用FormBuilder">
-      <code-mirror [code]="code8"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h2 id="formArray">FormArray</h2>
-  有时候, 表单的控件数量是不定的.尤其在一些资料录入的场景下, 可能是多条记录的.为了解决这个问题, Angular提供了
-  <span class="key-word">FormArray</span>. <br />
-  <span class="key-word">FormBuilder</span>提供了 <span class="key-word">array()</span>方法, 可以动态地添加控件.接下来我们实现一个简单的需求
-  <ul>
-    <li>用户可以添加任意多个爱好, 但是每个爱好都是必填项.</li>
-  </ul>
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code9"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code10"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h3>运行结果</h3>
-  <nz-card class="card demo3">
-    <form [formGroup]="hobbyForm">
-      <div formArrayName="hobby">
-        <button nzType="primary" (click)="addHobby()" nz-button>新增爱好</button>
-        <button nzType="primary" (click)="getHobbies()" [disabled]="hobbyForm.invalid" nz-button>显示结果</button>
-        <div *ngFor="let obj of hobbies.controls; let i = index">
-          <label>
-            爱好{{ i + 1 }}:
-            <input nz-input [formControlName]="i" />
-          </label>
+<app-content-fill [anchor]="anchor">
+  <div class="tutorial">
+    <h2 id="resume">概述</h2>
+    在之前的学习当中, 我们已经知道了什么叫做
+    <strong>模板驱动表单</strong>, 什么叫做 <strong>响应式表单</strong>. <br />
+    现在, 我们来详细谈一谈响应式表单的一些零碎的用法.
+    <h2 id="getAndSet">取值与赋值</h2>
+    <span class="key-word">FormControl</span>提供了一些功能, 最常用的是取值与赋值.
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code1"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code2"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <nz-card class="card demo1">
+      <form [formGroup]="demo1Group">
+        <input formControlName="demo1Value" nz-input placeholder="尝试输入值" />
+        <button (click)="updateDemo1Value()" nz-button nzType="primary">设置值</button>
+        <button (click)="getDemo1Value()" nz-button nzType="primary">取得值</button>
+        <br />
+        你输入的值为:{{ result }}
+      </form>
+    </nz-card>
+    <h2 id="nestingAndGroup">嵌套与分组</h2>
+    很多时候, 一份复杂的表单是由几个部分组成的.比如用户信息采集, 可能由社会信息、个人信息、学籍信息等多个方面组成的.而我们知道, 
+    <span class="key-word">form</span
+    >是不能嵌套的.嵌套的好处其实就是使得逻辑更加清晰罢了, 并没有特别大的必要, 如果你真的有这个需求, 可以使用响应式表单来完成. <br />
+    现在我们来实现一个简单的需求
+    <ul>
+      <li>采集用户信息, 用户信息由个人信息和学籍信息组成</li>
+    </ul>
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code3"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code4"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h3>运行结果</h3>
+    <nz-card class="card demo2">
+      <form [formGroup]="userGroup">
+        用户表单(两个小表单合起来)的合法状态:
+        <span>{{ userGroup.valid }}</span>
+        <h2>个人信息</h2>
+        <div formGroupName="personalGroup">
+          <input formControlName="userName" nz-input placeholder="用户名, 必填项" />
         </div>
-      </div>
-    </form>
-    <div *ngFor="let value of hobbyResult; let i = index">爱好{{ i + 1 }}:{{ value }}</div>
-  </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#getAndSet" nzTitle="取值与赋值"></nz-link>
-  <nz-link nzHref="#nestingAndGroup" nzTitle="嵌套与分组"></nz-link>
-  <nz-link nzHref="#patchValue" nzTitle="批量模型更新"></nz-link>
-  <nz-link nzHref="#formBuilder" nzTitle="FormBuilder"></nz-link>
-  <nz-link nzHref="#formArray" nzTitle="FormArray"></nz-link>
-</nz-anchor>
+        userName的值为:
+        <span>{{ userGroup.get('personalGroup').get('userName').value }}</span>
+        <h2>学籍信息</h2>
+        <div formGroupName="schoolGroup">
+          <input formControlName="collegePlace" nz-input placeholder="大学所在地, 不少于4个字符" />
+        </div>
+        collegePlace的值为:
+        <span>{{ userGroup.get('schoolGroup').get('collegePlace').value }}</span>
+        <br />
+      </form>
+    </nz-card>
+    <h2 id="patchValue">批量模型更新</h2>
+    我们已经知道, 如果想要修改表单的值, 可以借助
+    <span class="key-word">FormControl</span> 的
+    <span class="key-word">setValue()</span>来修改表单的值, 但是这种方法只能改一个值, 如果想要改多个值, 可以使用
+    <span class="key-word">FormGroup</span>的 <span class="key-word">patchValue()</span>.
+    基于上一部分的需求, 我们对需求做出调整.在注册时, 对于用户信息, 一般网站不会要求一次性填写, 一些补充信息是可以事后填写的, 我们现在来模仿这个功能.
+    <ul>
+      <li>假设用户名已经设置了, 当他想要更新用户信息时, 学籍信息是全新的, 而用户名他可以修改也可以使用注册时填写的.</li>
+    </ul>
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code5"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code6"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h3>运行结果</h3>
+    <nz-card class="card demo2">
+      <form [formGroup]="userGroup2">
+        用户表单(两个小表单合起来)的合法状态:
+        <span>{{ userGroup2.valid }}</span>
+        <h2>个人信息</h2>
+        <div formGroupName="personalGroup">
+          <input formControlName="userName" nz-input placeholder="用户名, 必填项" class="userName" />
+          <button (click)="updatePersonalGroup()" nz-button nzType="primary">使用默认用户名</button>
+        </div>
+        userName的值为:
+        <span>{{ userGroup2.get('personalGroup').get('userName').value }}</span>
+        <h2>学籍信息</h2>
+        <div formGroupName="schoolGroup">
+          <input formControlName="collegePlace" nz-input placeholder="大学所在地, 不少于4个字符" />
+        </div>
+        collegePlace的值为:
+        <span>{{ userGroup2.get('schoolGroup').get('collegePlace').value }}</span>
+        <br />
+      </form>
+    </nz-card>
+    <h2 id="formBuilder">FormBuilder</h2>
+    我们已经知道, 想要创建响应式表单, 需要用到
+    <span class="key-word">FormGroup</span>和 <span class="key-word">FormControl</span>.实际上, 我们可以简化这个步骤, 在构造函数当中注入
+    <span class="key-word">FormBuilder</span>, 二者的写法相似.以下两种写法的效果是等价的.
+    <nz-tabset>
+      <nz-tab nzTitle="使用FormGroup、FormControl">
+        <code-mirror [code]="code7"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="使用FormBuilder">
+        <code-mirror [code]="code8"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h2 id="formArray">FormArray</h2>
+    有时候, 表单的控件数量是不定的.尤其在一些资料录入的场景下, 可能是多条记录的.为了解决这个问题, Angular提供了
+    <span class="key-word">FormArray</span>. <br />
+    <span class="key-word">FormBuilder</span>提供了 <span class="key-word">array()</span>方法, 可以动态地添加控件.接下来我们实现一个简单的需求
+    <ul>
+      <li>用户可以添加任意多个爱好, 但是每个爱好都是必填项.</li>
+    </ul>
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code9"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code10"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h3>运行结果</h3>
+    <nz-card class="card demo3">
+      <form [formGroup]="hobbyForm">
+        <div formArrayName="hobby">
+          <button nzType="primary" (click)="addHobby()" nz-button>新增爱好</button>
+          <button nzType="primary" (click)="getHobbies()" [disabled]="hobbyForm.invalid" nz-button>显示结果</button>
+          <div *ngFor="let obj of hobbies.controls; let i = index">
+            <label>
+              爱好{{ i + 1 }}:
+              <input nz-input [formControlName]="i" />
+            </label>
+          </div>
+        </div>
+      </form>
+      <div *ngFor="let value of hobbyResult; let i = index">爱好{{ i + 1 }}:{{ value }}</div>
+    </nz-card>
+  </div>
+</app-content-fill>

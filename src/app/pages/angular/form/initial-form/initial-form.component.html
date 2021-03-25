@@ -1,83 +1,78 @@
-<div class="tutorial">
-  <h2 id="resume">概述</h2>
-  在本章, 我们将学习Angular当中关于表单的操作. <br />
-  这一小结的知识点, 其实都是比较简单的, 几乎都不用说明, 看代码就能明白.实际上, 这些属于后面几节的预备知识.
-  <h2 id="event">$event</h2>
-  到了本章节, 你应该明白在模板中使用
-  <span class="key-word">(event)="func(arg)"</span>这种写法的意义. <br />
-  理论地说, 这是视图到数据源的单向绑定, 通俗地说, 这是事件触发后访问的方法.在此之前用的最多的事件是
-  <span class="key-word">click</span>.接下来需要向你再介绍一下 <span class="key-word">keyup</span>, 正如字面意思, 当释放按键时触发的事件.
-  <br />
-  <span class="key-word">$event</span>是特殊的变量, 他携带了大量的信息. <br />
-  下面这个案例演示了 <span class="key-word">$event</span>携带的信息, 以及如何取值.
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code1"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code2"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <nz-card class="card">
-    <input nz-input (keyup)="onKey($event)" placeholder="尝试输入一些内容, 观察控制台信息" />
+<app-content-fill [anchor]="anchor">
+  <div class="tutorial">
+    <h2 id="resume">概述</h2>
+    在本章, 我们将学习Angular当中关于表单的操作. <br />
+    这一小结的知识点, 其实都是比较简单的, 几乎都不用说明, 看代码就能明白.实际上, 这些属于后面几节的预备知识.
+    <h2 id="event">$event</h2>
+    到了本章节, 你应该明白在模板中使用
+    <span class="key-word">(event)="func(arg)"</span>这种写法的意义. <br />
+    理论地说, 这是视图到数据源的单向绑定, 通俗地说, 这是事件触发后访问的方法.在此之前用的最多的事件是
+    <span class="key-word">click</span>.接下来需要向你再介绍一下 <span class="key-word">keyup</span>, 正如字面意思, 当释放按键时触发的事件.
     <br />
-    你刚刚输入的是:{{ value }}
-  </nz-card>
-  <div class="warning">
-    <span class="key-word">$event</span
-    >的用法大家了解一下就好.其实并不推荐这种写法, 因为它违背了模板与组件的分离关注原则.初学者不必太在意这是啥, 记住结论即可, 尽量不用这种方式.
+    <span class="key-word">$event</span>是特殊的变量, 他携带了大量的信息. <br />
+    下面这个案例演示了 <span class="key-word">$event</span>携带的信息, 以及如何取值.
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code1"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code2"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <nz-card class="card">
+      <input nz-input (keyup)="onKey($event)" placeholder="尝试输入一些内容, 观察控制台信息" />
+      <br />
+      你刚刚输入的是:{{ value }}
+    </nz-card>
+    <div class="warning">
+      <span class="key-word">$event</span
+      >的用法大家了解一下就好.其实并不推荐这种写法, 因为它违背了模板与组件的分离关注原则.初学者不必太在意这是啥, 记住结论即可, 尽量不用这种方式.
+    </div>
+    <h2 id="var">模板引用变量</h2>
+    其实模板引用变量的概念, 在之前几章当中都提到过了, 所谓模板引用变量, 就是在模板当中, 使用
+    <span class="key-word">#</span>标记, 然后获得这个宿主的控制器, 下面这个案例同样演示了取值的过程.
+    <code-mirror [code]="code3"></code-mirror>
+    <h3>运行结果</h3>
+    <nz-card class="card">
+      <input nz-input #inputRef placeholder="尝试输入一些内容, 观察模板变化" />
+      <br />
+      你刚刚输入的是:{{ inputRef.value }}
+    </nz-card>
+    <h2 id="key-enter">key.enter</h2>
+    在
+    <span class="key-word">$event</span>的案例中, 如果你观察其对象结构, 你会发现它有一个属性叫做
+    <span class="key-word">keyCode</span>, 这个属性代表着你按键的码.
+    <div class="info">每个键位都一个对应的编号的, 具体可以百度一下.</div>
+    实际上, 不同的按键, 使用频率是不一样的, 在表单当中最需要监听的按键是什么?显然是回车键.因此, Angular提供了一个事件专门用于监听回车事件
+    <span class="key-word">keyup.enter</span>
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code4"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code5"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h3>运行结果</h3>
+    <nz-card class="card">
+      <input nz-input #inputRef2 (keyup.enter)="onEnter(inputRef2.value)" placeholder="尝试输入一些内容后按回车键, 观察模板变化" />
+      <p>{{ value2 }}</p>
+    </nz-card>
+    <h2 id="blur">blur</h2>
+    在表单当中, 我们经常在用户失去焦点时判断输入的信息是否合法, 如用户名是否重复等.所以, 失焦事件也是非常常用的.Angular提供了
+    <span class="key-word">blur</span>事件.
+    <nz-tabset>
+      <nz-tab nzTitle="html">
+        <code-mirror [code]="code6"></code-mirror>
+      </nz-tab>
+      <nz-tab nzTitle="ts">
+        <code-mirror [code]="code7"></code-mirror>
+      </nz-tab>
+    </nz-tabset>
+    <h3>运行结果</h3>
+    <nz-card class="card">
+      <input nz-input #inputRef3 (blur)="onBlur(inputRef3.value)" placeholder="尝试输入一些内容后失去焦点, 观察模板变化" />
+      <p>{{ value3 }}</p>
+    </nz-card>
   </div>
-  <h2 id="var">模板引用变量</h2>
-  其实模板引用变量的概念, 在之前几章当中都提到过了, 所谓模板引用变量, 就是在模板当中, 使用
-  <span class="key-word">#</span>标记, 然后获得这个宿主的控制器, 下面这个案例同样演示了取值的过程.
-  <code-mirror [code]="code3"></code-mirror>
-  <h3>运行结果</h3>
-  <nz-card class="card">
-    <input nz-input #inputRef placeholder="尝试输入一些内容, 观察模板变化" />
-    <br />
-    你刚刚输入的是:{{ inputRef.value }}
-  </nz-card>
-  <h2 id="key-enter">key.enter</h2>
-  在
-  <span class="key-word">$event</span>的案例中, 如果你观察其对象结构, 你会发现它有一个属性叫做
-  <span class="key-word">keyCode</span>, 这个属性代表着你按键的码.
-  <div class="info">每个键位都一个对应的编号的, 具体可以百度一下.</div>
-  实际上, 不同的按键, 使用频率是不一样的, 在表单当中最需要监听的按键是什么?显然是回车键.因此, Angular提供了一个事件专门用于监听回车事件
-  <span class="key-word">keyup.enter</span>
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code4"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code5"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h3>运行结果</h3>
-  <nz-card class="card">
-    <input nz-input #inputRef2 (keyup.enter)="onEnter(inputRef2.value)" placeholder="尝试输入一些内容后按回车键, 观察模板变化" />
-    <p>{{ value2 }}</p>
-  </nz-card>
-  <h2 id="blur">blur</h2>
-  在表单当中, 我们经常在用户失去焦点时判断输入的信息是否合法, 如用户名是否重复等.所以, 失焦事件也是非常常用的.Angular提供了
-  <span class="key-word">blur</span>事件.
-  <nz-tabset>
-    <nz-tab nzTitle="html">
-      <code-mirror [code]="code6"></code-mirror>
-    </nz-tab>
-    <nz-tab nzTitle="ts">
-      <code-mirror [code]="code7"></code-mirror>
-    </nz-tab>
-  </nz-tabset>
-  <h3>运行结果</h3>
-  <nz-card class="card">
-    <input nz-input #inputRef3 (blur)="onBlur(inputRef3.value)" placeholder="尝试输入一些内容后失去焦点, 观察模板变化" />
-    <p>{{ value3 }}</p>
-  </nz-card>
-</div>
-<nz-anchor class="anchor" nzOffsetTop="64">
-  <nz-link nzHref="#resume" nzTitle="概述"></nz-link>
-  <nz-link nzHref="#event" nzTitle="$event"></nz-link>
-  <nz-link nzHref="#var" nzTitle="模板引用变量"></nz-link>
-  <nz-link nzHref="#key-enter" nzTitle="key.enter"></nz-link>
-  <nz-link nzHref="#blur" nzTitle="blur"></nz-link>
-</nz-anchor>
+</app-content-fill>

@@ -1,12 +1,39 @@
 import { Component } from '@angular/core';
 import { User } from './user';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './template-driven-form.component.html',
   styleUrls: ['./template-driven-form.component.scss']
 })
 export class TemplateDrivenFormComponent {
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#FormsModule',
+      title: 'FormsModule'
+    },
+    {
+      href: '#object-structral',
+      title: '使用对象结构取值'
+    },
+    {
+      href: '#ngModel',
+      title: 'ngModel'
+    },
+    {
+      href: '#form-state-judge',
+      title: '控件状态的判断'
+    },
+    {
+      href: '#ngForm',
+      title: 'ngForm'
+    }
+  ];
   constructor(private messageService: NzMessageService) {}
   code1 = `
     import { FormsModule }   from '@angular/forms';

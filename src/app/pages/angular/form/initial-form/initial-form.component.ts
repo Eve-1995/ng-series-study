@@ -1,10 +1,33 @@
 import { Component } from '@angular/core';
+import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
 
 @Component({
   templateUrl: './initial-form.component.html',
   styleUrls: ['./initial-form.component.scss']
 })
 export class InitialFormComponent {
+  anchor: Anchor[] = [
+    {
+      href: '#resume',
+      title: '概述'
+    },
+    {
+      href: '#event',
+      title: '$event'
+    },
+    {
+      href: '#var',
+      title: '模板引用变量'
+    },
+    {
+      href: '#key-enter',
+      title: 'key.enter'
+    },
+    {
+      href: '#blur',
+      title: 'blur'
+    }
+  ];
   value;
   onKey(event: any) {
     console.log(event);
