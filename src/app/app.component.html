@@ -1,0 +1,26 @@
+<ngx-loading-bar [color]="'red'" [includeSpinner]="false"></ngx-loading-bar>
+<nz-layout>
+  <nz-sider>
+    <ul nz-menu [nzMode]="'inline'">
+      <li nz-menu-item nzMatchRouter>
+        <span title>
+          <span>教程概述</span>
+        </span>
+      </li>
+      <li nz-submenu>
+        <span title>
+          <span>RxJS</span>
+        </span>
+        <ul>
+          <li nz-menu-item nzMatchRouter routerLink="/01">初识RxJS</li>
+          <li nz-menu-item nzMatchRouter routerLink="/02">常用操作符</li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

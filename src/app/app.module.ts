@@ -8,20 +8,23 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { LayoutModule } from './layout/layout.module';
-import { PagesRoutingModule } from './pages/pages-routing.module';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { AppMarkdownModule } from './libs/markdown/markdown.module';
+import { SharedModule } from 'dist/ng-docs/app/shared/shared.module';
+import { declarations, routes } from './config';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...declarations],
   imports: [
+    RouterModule.forRoot(routes),
     BrowserModule,
     BrowserAnimationsModule,
     LoadingBarRouterModule,
     HttpClientModule,
     RouterModule,
-    PagesRoutingModule,
     LayoutModule,
-    OverlayModule
+    AppMarkdownModule,
+    OverlayModule,
+    SharedModule
   ],
   bootstrap: [AppComponent]
 })
