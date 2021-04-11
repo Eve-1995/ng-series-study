@@ -1,38 +1,8 @@
-<!-- <ng-container [ngSwitch]="type">
-  <ng-container *ngSwitchCase="'h1'">
-    <div class="h1">12122
-      <ng-content></ng-content>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'h2'">
-    <div class="h2">
-      <ng-content></ng-content>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'h3'">
-    <div class="h3">
-      <ng-content></ng-content>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'h4'">
-    <div class="h4">
-      <ng-content></ng-content>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'section'">
-    <div class="section">
-      <ng-content></ng-content>
-    </div>
-  </ng-container>
-</ng-container> -->
-
-<ng-container *ngIf="type === 'h1'">
-  <div class="h1">
-    <ng-content></ng-content>
-  </div>
+<ng-container *ngIf="src">
+  <markdown lineNumbers [src]="src"></markdown>
 </ng-container>
-<ng-container *ngIf="type === 'section'">
-  <div class="section">
+<ng-container *ngIf="!src">
+  <markdown>
     <ng-content></ng-content>
-  </div>
+  </markdown>
 </ng-container>

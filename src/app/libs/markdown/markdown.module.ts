@@ -1,10 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { MarkDownComponent } from './markdown.component';
+import { HttpClient } from '@angular/common/http';
+import { NgModule, SecurityContext } from '@angular/core';
+import { MarkdownModule } from 'ngx-markdown';
+import { MarkdownComponent } from './markdown.component';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [MarkDownComponent],
-  exports: [MarkDownComponent]
+  imports: [
+    CommonModule,
+    MarkdownModule.forRoot({
+      loader: HttpClient,
+      sanitize: SecurityContext.NONE
+    })
+  ],
+  declarations: [MarkdownComponent],
+  exports: [MarkdownComponent]
 })
-export class MarkDownModule {}
+export class AppMarkdownModule {}

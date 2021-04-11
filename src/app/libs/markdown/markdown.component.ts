@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'app-md',
+  selector: 'app-markdown',
   templateUrl: './markdown.component.html',
-  styleUrls: ['./markdown.component.scss']
+  styleUrls: ['./markdown.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class MarkDownComponent {
-  @Input() type: 'section'|'h1'|'h2'|'h3'|'h4'|'h5';
+export class MarkdownComponent {
+  @Input() src: string;
 }

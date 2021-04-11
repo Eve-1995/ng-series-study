@@ -17,10 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "ng-zorro-antd, ng-zorro-antd-i18n",
-              "highlight.js"
-            ],
+            "allowedCommonJsDependencies": ["ng-zorro-antd, ng-zorro-antd-i18n", "highlight.js"],
             "outputPath": "dist/ng-docs",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -39,10 +36,19 @@
             ],
             "styles": [
               "./node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-              "./node_modules/highlight.js/styles/atom-one-dark.css",
+              "src/theme/material-theme.scss",
+              "src/theme/vsc-theme.scss",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/marked/lib/marked.js",
+              "./node_modules/prismjs/prism.js",
+              "./node_modules/prismjs/components/prism-typescript.min.js",
+              "./node_modules/prismjs/components/prism-scss.min.js",
+              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,12 +100,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["tsconfig.app.json"],
+            "exclude": ["**/node_modules/**"]
           }
         },
         "deploy": {

@@ -18,7 +18,8 @@
   <h2>基础案例</h2>
   <div class="section">
     我们来看一个很简单的例子, 该例子演示了如何订阅一个Subject, 如何使用操作符.
-    <code-mirror [code]="appService.code1 | async "></code-mirror>
+    <!-- <code-mirror [code]="appService.code1 | async"></code-mirror> -->
+    <app-markdown [src]="'app/pages/rxjs/init-rxjs/children/rxjs-child-03.component.ts'"></app-markdown>
     在组件初始化的时候就对一个Subject进行了订阅. 
     <div class="info">
       Subject你可以理解为就是Observable, 因为他继承了Observable. Subject非常的实用. 他经常用于复杂组件通信. 
