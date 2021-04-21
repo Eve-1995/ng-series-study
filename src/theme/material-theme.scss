@@ -91,18 +91,6 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   $primary: map-get($theme, primary);
   $foreground: map-get($theme, foreground);
 
-  a,
-  a:active,
-  a:focus,
-  a:visited {
-    color: mat-color($accent, A400);
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-
   blockquote {
     background: mat-color($primary, 300, 0.14);
     border-left: 4px solid mat-color($accent);

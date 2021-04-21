@@ -2,7 +2,7 @@
   <markdown lineNumbers [src]="src"></markdown>
 </ng-container>
 <ng-container *ngIf="!src">
-  <markdown>
+  <markdown lineNumbers ngPreserveWhitespaces>
     <ng-content></ng-content>
   </markdown>
 </ng-container>

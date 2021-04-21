@@ -1,6 +1,14 @@
 // 覆盖zorro样式
-p {
-  margin-top: inherit;
+blockquote {
+  address,
+  dl,
+  ol,
+  p,
+  pre,
+  ul {
+    margin-top: inherit;
+    margin-bottom: inherit;
+  }
 }
 h1,
 h2,
