@@ -3,10 +3,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 
 @Component({
-  selector: 'app-demo-02',
-  templateUrl: './demo-02.component.html'
+  selector: 'app-demo-002',
+  templateUrl: './demo-002.component.html'
 })
-export class Demo02Component {
+export class Demo002Component {
   receiveNum = 0; // 已经收到的报纸数量
 
   doSubscribe(): void {

@@ -3,10 +3,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-demo-04',
-  templateUrl: './demo-04.component.html'
+  selector: 'app-demo-004',
+  templateUrl: './demo-004.component.html'
 })
-export class Demo04Component {
+export class Demo004Component {
   private subject$ = new Subject<void>();
   private subscriptionList: Subscription[] = [];
 

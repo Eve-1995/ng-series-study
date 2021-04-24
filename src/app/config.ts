@@ -1,28 +1,28 @@
 import { Type } from '@angular/core';
 import { Routes } from '@angular/router';
-import { Container00Component } from './page/container/container-00.component';
-import { Container01Component } from './page/container/container-01.component';
-import { Container02Component } from './page/container/container-02.component';
-import { Container03Component } from './page/container/container-03.component';
+import { Container000Component } from './page/container/container-000.component';
+import { Container001Component } from './page/container/container-001.component';
+import { Container002Component } from './page/container/container-002.component';
+import { Container003Component } from './page/container/container-003.component';
 import { DemoComponent } from './page/demo/demo.component';
-import { Demo01Component } from './page/demo/demo-01/demo-01.component';
-import { Demo02Component } from './page/demo/demo-02/demo-02.component';
-import { Demo03Component } from './page/demo/demo-03/demo-03.component';
-import { Demo04Component } from './page/demo/demo-04/demo-04.component';
-import { Demo05Component } from './page/demo/demo-05/demo-05.component';
+import { Demo001Component } from './page/demo/demo-001/demo-001.component';
+import { Demo002Component } from './page/demo/demo-002/demo-002.component';
+import { Demo003Component } from './page/demo/demo-003/demo-003.component';
+import { Demo004Component } from './page/demo/demo-004/demo-004.component';
+import { Demo005Component } from './page/demo/demo-005/demo-005.component';
 import { RenderComponent } from './page/render/render.component';
 
 const components = [
-  Container00Component,
-  Container01Component,
-  Container02Component,
-  Container03Component,
+  Container000Component,
+  Container001Component,
+  Container002Component,
+  Container003Component,
   DemoComponent,
-  Demo01Component,
-  Demo02Component,
-  Demo03Component,
-  Demo04Component,
-  Demo05Component
+  Demo001Component,
+  Demo002Component,
+  Demo003Component,
+  Demo004Component,
+  Demo005Component
 ];
 const pages = [RenderComponent];
 
@@ -36,7 +36,7 @@ export const routes: Routes = [
     path: 'render',
     component: RenderComponent
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/render' }
 ];
 
 export const declarations: Array<Type<any> | any[]> = [...components, ...pages];

@@ -4,10 +4,10 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-demo-05',
-  templateUrl: './demo-05.component.html'
+  selector: 'app-demo-005',
+  templateUrl: './demo-005.component.html'
 })
-export class Demo05Component implements OnInit {
+export class Demo005Component implements OnInit {
   private unsubscribe$ = new Subject();
 
   loading = false;

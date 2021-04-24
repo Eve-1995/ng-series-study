@@ -1,24 +1,24 @@
-import { Container01Component } from '../container/container-01.component';
-import { Container02Component } from '../container/container-02.component';
-import { Container03Component } from '../container/container-03.component';
+import { Container001Component } from '../container/container-001.component';
+import { Container002Component } from '../container/container-002.component';
+import { Container003Component } from '../container/container-003.component';
 
 export function getComponent(index: string): { component: any } {
   switch (index) {
-    case '01':
+    case '001':
       return {
-        component: Container01Component
+        component: Container001Component
       };
-    case '02':
+    case '002':
       return {
-        component: Container02Component
+        component: Container002Component
       };
-    case '03':
+    case '003':
       return {
-        component: Container03Component
+        component: Container003Component
       };
     default:
       return {
-        component: Container01Component
+        component: Container001Component
       };
   }
 }

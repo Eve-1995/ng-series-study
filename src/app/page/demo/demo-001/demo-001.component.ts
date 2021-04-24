@@ -3,10 +3,10 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Observable, Observer } from 'rxjs';
 
 @Component({
-  selector: 'app-demo-01',
-  templateUrl: './demo-01.component.html'
+  selector: 'app-demo-001',
+  templateUrl: './demo-001.component.html'
 })
-export class Demo01Component {
+export class Demo001Component {
   receiveNum = 0; // 已经收到的报纸数量
 
   // me, 也就是我, 是一个Observer对象. Observer<void> 是指 next 所接收到的参数是void. 如果你指定为string, 则next收到的参数类型为string
