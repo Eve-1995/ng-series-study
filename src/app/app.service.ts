@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
+  changePage$ = new Subject<string>();
+
   /**
    * 获取文件路径
    * @param fileNum 文件编号

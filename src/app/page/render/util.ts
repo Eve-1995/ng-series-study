@@ -13,6 +13,6 @@ export function getComponent(index: string): { component: any } {
         component: Container02Component
       };
     default:
-      return { component: Container00Component };
+      return { component: Container01Component };
   }
 }

@@ -27,14 +27,14 @@ const pages = [RenderComponent];
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'render/01',
+    redirectTo: 'render',
     pathMatch: 'full'
   },
   {
-    path: 'render/:index',
+    path: 'render',
     component: RenderComponent
   },
-  { path: '**', redirectTo: 'render/:01' }
+  { path: '**', redirectTo: '' }
 ];
 
 export const declarations: Array<Type<any> | any[]> = [...components, ...pages];

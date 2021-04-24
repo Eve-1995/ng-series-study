@@ -2,12 +2,16 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AppService } from 'src/app/app.service';
 import { getComponent } from './util';
 
 @Component({
@@ -16,9 +20,11 @@ import { getComponent } from './util';
   styleUrls: ['./render.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RenderComponent implements OnInit {
+export class RenderComponent implements OnInit, OnDestroy {
   /** 文章序号 */
   private index: string;
+  private unsubscribe$ = new Subject<void>();
+
   @ViewChild('componentRef', { read: ViewContainerRef }) componentRef: ViewContainerRef;
 
   private generateComponent(): void {
@@ -30,16 +36,18 @@ export class RenderComponent implements OnInit {
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private componentFactoryResolve: ComponentFactoryResolver,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private componentFactoryResolve: ComponentFactoryResolver, private cdr: ChangeDetectorRef, private appService: AppService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => {
-      this.index = params.index;
+    this.appService.changePage$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
+      this.index = v;
       this.generateComponent();
     });
+    this.generateComponent();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
