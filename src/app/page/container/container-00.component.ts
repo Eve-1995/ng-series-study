@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+import { ContainerBaseComponent } from './container-base.component';
 
 @Component({
   template: `
@@ -8,6 +8,5 @@ import { AppService } from 'src/app/app.service';
   </app-content-fill>
   `
 })
-export class Container00Component {
-  constructor(public appService: AppService) {}
+export class Container00Component extends ContainerBaseComponent {
 }

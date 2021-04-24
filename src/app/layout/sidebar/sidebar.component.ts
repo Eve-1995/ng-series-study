@@ -1,4 +1,6 @@
+import { LocationStrategy, Location } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 
 @Component({
@@ -10,9 +12,23 @@ import { AppService } from 'src/app/app.service';
 export class SidebarComponent implements OnInit {
   changePage(page: string): void {
     this.appService.changePage$.next(page);
+    this.updateParam(page);
   }
 
-  constructor(private cdr: ChangeDetectorRef, private appService: AppService) {}
+  private updateParam(page: string): void {
+    const queryParamsObj = { page };
+    this.location.replaceState(
+      this.router.createUrlTree([this.locationStrategy.path().split('?')[0]], { queryParams: queryParamsObj }).toString()
+    );
+  }
+
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private location: Location,
+    private router: Router,
+    private locationStrategy: LocationStrategy,
+    private appService: AppService
+  ) {}
 
   ngOnInit(): void {
     this.cdr.detectChanges();

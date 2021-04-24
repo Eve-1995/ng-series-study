@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { Container00Component } from './page/container/container-00.component';
 import { Container01Component } from './page/container/container-01.component';
 import { Container02Component } from './page/container/container-02.component';
+import { Container03Component } from './page/container/container-03.component';
 import { DemoComponent } from './page/demo/demo.component';
 import { Demo01Component } from './page/demo/demo-01/demo-01.component';
 import { Demo02Component } from './page/demo/demo-02/demo-02.component';
@@ -15,6 +16,7 @@ const components = [
   Container00Component,
   Container01Component,
   Container02Component,
+  Container03Component,
   DemoComponent,
   Demo01Component,
   Demo02Component,

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AppService } from 'src/app/app.service';
 import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
+import { ContainerBaseComponent } from './container-base.component';
 
 @Component({
   template: `
@@ -31,7 +31,7 @@ import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
   </app-content-fill>
   `
 })
-export class Container02Component {
+export class Container02Component extends ContainerBaseComponent {
   anchor: Anchor[] = [
     {
       href: '#anchor001',
@@ -55,8 +55,7 @@ export class Container02Component {
     },
     {
       href: '#anchor006',
-      title: '无需取消订阅'
+      title: '无需取消的订阅'
     }
   ];
-  constructor(public appService: AppService) {}
 }

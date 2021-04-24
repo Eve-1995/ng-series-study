@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
@@ -36,14 +36,22 @@ export class RenderComponent implements OnInit, OnDestroy {
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  constructor(private componentFactoryResolve: ComponentFactoryResolver, private cdr: ChangeDetectorRef, private appService: AppService) {}
+  private paramChange(page: string): void {
+    this.index = page;
+    this.generateComponent();
+  }
+
+  constructor(
+    private componentFactoryResolve: ComponentFactoryResolver,
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private appService: AppService
+  ) {}
 
   ngOnInit(): void {
-    this.appService.changePage$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
-      this.index = v;
-      this.generateComponent();
-    });
-    this.generateComponent();
+    const page = this.activatedRoute.snapshot.queryParams.page || '01';
+    this.paramChange(page);
+    this.appService.changePage$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => this.paramChange(v));
   }
 
   ngOnDestroy(): void {
