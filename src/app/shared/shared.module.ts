@@ -26,6 +26,7 @@ import { CodemirrorComponent } from './codemirror/codemirror.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { HighlightPlusModule } from 'ngx-highlightjs/plus';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 // 先把全部的zorro都引进来, 能跑起来再说
 const zorroModules = [
@@ -47,6 +48,7 @@ const zorroModules = [
   NzModalModule,
   NzAnchorModule,
   NzLayoutModule,
+  NzIconModule,
   NzGridModule
 ];
 

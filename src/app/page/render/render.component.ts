@@ -49,7 +49,7 @@ export class RenderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const page = this.activatedRoute.snapshot.queryParams.page || '01';
+    const page: string = this.activatedRoute.snapshot.queryParams.page || '001';
     this.paramChange(page);
     this.appService.changePage$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => this.paramChange(v));
   }

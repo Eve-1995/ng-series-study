@@ -2,78 +2,29 @@
   <div class="title">
     <h1>Ng Docs</h1>
   </div>
-  <ul nz-menu [nzMode]="'inline'">
-    <li nz-menu-item (click)="changePage('001')">
-      <span title>
-        <span>教程概述</span>
-      </span>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>Angular</span>
-      </span>
-      <ul>
-        <li nz-menu-item>创建项目</li>
-        <li nz-menu-item>常规用法</li>
-        <li nz-submenu>
-          <span title>路由</span>
+  <ul nz-menu nzMode="inline">
+    <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+    <ng-template #menuTpl let-menus>
+      <ng-container *ngFor="let menu of menus">
+        <li
+          *ngIf="!menu.children"
+          nz-menu-item
+          [nzPaddingLeft]="menu.level * 24"
+          [nzSelected]="menu.selected"
+          (click)="changePage(menu.page)">
+          <span>{{ menu.title }}</span>
+        </li>
+        <li
+          *ngIf="menu.children"
+          nz-submenu
+          [nzPaddingLeft]="menu.level * 24"
+          [nzOpen]="menu.open"
+          [nzTitle]="menu.title">
           <ul>
-            <li nz-menu-item>初识路由</li>
-            <li nz-menu-item>路由进阶</li>
+            <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
           </ul>
         </li>
-        <li nz-submenu>
-          <span title>指令</span>
-          <ul>
-            <li nz-menu-item>结构型指令</li>
-            <li nz-menu-item>属性型指令</li>
-          </ul>
-        </li>
-        <li nz-menu-item>服务</li>
-        <li nz-submenu>
-          <span title>组件</span>
-          <ul>
-            <li nz-menu-item>组件交互</li>
-            <li nz-menu-item>组件样式</li>
-            <li nz-menu-item>动态组件</li>
-          </ul>
-        </li>
-        <li nz-menu-item>生命周期</li>
-        <li nz-menu-item>管道</li>
-        <li nz-submenu>
-          <span title>表单</span>
-          <ul>
-            <li nz-menu-item>初识表单</li>
-            <li nz-menu-item>模板驱动表单</li>
-            <li nz-menu-item>表单验证</li>
-            <li nz-menu-item>响应式表单</li>
-            <li nz-menu-item>动态表单</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>RxJS</span>
-      </span>
-      <ul>
-        <li nz-menu-item (click)="changePage('002')">初识RxJS</li>
-        <li nz-menu-item (click)="changePage('003')">常用操作符</li>
-      </ul>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>生态社区</span>
-      </span>
-      <ul>
-        <li nz-menu-item>常见问题</li>
-        <!-- <li nz-menu-item nzMatchRouter routerLink="/recommend/ng-exam">水平测验</li> -->
-      </ul>
-    </li>
-    <!-- <li nz-menu-item nzMatchRouter routerLink="/project/author">
-      <span title>
-        <span>关于作者</span>
-      </span>
-    </li> -->
+      </ng-container>
+    </ng-template>
   </ul>
 </div>
