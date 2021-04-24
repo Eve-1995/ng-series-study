@@ -22,12 +22,6 @@ import { ContainerBaseComponent } from './container-base.component';
     <app-markdown [src]="appService.getPath('04', 'ts')"></app-markdown>
     <app-demo><app-demo-04></app-demo-04></app-demo>
     <app-markdown [src]="appService.getPath('06', 'md')"></app-markdown>
-    <!--
-    <app-markdown [src]="appService.getPath('05', 'html')"></app-markdown>
-    <app-markdown [src]="appService.getPath('05', 'ts')"></app-markdown>
-    <app-demo><app-demo-05></app-demo-05></app-demo>
-    -->
-    <app-markdown [src]="appService.getPath('07', 'md')"></app-markdown>
   </app-content-fill>
   `
 })
