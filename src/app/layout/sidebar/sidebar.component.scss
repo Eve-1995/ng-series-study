@@ -7,5 +7,9 @@
   .title {
     display: flex;
     justify-content: center;
+    border-right: 1px solid #f0f0f0;
+    h1 {
+      margin: 0.5em;
+    }
   }
 }
