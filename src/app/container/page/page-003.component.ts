@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Anchor } from 'src/app/libs/content-fill/content-fill.interface';
-import { ContainerBaseComponent } from './container-base.component';
+import { PageBaseComponent } from './Page-base.component';
 
 @Component({
   template: `
@@ -13,7 +13,7 @@ import { ContainerBaseComponent } from './container-base.component';
     </app-content-fill>
   `
 })
-export class Container003Component extends ContainerBaseComponent {
+export class Page003Component extends PageBaseComponent {
   anchor: Anchor[] = [
     {
       href: '#anchor001',

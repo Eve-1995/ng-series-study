@@ -13,11 +13,11 @@ export class AppService {
   getPath(fileNum: string, type: 'md' | 'html' | 'ts'): string {
     switch (type) {
       case 'md':
-        return `app/page/md/${fileNum}.md`;
+        return `app/container/md/${fileNum}.md`;
       case 'html':
-        return `app/page/demo/demo-${fileNum}/demo-${fileNum}.component.html`;
+        return `app/container/demo/demo-${fileNum}/demo-${fileNum}.component.html`;
       case 'ts':
-        return `app/page/demo/demo-${fileNum}/demo-${fileNum}.component.ts`;
+        return `app/container/demo/demo-${fileNum}/demo-${fileNum}.component.ts`;
     }
   }
 }

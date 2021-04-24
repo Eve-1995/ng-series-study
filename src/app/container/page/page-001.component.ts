@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContainerBaseComponent } from './container-base.component';
+import { PageBaseComponent } from './Page-base.component';
 
 @Component({
   template: `
@@ -8,4 +8,4 @@ import { ContainerBaseComponent } from './container-base.component';
     </app-content-fill>
   `
 })
-export class Container001Component extends ContainerBaseComponent {}
+export class Page001Component extends PageBaseComponent {}
