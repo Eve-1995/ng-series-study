@@ -1,8 +1,8 @@
 <div class="content-fill-container">
-  <div class="text">
+  <div class="markdown-render">
     <ng-content></ng-content>
   </div>
-  <nz-anchor *ngIf="anchor.length > 0" class="my-anchor">
+  <nz-anchor *ngIf="anchor.length > 0" class="markdown-anchor">
     <nz-link *ngFor="let item of anchor" [nzHref]="item.href" [nzTitle]="item.title">
       <nz-link *ngFor="let subItem of item?.children" [nzHref]="subItem.href" [nzTitle]="subItem.title"></nz-link>
     </nz-link>

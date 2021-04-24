@@ -1,11 +1,11 @@
 .content-fill-container {
   display: flex;
   background-color: #fff;
-  .text {
+  .markdown-render {
     padding: 10px 20px;
     flex: 1;
   }
-  .my-anchor {
+  .markdown-anchor {
     width: 200px;
   }
 }
