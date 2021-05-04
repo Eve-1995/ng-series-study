@@ -17,11 +17,27 @@ export class Page004Component extends PageBaseComponent {
     },
     {
       href: '#anchor002',
-      title: 'takeUntil'
+      title: '类型声明'
     },
     {
       href: '#anchor003',
-      title: 'debounceTime'
+      title: 'interface'
+    },
+    {
+      href: '#anchor004',
+      title: '泛型'
+    },
+    {
+      href: '#anchor005',
+      title: '继承与泛型的区别'
+    },
+    {
+      href: '#anchor006',
+      title: 'enum'
+    },
+    {
+      href: '#anchor007',
+      title: 'type'
     }
   ];
 }

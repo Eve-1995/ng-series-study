@@ -26,11 +26,22 @@ export class SidebarComponent implements AfterContentInit {
     },
     {
       level: 1,
+      title: 'TypeScript',
+      children: [
+        {
+          level: 2,
+          title: '基本概念',
+          page: '004'
+        }
+      ]
+    },
+    {
+      level: 1,
       title: 'RxJS',
       children: [
         {
           level: 2,
-          title: '初识RxJS',
+          title: '基本概念',
           page: '002'
         },
         {
