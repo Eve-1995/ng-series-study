@@ -30,8 +30,13 @@ export class SidebarComponent implements AfterContentInit {
       children: [
         {
           level: 2,
-          title: '基本概念',
+          title: '基本概念★',
           page: '004'
+        },
+        {
+          level: 2,
+          title: '深入探讨',
+          page: '005'
         }
       ]
     },
@@ -41,12 +46,12 @@ export class SidebarComponent implements AfterContentInit {
       children: [
         {
           level: 2,
-          title: '基本概念',
+          title: '基本概念★',
           page: '002'
         },
         {
           level: 2,
-          title: '常用操作符',
+          title: '常用操作符★',
           page: '003'
         }
       ]

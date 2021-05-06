@@ -10,35 +10,35 @@
 
 // light-theme
 $primary: (
-  50 : #d6ebff,
-  100 : #8ac4ff,
-  200 : #52a8ff,
-  300 : #0a85ff,
-  400 : #0075eb,
-  500 : #0066cc,
-  600 : #0057ad,
-  700 : #00478f,
-  800 : #003870,
-  900 : #002952,
-  A100 : #cce5ff,
-  A200 : #66b2ff,
-  A400 : #007fff,
-  A700 : #0073e6,
+  50: #d6ebff,
+  100: #8ac4ff,
+  200: #52a8ff,
+  300: #0a85ff,
+  400: #0075eb,
+  500: #0066cc,
+  600: #0057ad,
+  700: #00478f,
+  800: #003870,
+  900: #002952,
+  A100: #cce5ff,
+  A200: #66b2ff,
+  A400: #007fff,
+  A700: #0073e6,
   contrast: (
-    50 : $dark-primary-text,
-    100 : $dark-primary-text,
-    200 : $dark-primary-text,
-    300 : $light-primary-text,
-    400 : $light-primary-text,
-    500 : $light-primary-text,
-    600 : $light-primary-text,
-    700 : $light-primary-text,
-    800 : $light-primary-text,
-    900 : $light-primary-text,
-    A100 : $dark-primary-text,
-    A200 : $dark-primary-text,
-    A400 : $light-primary-text,
-    A700 : $light-primary-text,
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text
   )
 );
 
@@ -52,7 +52,6 @@ $dark-primary: mat-palette($mat-grey, 900, 300, 700);
 $dark-accent: mat-palette($mat-light-blue);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-
 
 @mixin app-component-theme($theme) {
   $primary: map-get($theme, primary);
@@ -104,7 +103,8 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
     background: mat-color($foreground, secondary-text, 0.07);
     border-radius: 3px;
     font-size: 0.94em;
-    padding: 2px 6px 2px;
+    padding: 2px;
+    margin: 0px 1px;
   }
 
   hr {
@@ -114,12 +114,17 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   }
 
   table {
+    tr {
+      min-height: 30px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.12);
+    }
     th {
       color: mat-color($foreground, secondary-text);
     }
 
     td,
     th {
+      min-width: 100px;
       border-bottom-color: mat-color($foreground, divider);
     }
   }

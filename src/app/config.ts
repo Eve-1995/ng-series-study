@@ -9,7 +9,8 @@ import {
   Page005Component,
   Page006Component,
   Page007Component,
-  Page008Component
+  Page008Component,
+  Page009Component
 } from '@page';
 import {
   DemoComponent,
@@ -41,7 +42,8 @@ const components = [
   Page005Component,
   Page006Component,
   Page007Component,
-  Page008Component
+  Page008Component,
+  Page009Component
 ];
 const pages = [RenderComponent];
 

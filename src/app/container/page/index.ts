@@ -6,3 +6,4 @@ export * from './page-005.component';
 export * from './page-006.component';
 export * from './page-007.component';
 export * from './page-008.component';
+export * from './page-009.component';

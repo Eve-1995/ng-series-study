@@ -1,4 +1,4 @@
-import { Page001Component, Page002Component, Page003Component, Page004Component } from '@page';
+import { Page001Component, Page002Component, Page003Component, Page004Component, Page005Component } from '@page';
 
 export function getComponent(index: string): { component: any } {
   switch (index) {
@@ -17,6 +17,10 @@ export function getComponent(index: string): { component: any } {
     case '004':
       return {
         component: Page004Component
+      };
+    case '005':
+      return {
+        component: Page005Component
       };
     default:
       return {
