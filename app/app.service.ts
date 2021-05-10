@@ -1,15 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Subject } from 'rxjs';
+
+type FileType = 'md' | 'html' | 'ts' | 'scss';
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-  // <code-mirror [code]="appService.code1 | async "></code-mirror>
-  code1 = this.getFile('app/pages/rxjs/init-rxjs/children/rxjs-child-03.component.ts');
+  changePage$ = new Subject<string>();
 
-  getFile(path: string): Observable<string> {
-    return this.http.get(path, { responseType: 'text' });
+  /**
+   * 获取文件路径
+   * @param fileNum 文件编号
+   * @param type 文件类型, md为markdown文件, demo为Angular组件
+   */
+  getPath(fileNum: string, type: FileType): string {
+    switch (type) {
+      case 'md':
+        return `app/container/md/${fileNum}.md`;
+      case 'html':
+        return `app/container/demo/demo-${fileNum}/demo-${fileNum}.component.html`;
+      case 'scss':
+        return `app/container/demo/demo-${fileNum}/demo-${fileNum}.component.scss`;
+      case 'ts':
+        return `app/container/demo/demo-${fileNum}/demo-${fileNum}.component.ts`;
+    }
   }
-
-  constructor(private http: HttpClient) {}
 }

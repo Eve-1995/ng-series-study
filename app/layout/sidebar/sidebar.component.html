@@ -2,78 +2,29 @@
   <div class="title">
     <h1>Ng Docs</h1>
   </div>
-  <ul nz-menu [nzMode]="'inline'">
-    <li nz-menu-item nzMatchRouter routerLink="/project/introduction">
-      <span title>
-        <span>教程概述</span>
-      </span>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>Angular</span>
-      </span>
-      <ul>
-        <li nz-menu-item nzMatchRouter routerLink="/angular/create">创建项目</li>
-        <li nz-menu-item nzMatchRouter routerLink="/angular/conventional-usage">常规用法</li>
-        <li nz-submenu>
-          <span title>路由</span>
+  <ul nz-menu nzMode="inline">
+    <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menus }"></ng-container>
+    <ng-template #menuTpl let-menus>
+      <ng-container *ngFor="let menu of menus">
+        <li
+          *ngIf="!menu.children"
+          nz-menu-item
+          [nzPaddingLeft]="menu.level * 24"
+          [nzSelected]="menu.selected"
+          (click)="changePage(menu.page)">
+          <span>{{ menu.title }}</span>
+        </li>
+        <li
+          *ngIf="menu.children"
+          nz-submenu
+          [nzPaddingLeft]="menu.level * 24"
+          [nzOpen]="menu.open"
+          [nzTitle]="menu.title">
           <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/init-router">初识路由</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/advanced-router">路由进阶</li>
+            <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
           </ul>
         </li>
-        <li nz-submenu>
-          <span title>指令</span>
-          <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/structural-directive">结构型指令</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/attribute-directive">属性型指令</li>
-          </ul>
-        </li>
-        <li nz-menu-item nzMatchRouter routerLink="/angular/service">服务</li>
-        <li nz-submenu>
-          <span title>组件</span>
-          <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/component-communication">组件交互</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/component-styles">组件样式</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/dynamic-component">动态组件</li>
-          </ul>
-        </li>
-        <li nz-menu-item nzMatchRouter routerLink="/angular/lifecycle">生命周期</li>
-        <li nz-menu-item nzMatchRouter routerLink="/angular/pipe">管道</li>
-        <li nz-submenu>
-          <span title>表单</span>
-          <ul>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/initial-form">初识表单</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/template-driven-form">模板驱动表单</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/validation-form">表单验证</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/reactive-form">响应式表单</li>
-            <li nz-menu-item nzMatchRouter routerLink="/angular/dynamic-form">动态表单</li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>RxJS</span>
-      </span>
-      <ul>
-        <li nz-menu-item nzMatchRouter routerLink="/rxjs/init-rxjs">初识RxJS</li>
-        <li nz-menu-item nzMatchRouter routerLink="/rxjs/operators">常用操作符</li>
-      </ul>
-    </li>
-    <li nz-submenu>
-      <span title>
-        <span>生态社区</span>
-      </span>
-      <ul>
-        <li nz-menu-item nzMatchRouter routerLink="/recommend/common-question">常见问题</li>
-        <!-- <li nz-menu-item nzMatchRouter routerLink="/recommend/ng-exam">水平测验</li> -->
-      </ul>
-    </li>
-    <!-- <li nz-menu-item nzMatchRouter routerLink="/project/author">
-      <span title>
-        <span>关于作者</span>
-      </span>
-    </li> -->
+      </ng-container>
+    </ng-template>
   </ul>
 </div>

@@ -1,0 +1,153 @@
+@import '~@angular/material/theming';
+
+// utils
+@function soften-color($color, $percent) {
+  @if lightness($color) < 50% {
+    @return lighten($color, $percent);
+  }
+  @return darken($color, $percent/2);
+}
+
+// light-theme
+$primary: (
+  50: #d6ebff,
+  100: #8ac4ff,
+  200: #52a8ff,
+  300: #0a85ff,
+  400: #0075eb,
+  500: #0066cc,
+  600: #0057ad,
+  700: #00478f,
+  800: #003870,
+  900: #002952,
+  A100: #cce5ff,
+  A200: #66b2ff,
+  A400: #007fff,
+  A700: #0073e6,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $light-primary-text,
+    400: $light-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text
+  )
+);
+
+$light-primary: mat-palette($primary);
+$light-accent: mat-palette($primary);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+// dark-theme
+$dark-primary: mat-palette($mat-grey, 900, 300, 700);
+$dark-accent: mat-palette($mat-light-blue);
+$dark-warn: mat-palette($mat-red);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+@mixin app-component-theme($theme) {
+  $primary: map-get($theme, primary);
+
+  .mat-toolbar.mat-primary {
+    background: linear-gradient(90deg, mat-color($primary) 15%, darken(mat-color($primary), 4%) 100%);
+  }
+
+  .mat-tab-nav-bar.mat-background-primary {
+    background: mat-color($primary);
+  }
+}
+
+@mixin scrollspy-nav-component-theme($theme) {
+  $accent: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+
+  ul.scrollspy-nav {
+    li {
+      border-left: 2px solid mat-color($accent);
+      box-shadow: inset 1px 0 0 mat-color($accent);
+
+      &:not(.active) {
+        box-shadow: inset 1px 0 0 mat-color($foreground, text, 0.21);
+
+        a:not(:hover) {
+          color: mat-color($foreground, text);
+        }
+      }
+    }
+  }
+}
+
+@mixin native-element-theme($theme, $name) {
+  $accent: map-get($theme, accent);
+  $primary: map-get($theme, primary);
+  $foreground: map-get($theme, foreground);
+
+  blockquote {
+    background: mat-color($primary, 300, 0.14);
+    border-left: 4px solid mat-color($accent);
+    border-radius: 4px;
+    color: soften-color(mat-color($foreground, base), 40%);
+    margin: 20px 0;
+    padding: 1px 20px;
+  }
+
+  code:not([class*='language-']) {
+    background: mat-color($foreground, secondary-text, 0.07);
+    border-radius: 3px;
+    font-size: 0.94em;
+    padding: 2px;
+    margin: 0px 1px;
+  }
+
+  hr {
+    border-color: mat-color($foreground, divider);
+    border-style: solid;
+    border-width: 1px 0 0 0;
+  }
+
+  table {
+    tr {
+      min-height: 30px;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.12);
+    }
+    th {
+      color: mat-color($foreground, secondary-text);
+    }
+
+    td,
+    th {
+      min-width: 100px;
+      border-bottom-color: mat-color($foreground, divider);
+    }
+  }
+}
+
+@mixin theme($theme, $name) {
+  .#{$name}-theme {
+    @include angular-material-theme($theme);
+    @include native-element-theme($theme, $name);
+    @include app-component-theme($theme);
+    @include scrollspy-nav-component-theme($theme);
+  }
+}
+
+@mixin material-core() {
+  $font-family: 'Google Sans', 'Helvetica Neue', sans-serif;
+  $mat-typography: mat-typography-config($font-family);
+  body {
+    font-family: $font-family;
+  }
+  @include mat-core($mat-typography);
+}
+
+@include material-core();
+@include theme($light-theme, 'light');
+@include theme($dark-theme, 'dark');

@@ -1,3 +1,19 @@
-.section {
-  margin-bottom: 9px;
+// 覆盖zorro样式
+blockquote {
+  address,
+  dl,
+  ol,
+  p,
+  pre,
+  ul {
+    margin-top: inherit;
+    margin-bottom: inherit;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: bold;
 }
