@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AppService } from 'src/app/app.service';
-import { getComponent } from './util';
+import { getComponent } from 'src/app/config';
 
 @Component({
   selector: 'app-render',

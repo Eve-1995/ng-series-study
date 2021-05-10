@@ -4,8 +4,19 @@ import { PageBaseComponent } from './Page-base.component';
 
 @Component({
   template: `
-    <app-content-fill [anchor]="anchor">
-      <app-markdown [src]="appService.getPath('009', 'md')"></app-markdown>
+    <app-content-fill>
+      <app-markdown [src]="appService.getPath('011', 'md')"></app-markdown>
+      <app-markdown [src]="appService.getPath('006', 'html')"></app-markdown>
+      <app-markdown [src]="appService.getPath('006', 'scss')"></app-markdown>
+      <app-markdown [src]="appService.getPath('006', 'ts')"></app-markdown>
+      <app-markdown [src]="appService.getPath('012', 'md')"></app-markdown>
+      <app-demo><app-demo-006></app-demo-006></app-demo>
+      <app-markdown [src]="appService.getPath('013', 'md')"></app-markdown>
+      <app-markdown [src]="appService.getPath('007', 'html')"></app-markdown>
+      <app-markdown [src]="appService.getPath('007', 'ts')"></app-markdown>
+      <app-demo><app-demo-007></app-demo-007></app-demo>
+      <app-markdown [src]="appService.getPath('014', 'md')"></app-markdown>
+      <app-demo><app-demo-008></app-demo-008></app-demo>
     </app-content-fill>
   `
 })

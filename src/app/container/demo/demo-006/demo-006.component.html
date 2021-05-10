@@ -1,6 +1,3 @@
-<nz-spin [nzSpinning]="loading">
-  <input
-    nz-input
-    placeholder="Input something..."
-    [formControl]="formControl"/>
-</nz-spin>
+<!-- HTML -->
+<input type="text" [(ngModel)]="value"><!-- ngModel是双向绑定语法糖, 后文会讲 -->
+<p>你输入的是: <span class="text">{{value}}</span></p>

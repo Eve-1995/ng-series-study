@@ -1,25 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+// TypeScript
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-demo-006',
-  templateUrl: './demo-006.component.html'
+  selector: 'app-demo-006', // 选择器, 当需要调用这个组件的时候可以在调用的模板中写<app-demo-006></app-demo-006>
+  templateUrl: './demo-006.component.html', // 指定模板, 使用哪个HTML文件
+  styleUrls: ['./demo-006.component.scss'] // 使用样式表, 注意这里是数组, 所以可以使用多个样式表
 })
-export class Demo006Component implements OnInit {
-  private unsubscribe$ = new Subject();
-
-  loading = false;
-  formControl = new FormControl();
-
-  ngOnInit(): void {
-    // valueChanges 是 Observable 类型
-    this.formControl.valueChanges.pipe(debounceTime(500), takeUntil(this.unsubscribe$)).subscribe(() => {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
-    });
-  }
+export class Demo006Component {
+  value = 'Input something?';
 }

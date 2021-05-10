@@ -26,6 +26,32 @@ export class SidebarComponent implements AfterContentInit {
     },
     {
       level: 1,
+      title: 'Angular',
+      children: [
+        {
+          level: 2,
+          title: '基操集锦★',
+          page: '006'
+        },
+        // {
+        //   level: 2,
+        //   title: '指令',
+        //   page: '007'
+        // },
+        // {
+        //   level: 2,
+        //   title: '管道',
+        //   page: '008'
+        // },
+        // {
+        //   level: 2,
+        //   title: '生命周期',
+        //   page: '009'
+        // }
+      ]
+    },
+    {
+      level: 1,
       title: 'TypeScript',
       children: [
         {
