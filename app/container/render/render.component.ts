@@ -2,17 +2,13 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
-  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { AppService } from 'src/app/app.service';
-import { getComponent } from 'src/app/config';
+import { ActivatedRoute, Params } from '@angular/router';
+import { getComponent } from './render-config';
 
 @Component({
   selector: 'app-render',
@@ -20,42 +16,28 @@ import { getComponent } from 'src/app/config';
   styleUrls: ['./render.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RenderComponent implements OnInit, OnDestroy {
-  /** 文章序号 */
-  private index: string;
-  private unsubscribe$ = new Subject<void>();
-
+export class RenderComponent implements OnInit {
   @ViewChild('componentRef', { read: ViewContainerRef }) componentRef: ViewContainerRef;
 
-  private generateComponent(): void {
+  private generateComponent(index: string): void {
     this.cdr.detectChanges();
-    const { component } = getComponent(this.index);
+    const { component } = getComponent(index);
     const componentFactory = this.componentFactoryResolve.resolveComponentFactory(component);
     this.componentRef.clear();
     const componentRef = this.componentRef.createComponent(componentFactory);
     componentRef.changeDetectorRef.detectChanges();
   }
 
-  private paramChange(page: string): void {
-    this.index = page;
-    this.generateComponent();
-  }
-
   constructor(
     private componentFactoryResolve: ComponentFactoryResolver,
     private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef,
-    private appService: AppService
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    const page: string = this.activatedRoute.snapshot.queryParams.page || '001';
-    this.paramChange(page);
-    this.appService.changePage$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => this.paramChange(v));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.activatedRoute.params.subscribe((params: Params) => {
+      const index = params.index;
+      this.generateComponent(index);
+    });
   }
 }
