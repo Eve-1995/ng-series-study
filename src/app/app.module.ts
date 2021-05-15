@@ -9,7 +9,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 import { LayoutModule } from './layout/layout.module';
 import { AppMarkdownModule } from './libs/markdown/markdown.module';
-import { declarations, routes } from './config';
+import { declarations, routes } from './app-config';
 import { SharedModule } from './shared/shared.module';
 import { ContentFillModule } from './libs/content-fill';
 

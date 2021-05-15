@@ -17,7 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["ng-zorro-antd, ng-zorro-antd-i18n", "highlight.js"],
+            "allowedCommonJsDependencies": [
+              "ng-zorro-antd",
+              "ng-zorro-antd-i18n",
+              "date-fns/parse",
+              "date-fns/format",
+              "date-fns/getISOWeek",
+              "highlight.js"
+            ],
             "outputPath": "dist/ng-docs",
             "index": "src/index.html",
             "main": "src/main.ts",

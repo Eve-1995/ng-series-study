@@ -32,7 +32,7 @@ export class SidebarComponent implements AfterContentInit {
           level: 2,
           title: '基操集锦★',
           page: '006'
-        },
+        }
         // {
         //   level: 2,
         //   title: '指令',
@@ -84,9 +84,8 @@ export class SidebarComponent implements AfterContentInit {
     }
   ];
 
-  changePage(page: string): void {
-    this.appService.changePage$.next(page);
-    this.updateParam(page);
+  changePage(index: string): void {
+    this.router.navigate([`render/${index}`]);
   }
 
   /** 根据 url 自动选中、展开对应的菜单 */
@@ -106,14 +105,7 @@ export class SidebarComponent implements AfterContentInit {
     }
   }
 
-  /** 更新路由参数, 但不跳转页面. 真正地跳转是由动态组件完成的 */
-  private updateParam(page: string): void {
-    const queryParams = { page };
-    this.location.replaceState(this.router.createUrlTree([this.locationStrategy.path().split('?')[0]], { queryParams }).toString());
-  }
-
   constructor(
-    private location: Location,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private locationStrategy: LocationStrategy,
