@@ -1,2 +1,7 @@
-<!-- {{ dateTime | date:'medium' }} // 1989年7月22日 上午10:21:21 -->
-<span>{{ dateTime | date:'medium' }}</span>
+<nz-radio-group [(ngModel)]="isRed">
+  <label nz-radio [nzValue]="true">红色</label>
+  <label nz-radio [nzValue]="false">默认色</label>
+</nz-radio-group>
+<div [ngClass]="{'red': isRed}">
+  修改选项, 我就可能会变色.
+</div>

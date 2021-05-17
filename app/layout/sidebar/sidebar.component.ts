@@ -90,9 +90,9 @@ export class SidebarComponent implements AfterContentInit {
 
   /** 根据 url 自动选中、展开对应的菜单 */
   private updateMenuStatus(children: Menu[], parent?: Menu): void {
-    const page: string = this.activatedRoute.snapshot.queryParams.page || '001';
+    const pageIndex: string = this.activatedRoute.snapshot.firstChild.params.index;
     for (const menu of children) {
-      menu.selected = menu.page === page;
+      menu.selected = menu.page === pageIndex;
       if (parent) {
         parent.open = menu.selected;
       }

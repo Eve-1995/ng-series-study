@@ -16,6 +16,9 @@ import { PageBaseComponent } from './Page-base.component';
       <app-markdown [src]="appService.getPath('007', 'ts')"></app-markdown>
       <app-demo><app-demo-007></app-demo-007></app-demo>
       <app-markdown [src]="appService.getPath('014', 'md')"></app-markdown>
+      <app-markdown [src]="appService.getPath('008', 'html')"></app-markdown>
+      <app-markdown [src]="appService.getPath('008', 'scss')"></app-markdown>
+      <app-markdown [src]="appService.getPath('008', 'ts')"></app-markdown>
       <app-demo><app-demo-008></app-demo-008></app-demo>
     </app-content-fill>
   `
