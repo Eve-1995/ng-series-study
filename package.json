@@ -7,7 +7,7 @@
     "build": "ng build --prod",
     "lint": "ng lint",
     "format": "prettier --write .",
-    "deploy": "ng deploy --base-href=\"./\" --no-silent"
+    "deploy": "ng deploy --base-href=https://eve-sama.github.io/ng-docs/ --no-silent"
   },
   "dependencies": {
     "@angular/animations": "~11.0.0",

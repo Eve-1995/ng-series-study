@@ -85,7 +85,7 @@ export class SidebarComponent implements AfterContentInit {
   ];
 
   changePage(index: string): void {
-    this.router.navigate([`render/${index}`]);
+    this.router.navigate(['/render', index]);
   }
 
   /** 根据 url 自动选中、展开对应的菜单 */
